@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Alif Quiz | MediLearn Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #60a5fa;
+            --primary-dark: #3b82f6;
+            --primary-light: #93c5fd;
+            --secondary: #94a3b8;
+            --success: #22c55e;
+            --error: #ef4444;
+            --warning: #eab308;
+            --info: #0ea5e9;
+            --shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+            --radius: 12px;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+        }
+        body.light-mode {
+            --background: #f3f4f6;
+            --surface: #ffffff;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --text-tertiary: #9ca3af;
+            --border: #d1d5db;
+        }
+        body.dark-mode {
+            --background: #0f172a;
+            --surface: #1e293b;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --text-tertiary: #6b7280;
+            --border: #334155;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            touch-action: manipulation;
+        }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+            transition: var(--transition);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            touch-action: pan-x pan-y;
+        }
+        html {
+            touch-action: none;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .logo {
+           display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--primary);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logo img {
+  width: 40px;       /* Adjust size */
+  height: 40px;      /* Keep consistent shape */
+  border-radius: 50%; /* Optional: make it circular */
+  object-fit: cover;  /* Ensures the image doesn’t stretch */
+}
+
+.logo i {
+  font-size: 1.5rem;
+}
+
+        .nav-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .action-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .action-btn:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-color: var(--primary-light);
+        }
+        .action-btn.primary {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .action-btn.primary:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 1rem 2rem;
+            display: none;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .page-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        .page-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .year-filter {
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+        .year-filter-container {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+        }
+        .year-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            font-weight: 500;
+        }
+        .year-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .year-section {
+            margin-bottom: 2rem;
+        }
+        .year-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .year-title i {
+            color: var(--primary);
+        }
+        .cards-container {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-light) transparent;
+        }
+        .cards-container::-webkit-scrollbar {
+            height: 6px;
+        }
+        .cards-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .cards-container::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 3px;
+        }
+        .cards-container::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+        .quiz-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+            min-width: 200px;
+            max-width: 200px;
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .quiz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-light);
+        }
+        .quiz-card.locked {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .quiz-card.locked:hover {
+            transform: none;
+            border-color: var(--border);
+        }
+        .quiz-card.locked::after {
+            content: '\f023';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: var(--error);
+            opacity: 0.8;
+        }
+        .quiz-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+        .quiz-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .quiz-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .quiz-stats {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .difficulty {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .difficulty.beginner {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
+        }
+        .difficulty.intermediate {
+            background: rgba(234, 179, 8, 0.1);
+            color: var(--warning);
+        }
+        .difficulty.advanced {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+        }
+        #registrationModal, #addModal, #confirmAddModal, #accessDeniedModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+        }
+        .modal-content {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: var(--radius);
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-content h2 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-size: 1.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .modal-content h2 i {
+            color: var(--primary);
+        }
+        .modal-content .price-info {
+            margin-bottom: 1.5rem;
+            color: var(--warning);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .input-group i {
+            position: absolute;
+            left: 1rem;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+        .modal-content select, .modal-content input {
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--background);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            width: 100%;
+        }
+        .modal-content select:focus, .modal-content input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .file-upload {
+            position: relative;
+            padding: 1rem;
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        .file-upload:hover {
+            border-color: var(--primary-light);
+        }
+        .file-upload i {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .file-upload input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .file-upload span {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .receipt-preview {
+            margin-top: 1rem;
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            display: none;
+        }
+        .modal-content button {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+        }
+        .modal-content button:hover {
+            background: var(--primary-dark);
+        }
+        .modal-content button.loading::after {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid white;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin-left: 8px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .modal-content .error {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        .back-btn, .cancel-btn, .ok-btn {
+            background: var(--surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .back-btn:hover, .cancel-btn:hover, .ok-btn:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-color: var(--primary-light);
+        }
+        .ok-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+        }
+        .ok-btn:hover {
+            background: var(--primary-dark);
+        }
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        #logoutModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+        }
+        /* Profile Styles */
+        #profileContent {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 80px 1rem 2rem;
+            background: linear-gradient(to bottom, var(--background), var(--surface));
+            min-height: calc(100vh - 80px);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .profile-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            margin-bottom: 1rem;
+        }
+        .change-pic-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        .change-pic-btn:hover {
+            background: var(--primary-dark);
+        }
+        .profile-info {
+            margin-bottom: 2rem;
+        }
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .info-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        .info-value {
+            color: var(--text-primary);
+        }
+        .add-year-btn {
+            color: var(--primary);
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+        .contact-section {
+            margin-bottom: 2rem;
+        }
+        .contact-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .contact-link {
+            background: var(--gradient);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+        .contact-link:hover {
+            transform: scale(1.1);
+        }
+        .comment-section {
+            margin-bottom: 2rem;
+        }
+        .comment-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        #commentBox {
+            width: 100%;
+            min-height: 100px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--background);
+            color: var(--text-primary);
+            resize: vertical;
+        }
+        #sendCommentBtn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        #sendCommentBtn:hover {
+            background: var(--primary-dark);
+        }
+        #commentError {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        #profileLogoutBtn {
+            background: var(--error);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            margin-top: 2rem;
+            width: 100%;
+        }
+        #profileLogoutBtn:hover {
+            background: #dc2626;
+        }
+        #backToMainBtn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            margin-top: 1rem;
+            width: 100%;
+        }
+        #backToMainBtn:hover {
+            background: var(--primary-dark);
+        }
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0.75rem;
+            }
+            .main-content {
+                padding: 70px 0.75rem 1rem;
+            }
+            .page-title {
+                font-size: 1.75rem;
+            }
+            .year-title {
+                font-size: 1.25rem;
+            }
+            .modal-content {
+                padding: 1.5rem;
+                width: 95%;
+            }
+            .profile-card {
+                padding: 1.5rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.5rem;
+            }
+            .quiz-card {
+                min-width: 180px;
+                max-width: 180px;
+            }
+            .year-title {
+                font-size: 1.25rem;
+            }
+            .modal-content h2 {
+                font-size: 1.5rem;
+            }
+            .profile-pic {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <!-- Registration Modal -->
+    <div id="registrationModal">
+        <div class="modal-content">
+            <h2><i class="fas fa-user-plus"></i> Register</h2>
+            <div id="priceInfo" class="price-info">Select Year to View Price</div>
+            <form id="regForm">
+                <div class="input-group">
+                    <i class="fas fa-graduation-cap"></i>
+                    <select id="year" required>
+                        <option value="" disabled selected>Select Year of Study</option>
+                        <option value="1">1st Year - 100 ETB</option>
+                        <option value="2">2nd Year - 120 ETB</option>
+                        <option value="3">3rd Year - 140 ETB</option>
+                        <option value="4">4th Year - 160 ETB</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input id="name" placeholder="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-phone"></i>
+                    <input id="phone" type="tel" placeholder="Phone Number" required>
+                </div>
+                <div class="input-group">
+                    <i class="fab fa-telegram-plane"></i>
+                    <input id="telegram" placeholder="Telegram Username (optional)">
+                </div>
+                <div class="file-upload">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span id="uploadText">Upload Payment Receipt</span>
+                    <input id="receipt" type="file" accept="image/*" required>
+                </div>
+                <img id="receiptPreview" class="receipt-preview" alt="Receipt Preview">
+                <button type="submit" id="submitBtn"><i class="fas fa-paper-plane"></i>Submit</button>
+                <div id="regError" class="error"></div>
+            </form>
+            <div id="verifyForm" style="display:none">
+                <h2><i class="fas fa-lock"></i> Enter Verification Code</h2>
+                <div class="input-group">
+                    <i class="fas fa-key"></i>
+                    <input id="verifyCode" placeholder="6-digit code" maxlength="6" required>
+                </div>
+                <button id="verifyBtn"><i class="fas fa-check-circle"></i> Verify</button>
+                <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i> Back to Registration</button>
+                <div id="verifyError" class="error"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Year Modal -->
+    <div id="addModal" style="display: none;">
+        <div class="modal-content">
+            <h2><i class="fas fa-plus"></i> Add program </h2>
+            <div class="price-info">Additional Charge: 50 ETB</div>
+            <form id="addForm">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input id="addName" placeholder="Full Name (for verification)" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-graduation-cap"></i>
+                    <select id="newYear" required>
+                        <option value="" disabled selected>Select New Year</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                </div>
+                <div class="file-upload">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span id="addUploadText">Upload Payment Receipt (50 ETB)</span>
+                    <input id="addReceipt" type="file" accept="image/*" required>
+                </div>
+                <img id="addReceiptPreview" class="receipt-preview" alt="Receipt Preview">
+                <button type="submit" id="addSubmitBtn"><i class="fas fa-paper-plane"></i> Submit </button>
+                <div id="addError" class="error"></div>
+            </form>
+            <div id="addVerifyForm" style="display:none">
+                <h2><i class="fas fa-lock"></i> Enter Verification Code</h2>
+                <div class="input-group">
+                    <i class="fas fa-key"></i>
+                    <input id="addVerifyCode" placeholder="6-digit code" maxlength="6" required>
+                </div>
+                <button id="addVerifyBtn"><i class="fas fa-check-circle"></i> Verify</button>
+                <button class="back-btn" id="addBackBtn"><i class="fas fa-arrow-left"></i> Back to Addition</button>
+                <div id="addVerifyError" class="error"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Confirm Add Modal -->
+    <div id="confirmAddModal" style="display: none;">
+        <div class="modal-content">
+            <h2><i class="fas fa-exclamation-triangle"></i> Confirm Add</h2>
+            <p>Additional Program charges additional 50 ETB. Do you want to continue?</p>
+            <div class="button-group">
+                <button class="cancel-btn" id="cancelAddBtn">no</button>
+                <button class="ok-btn" id="okAddBtn">yes</button>
+            </div>
+        </div>
+    </div>
+    <!-- Access Denied Modal -->
+    <div id="accessDeniedModal" style="display: none;">
+        <div class="modal-content">
+            <h2><i class="fas fa-lock"></i> Access Denied</h2>
+            <p id="deniedMessage"></p>
+            <button class="ok-btn" id="closeDeniedBtn">OK</button>
+        </div>
+    </div>
+    <!-- Logout Modal -->
+    <div id="logoutModal" style="display: none;">
+        <div class="modal-content">
+            <h2><i class="fas fa-sign-out-alt"></i> Confirm Logout</h2>
+            <div class="input-group">
+                <i class="fas fa-key"></i>
+                <input id="logoutCode" placeholder="6-digit logout code" maxlength="6" required>
+            </div>
+            <button id="confirmLogoutBtn"><i class="fas fa-check-circle"></i> Confirm Logout</button>
+            <div id="logoutError" class="error"></div>
+        </div>
+    </div>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <div class="logo" id="logoBtn">
+                <i class="fas fa-stethoscope"></i>
+                <span>ALIF | MED</span>
+            </div>
+            <div class="nav-actions">
+                <button class="action-btn" id="themeToggle">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <button id="profileBtn" class="action-btn primary">
+                    <i class="fas fa-user"></i> Profile
+                </button>
+                <a href="#" id="logout" class="action-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- Quizzes Content -->
+    <main id="mainContent" class="main-content">
+        <div class="page-header">
+            <h1 class="page-title"></h1>
+            <p class="page-subtitle"></p>
+        </div>
+        <div class="year-filter">
+            <div class="year-filter-container">
+                <button class="year-btn active" data-year="all">All</button>
+                <button class="year-btn" data-year="1">pre med</button>
+                <button class="year-btn" data-year="2">intro to med</button>
+                <button class="year-btn" data-year="3">pc1</button>
+                <button class="year-btn" data-year="4">pc2</button>
+            </div>
+        </div>
+        <section class="year-section" data-year="1">
+            <h2 class="year-title"><i class="fas fa-book-medical"></i>Pre Med</h2>
+            <div class="cards-container"></div>
+        </section>
+        <section class="year-section" data-year="2">
+            <h2 class="year-title"><i class="fas fa-book-medical"></i>Intro to MED</h2>
+            <div class="cards-container"></div>
+        </section>
+        <section class="year-section" data-year="3">
+            <h2 class="year-title"><i class="fas fa-book-medical"></i>PC1</h2>
+            <div class="cards-container"></div>
+        </section>
+        <section class="year-section" data-year="4">
+            <h2 class="year-title"><i class="fas fa-book-medical"></i>PC2</h2>
+            <div class="cards-container"></div>
+        </section>
+    </main>
+    <!-- Profile Content -->
+    <main id="profileContent" class="main-content" style="display: none;">
+        <div class="profile-card">
+            <div class="profile-header">
+                <img id="profilePic" class="profile-pic" src="" alt="Profile Picture">
+                <label for="profilePicInput" class="change-pic-btn"><i class="fas fa-camera"></i> Change Picture</label>
+                <input id="profilePicInput" type="file" accept="image/*" style="display: none;">
+            </div>
+            <div class="profile-info">
+                <h2 class="page-title">Your Profile</h2>
+                <div class="info-item">
+                    <span class="info-label">Name:</span>
+                    <span class="info-value" id="profileName"></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Phone:</span>
+                    <span class="info-value" id="profilePhone"></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Telegram:</span>
+                    <span class="info-value" id="profileTelegram"></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Year(s):</span>
+                    <span class="info-value" id="profileYears"></span>
+                    <span id="addYearBtn" class="add-year-btn"><i class="fas fa-plus"></i> Add</span>
+                </div>
+            </div>
+            <div class="contact-section">
+                <h3 class="contact-title">Contact Us</h3>
+                <div class="contact-links">
+                    <a href="https://t.me/yourchannel" class="contact-link" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="mailto:support@medilearnpro.com" class="contact-link"><i class="fas fa-envelope"></i></a>
+                    <!-- Add more if needed -->
+                </div>
+            </div>
+            <div class="comment-section">
+                <h3 class="comment-title">Send Us Your Comment</h3>
+                <textarea id="commentBox" placeholder="Write your message here..."></textarea>
+                <button id="sendCommentBtn"><i class="fas fa-paper-plane"></i> Send</button>
+                <div id="commentError" class="error"></div>
+            </div>
+            <button id="profileLogoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            <button id="backToMainBtn"><i class="fas fa-arrow-left"></i> Back to Quizzes</button>
+        </div>
+    </main>
+    <script>
+        // Security measures
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.keyCode === 123 ||
+                (e.ctrlKey && e.shiftKey && e.keyCode === 73) ||
+                (e.ctrlKey && e.shiftKey && e.keyCode === 74) ||
+                (e.ctrlKey && e.keyCode === 85) ||
+                (e.ctrlKey && e.keyCode === 83)) {
+                e.preventDefault();
+            }
+        });
+        document.addEventListener('visibilitychange', () => {
+            document.body.style.filter = document.visibilityState === 'hidden' ? 'blur(10px)' : 'none';
+        });
+        document.addEventListener('touchstart', e => {
+            if (e.touches.length > 1) e.preventDefault();
+        }, { passive: false });
+        document.addEventListener('gesturestart', e => e.preventDefault());
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        function toggleTheme() {
+            if (document.body.classList.contains('dark-mode')) {
+                document.body.classList.remove('dark-mode');
+                document.body.classList.add('light-mode');
+                themeToggle.querySelector('i').className = 'fas fa-moon';
+            } else {
+                document.body.classList.remove('light-mode');
+                document.body.classList.add('dark-mode');
+                themeToggle.querySelector('i').className = 'fas fa-sun';
+            }
+        }
+        themeToggle.addEventListener('click', toggleTheme);
+        // Quiz data
+        const quizData = {
+            1: [
+                { id: 6, title: "Organic Chemistry", icon: "fas fa-brain", questions: 30, time: 25, difficulty: "intermediate", rating: 4.6, page: "year2/human-anatomy.html" },
+                { id: 7, title: "ENTREPRENUERSHIP", icon: "fas fa-heartbeat", questions: 25, time: 20, difficulty: "intermediate", rating: 4.5, page: "year2/physiology-i.html" },
+                { id: 8, title: "ECONOMICS", icon: "fas fa-microscope", questions: 20, time: 15, difficulty: "intermediate", rating: 4.3, page: "year2/histology.html" },
+                { id: 9, title: "CIVIC", icon: "fas fa-flask", questions: 28, time: 22, difficulty: "intermediate", rating: 4.4, page: "year2/biochemistry-ii.html" }
+               ],
+            2: [
+                { id: 1, title: "Anatomy", icon: "fas fa-brain", questions: 20, time: 15, difficulty: "beginner", rating: 4.5, page: "yr1/an.html" },
+                { id: 2, title: "Physiology", icon: "fas fa-microscope", questions: 15, time: 10, difficulty: "beginner", rating: 4.2, page: "yr1/ps.html" },
+                { id: 3, title: "Biochemistry", icon: "fas fa-book", questions: 25, time: 20, difficulty: "beginner", rating: 4.7, page: "yr1/bc.html" },
+                { id: 4, title: "Pathology", icon: "fas fa-flask", questions: 18, time: 15, difficulty: "beginner", rating: 4.3, page: "yr1/pt.html" },
+                { id: 5, title: "Pharmacology", icon: "fas fa-heartbeat", questions: 22, time: 18, difficulty: "beginner", rating: 4.4, page: "yr1/pc.html" }
+           ],
+            3: [
+                { id: 10, title: "Pathology", icon: "fas fa-virus", questions: 35, time: 30, difficulty: "intermediate", page: "year3/pathology.html", rating: 4.7 },
+                { id: 11, title: "Pharmacology I", icon: "fas fa-pills", questions: 30, time: 25, difficulty: "intermediate", rating: 4.6, page: "year3/pharmacology-i.html" },
+                { id: 12, title: "Microbiology", icon: "fas fa-bacteria", questions: 25, time: 20, difficulty: "intermediate", rating: 4.5, page: "year3/microbiology.html" },
+                { id: 13, title: "Immunology", icon: "fas fa-shield-virus", questions: 28, time: 22, difficulty: "intermediate", rating: 4.4, page: "year3/immunology.html" }
+            ],
+            4: [
+                { id: 14, title: "Clinical Medicine I", icon: "fas fa-stethoscope", questions: 40, time: 35, difficulty: "advanced", rating: 4.8, page: "year4/clinical-medicine-i.html" },
+                { id: 15, title: "Surgery Basics", icon: "fas fa-syringe", questions: 35, time: 30, difficulty: "advanced", rating: 4.7, page: "year4/surgery-basics.html" },
+                { id: 16, title: "Pharmacology II", icon: "fas fa-pills", questions: 38, time: 32, difficulty: "advanced", rating: 4.6, page: "year4/pharmacology-ii.html" },
+                { id: 17, title: "Pathology II", icon: "fas fa-virus", questions: 42, time: 35, difficulty: "advanced", rating: 4.7, page: "year4/pathology-ii.html" }
+            ],
+            5: [
+                { id: 18, title: "Internal Medicine", icon: "fas fa-stethoscope", questions: 45, time: 40, difficulty: "advanced", rating: 4.8, page: "year5/internal-medicine.html" },
+                { id: 19, title: "Surgery", icon: "fas fa-syringe", questions: 40, time: 35, difficulty: "advanced", rating: 4.7, page: "year5/surgery.html" },
+                { id: 20, title: "Pediatrics", icon: "fas fa-baby", questions: 38, time: 32, difficulty: "advanced", rating: 4.6, page: "year5/pediatrics.html" },
+                { id: 21, title: "Obstetrics & Gynecology", icon: "fas fa-female", questions: 42, time: 35, difficulty: "advanced", rating: 4.7, page: "year5/obstetrics-gynecology.html" }
+            ],
+            6: [
+                { id: 22, title: "Clinical Rotations I", icon: "fas fa-hospital-user", questions: 50, time: 45, difficulty: "advanced", rating: 4.9, page: "year6/clinical-rotations-i.html" },
+                { id: 23, title: "Emergency Medicine", icon: "fas fa-ambulance", questions: 45, time: 40, difficulty: "advanced", rating: 4.8, page: "year6/emergency-medicine.html" },
+                { id: 24, title: "Psychiatry", icon: "fas fa-brain", questions: 40, time: 35, difficulty: "advanced", rating: 4.7, page: "year6/psychiatry.html" },
+                { id: 25, title: "Radiology", icon: "fas fa-x-ray", questions: 38, time: 32, difficulty: "advanced", rating: 4.6, page: "year6/radiology.html" }
+            ],
+            7: [
+                { id: 26, title: "Clinical Rotations II", icon: "fas fa-hospital-user", questions: 55, time: 50, difficulty: "advanced", rating: 4.9, page: "year7/clinical-rotations-ii.html" },
+                { id: 27, title: "Specialty Medicine", icon: "fas fa-stethoscope", questions: 50, time: 45, difficulty: "advanced", rating: 4.8, page: "year7/specialty-medicine.html" },
+                { id: 28, title: "Medical Ethics", icon: "fas fa-balance-scale", questions: 35, time: 30, difficulty: "advanced", rating: 4.7, page: "year7/medical-ethics.html" },
+                { id: 29, title: "Board Exam Prep", icon: "fas fa-graduation-cap", questions: 60, time: 55, difficulty: "advanced", rating: 4.9, page: "year7/board-exam-prep.html" }
+            ]
+        };
+        // Price data
+        const prices = {
+            1: 100,
+            2: 120,
+            3: 140,
+            4: 160,
+            5: 180,
+            6: 200,
+            7: 220
+        };
+        // Render quiz cards
+        function renderQuizCards() {
+            const userYears = JSON.parse(localStorage.getItem('userYears')) || [];
+            for (let year = 1; year <= 7; year++) {
+                const container = document.querySelector(`.year-section[data-year="${year}"] .cards-container`);
+                if (!container) continue;
+                container.innerHTML = '';
+                if (quizData[year]) {
+                    quizData[year].forEach(quiz => {
+                        const card = document.createElement('div');
+                        card.className = 'quiz-card';
+                        card.dataset.year = year.toString();
+                        card.innerHTML = `
+                            <div class="quiz-icon"><i class="${quiz.icon}"></i></div>
+                            <h3 class="quiz-title">${quiz.title}</h3>
+                            <div class="quiz-meta">
+                                <span>${quiz.questions} Qs</span>
+                                <span>${quiz.time} min</span>
+                            </div>
+                            <div class="quiz-stats">
+                                <span class="difficulty ${quiz.difficulty}">${quiz.difficulty}</span>
+                                <div class="stat">
+                                    <i class="fas fa-star"></i>
+                                    <span>${quiz.rating}</span>
+                                </div>
+                            </div>
+                        `;
+                        if (!userYears.includes(year.toString())) {
+                            card.classList.add('locked');
+                        }
+                        card.addEventListener('click', (e) => {
+                            const quizYear = e.currentTarget.dataset.year;
+                            if (!userYears.includes(quizYear)) {
+                                showAccessDeniedModal(userYears, quizYear);
+                                return;
+                            }
+                            window.location.href = quiz.page;
+                        });
+                        container.appendChild(card);
+                    });
+                }
+            }
+        }
+        // Year filter
+        const yearButtons = document.querySelectorAll('.year-btn');
+        const yearSections = document.querySelectorAll('.year-section');
+        yearButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const year = button.dataset.year;
+                yearButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                if (year === 'all') {
+                    yearSections.forEach(section => section.style.display = 'block');
+                } else {
+                    yearSections.forEach(section => {
+                        section.style.display = section.dataset.year === year ? 'block' : 'none';
+                    });
+                }
+            });
+        });
+        // Navigation
+        const mainContent = document.getElementById('mainContent');
+        const profileContent = document.getElementById('profileContent');
+        const profileBtn = document.getElementById('profileBtn');
+        const logoBtn = document.getElementById('logoBtn');
+        const backToMainBtn = document.getElementById('backToMainBtn');
+
+        logoBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            mainContent.style.display = 'block';
+            profileContent.style.display = 'none';
+        });
+
+        profileBtn.addEventListener('click', () => {
+            mainContent.style.display = 'none';
+            profileContent.style.display = 'block';
+            loadProfile();
+        });
+
+        backToMainBtn.addEventListener('click', () => {
+            mainContent.style.display = 'block';
+            profileContent.style.display = 'none';
+        });
+
+        // Registration logic
+        const regModal = document.getElementById('registrationModal');
+        const regForm = document.getElementById('regForm');
+        const verifyForm = document.getElementById('verifyForm');
+        const logout = document.getElementById('logout');
+        const logoutModal = document.getElementById('logoutModal');
+        const regError = document.getElementById('regError');
+        const verifyError = document.getElementById('verifyError');
+        const logoutError = document.getElementById('logoutError');
+        const receiptInput = document.getElementById('receipt');
+        const receiptPreview = document.getElementById('receiptPreview');
+        const uploadText = document.getElementById('uploadText');
+        const yearSelect = document.getElementById('year');
+        const priceInfo = document.getElementById('priceInfo');
+        const submitBtn = document.getElementById('submitBtn');
+        const backBtn = document.getElementById('backBtn');
+        // Update price display on year selection
+        yearSelect.addEventListener('change', () => {
+            const year = yearSelect.value;
+            priceInfo.textContent = year ? `Price: ${prices[year]} ETB` : 'Select Year to View Price';
+        });
+        // Receipt preview
+        receiptInput.addEventListener('change', () => {
+            const file = receiptInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    receiptPreview.src = e.target.result;
+                    receiptPreview.style.display = 'block';
+                    uploadText.textContent = 'Change Payment Receipt';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                receiptPreview.style.display = 'none';
+                uploadText.textContent = 'Upload Payment Receipt';
+            }
+        });
+        // Check verification code expiry
+        function isVerificationExpired(timestampKey) {
+            const codeTimestamp = localStorage.getItem(timestampKey);
+            if (!codeTimestamp) return true;
+            const now = new Date().getTime();
+            const twoDaysInMs = 2 * 24 * 60 * 60 * 1000; // 2 days in milliseconds
+            return now - codeTimestamp > twoDaysInMs;
+        }
+        // Initialize modal state
+        if (localStorage.getItem('verified') === 'true') {
+            regModal.style.display = 'none';
+            mainContent.style.display = 'block';
+            renderQuizCards();
+        } else {
+            regModal.style.display = 'flex';
+            mainContent.style.display = 'none';
+            profileContent.style.display = 'none';
+            if (localStorage.getItem('pendingCode') && !isVerificationExpired('codeTimestamp')) {
+                regForm.style.display = 'none';
+                verifyForm.style.display = 'block';
+                // Restore form inputs if available
+                yearSelect.value = localStorage.getItem('tempYear') || '';
+                document.getElementById('name').value = localStorage.getItem('userName') || '';
+                document.getElementById('phone').value = localStorage.getItem('userPhone') || '';
+                document.getElementById('telegram').value = localStorage.getItem('userTelegram') || '';
+                priceInfo.textContent = yearSelect.value ? `Price: ${prices[yearSelect.value]} ETB` : 'Select Year to View Price';
+            } else {
+                localStorage.removeItem('pendingCode');
+                localStorage.removeItem('codeTimestamp');
+                localStorage.removeItem('tempYear');
+                localStorage.removeItem('userName');
+                localStorage.removeItem('userPhone');
+                localStorage.removeItem('userTelegram');
+            }
+        }
+        // Back button to return to registration form
+        backBtn.addEventListener('click', () => {
+            regForm.style.display = 'block';
+            verifyForm.style.display = 'none';
+            verifyError.textContent = '';
+        });
+        regForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+            const year = document.getElementById('year').value;
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const telegram = document.getElementById('telegram').value || 'N/A';
+            const receipt = document.getElementById('receipt').files[0];
+            if (!year || !name || !phone || !receipt) {
+                regError.textContent = 'Please fill all required fields.';
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+                return;
+            }
+            const code = Math.floor(100000 + Math.random() * 900000).toString();
+            localStorage.setItem('pendingCode', code);
+            localStorage.setItem('codeTimestamp', new Date().getTime());
+            localStorage.setItem('tempYear', year);
+            localStorage.setItem('userName', name);
+            localStorage.setItem('userPhone', phone);
+            localStorage.setItem('userTelegram', telegram);
+            const caption = `*New Registration*\n*Year:* ${year} (${prices[year]} ETB)\n*Name:* ${name}\n*Phone:* ${phone}\n*Telegram:* ${telegram}\n*Verification Code:* ${code}`;
+            const formData = new FormData();
+            formData.append('chat_id', '7897840965');
+            formData.append('photo', receipt);
+            formData.append('caption', caption);
+            formData.append('parse_mode', 'Markdown');
+            try {
+                const response = await fetch('https://api.telegram.org/bot8237566699:AAHICwsiqIrs-4_vUdrsORPlD8-WFSFYB2Y/sendPhoto', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                if (data.ok) {
+                    regForm.style.display = 'none';
+                    verifyForm.style.display = 'block';
+                    regError.textContent = '';
+                } else {
+                    regError.textContent = 'Error sending to Telegram: ' + data.description;
+                }
+            } catch (err) {
+                regError.textContent = 'Error: ' + err.message;
+            } finally {
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+            }
+        });
+        document.getElementById('verifyBtn').addEventListener('click', () => {
+            const enteredCode = document.getElementById('verifyCode').value;
+            if (isVerificationExpired('codeTimestamp')) {
+                verifyError.textContent = 'Verification code has expired. Please register again.';
+                localStorage.removeItem('pendingCode');
+                localStorage.removeItem('codeTimestamp');
+                localStorage.removeItem('tempYear');
+                localStorage.removeItem('userName');
+                localStorage.removeItem('userPhone');
+                localStorage.removeItem('userTelegram');
+                regForm.style.display = 'block';
+                verifyForm.style.display = 'none';
+                return;
+            }
+            if (enteredCode === localStorage.getItem('pendingCode')) {
+                localStorage.setItem('userYears', JSON.stringify([localStorage.getItem('tempYear')]));
+                localStorage.setItem('verified', 'true');
+                localStorage.removeItem('pendingCode');
+                localStorage.removeItem('codeTimestamp');
+                localStorage.removeItem('tempYear');
+                location.reload();
+            } else {
+                verifyError.textContent = 'Invalid verification code.';
+            }
+        });
+        // Add Year Logic
+        const addModal = document.getElementById('addModal');
+        const confirmAddModal = document.getElementById('confirmAddModal');
+        const addForm = document.getElementById('addForm');
+        const addVerifyForm = document.getElementById('addVerifyForm');
+        const addError = document.getElementById('addError');
+        const addVerifyError = document.getElementById('addVerifyError');
+        const addReceiptInput = document.getElementById('addReceipt');
+        const addReceiptPreview = document.getElementById('addReceiptPreview');
+        const addUploadText = document.getElementById('addUploadText');
+        const addSubmitBtn = document.getElementById('addSubmitBtn');
+        const addBackBtn = document.getElementById('addBackBtn');
+        const addYearBtn = document.getElementById('addYearBtn');
+        const cancelAddBtn = document.getElementById('cancelAddBtn');
+        const okAddBtn = document.getElementById('okAddBtn');
+
+        addYearBtn.addEventListener('click', () => {
+            confirmAddModal.style.display = 'flex';
+        });
+
+        cancelAddBtn.addEventListener('click', () => {
+            confirmAddModal.style.display = 'none';
+        });
+
+        okAddBtn.addEventListener('click', () => {
+            confirmAddModal.style.display = 'none';
+            addModal.style.display = 'flex';
+            addForm.style.display = 'block';
+            addVerifyForm.style.display = 'none';
+            document.getElementById('addName').value = localStorage.getItem('userName') || '';
+        });
+
+        addReceiptInput.addEventListener('change', () => {
+            const file = addReceiptInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    addReceiptPreview.src = e.target.result;
+                    addReceiptPreview.style.display = 'block';
+                    addUploadText.textContent = 'Change Payment Receipt';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                addReceiptPreview.style.display = 'none';
+                addUploadText.textContent = 'Upload Payment Receipt (50 ETB)';
+            }
+        });
+
+        addBackBtn.addEventListener('click', () => {
+            addForm.style.display = 'block';
+            addVerifyForm.style.display = 'none';
+            addVerifyError.textContent = '';
+        });
+
+        addForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            addSubmitBtn.classList.add('loading');
+            addSubmitBtn.disabled = true;
+            const addName = document.getElementById('addName').value;
+            const newYear = document.getElementById('newYear').value;
+            const addReceipt = document.getElementById('addReceipt').files[0];
+            const userYears = JSON.parse(localStorage.getItem('userYears')) || [];
+            const phone = localStorage.getItem('userPhone');
+            const telegram = localStorage.getItem('userTelegram') || 'N/A';
+
+            if (!addName || !newYear || !addReceipt) {
+                addError.textContent = 'Please fill all required fields.';
+                addSubmitBtn.classList.remove('loading');
+                addSubmitBtn.disabled = false;
+                return;
+            }
+            if (addName !== localStorage.getItem('userName')) {
+                addError.textContent = 'Name does not match registered name.';
+                addSubmitBtn.classList.remove('loading');
+                addSubmitBtn.disabled = false;
+                return;
+            }
+            if (userYears.includes(newYear)) {
+                addError.textContent = 'You are already registered for this year.';
+                addSubmitBtn.classList.remove('loading');
+                addSubmitBtn.disabled = false;
+                return;
+            }
+
+            const code = Math.floor(100000 + Math.random() * 900000).toString();
+            localStorage.setItem('addPendingCode', code);
+            localStorage.setItem('addCodeTimestamp', new Date().getTime());
+            localStorage.setItem('newUserYear', newYear);
+
+            const caption = `*Add Year Request*\n*Current Years:* ${userYears.join(', ')}\n*New Year:* ${newYear}\n*Name:* ${addName}\n*Phone:* ${phone}\n*Telegram:* ${telegram}\n*Additional Fee: 50 ETB*\n*Verification Code:* ${code}`;
+            const formData = new FormData();
+            formData.append('chat_id', '7897840965');
+            formData.append('photo', addReceipt);
+            formData.append('caption', caption);
+            formData.append('parse_mode', 'Markdown');
+
+            try {
+                const response = await fetch('https://api.telegram.org/bot8237566699:AAHICwsiqIrs-4_vUdrsORPlD8-WFSFYB2Y/sendPhoto', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                if (data.ok) {
+                    addForm.style.display = 'none';
+                    addVerifyForm.style.display = 'block';
+                    addError.textContent = '';
+                } else {
+                    addError.textContent = 'Error sending to Telegram: ' + data.description;
+                }
+            } catch (err) {
+                addError.textContent = 'Error: ' + err.message;
+            } finally {
+                addSubmitBtn.classList.remove('loading');
+                addSubmitBtn.disabled = false;
+            }
+        });
+
+        document.getElementById('addVerifyBtn').addEventListener('click', () => {
+            const enteredCode = document.getElementById('addVerifyCode').value;
+            if (isVerificationExpired('addCodeTimestamp')) {
+                addVerifyError.textContent = 'Verification code has expired. Please submit addition again.';
+                localStorage.removeItem('addPendingCode');
+                localStorage.removeItem('addCodeTimestamp');
+                localStorage.removeItem('newUserYear');
+                addForm.style.display = 'block';
+                addVerifyForm.style.display = 'none';
+                return;
+            }
+            if (enteredCode === localStorage.getItem('addPendingCode')) {
+                const userYears = JSON.parse(localStorage.getItem('userYears')) || [];
+                const newYear = localStorage.getItem('newUserYear');
+                userYears.push(newYear);
+                localStorage.setItem('userYears', JSON.stringify(userYears));
+                localStorage.removeItem('addPendingCode');
+                localStorage.removeItem('addCodeTimestamp');
+                localStorage.removeItem('newUserYear');
+                addModal.style.display = 'none';
+                loadProfile();
+                renderQuizCards();
+            } else {
+                addVerifyError.textContent = 'Invalid verification code.';
+            }
+        });
+
+        // Access Denied Modal
+        const accessDeniedModal = document.getElementById('accessDeniedModal');
+        const deniedMessage = document.getElementById('deniedMessage');
+        const closeDeniedBtn = document.getElementById('closeDeniedBtn');
+
+        function showAccessDeniedModal(userYears, requestedYear) {
+            deniedMessage.textContent = `You are registered for ${userYears.join(', ')} only. If you really want this year, go to profile and add your year.`;
+            accessDeniedModal.style.display = 'flex';
+        }
+
+        closeDeniedBtn.addEventListener('click', () => {
+            accessDeniedModal.style.display = 'none';
+        });
+
+        // Profile Logic
+        function loadProfile() {
+            document.getElementById('profileName').textContent = localStorage.getItem('userName') || 'N/A';
+            document.getElementById('profilePhone').textContent = localStorage.getItem('userPhone') || 'N/A';
+            document.getElementById('profileTelegram').textContent = localStorage.getItem('userTelegram') || 'N/A';
+            const userYears = JSON.parse(localStorage.getItem('userYears')) || [];
+            document.getElementById('profileYears').textContent = userYears.join(', ') || 'N/A';
+            const profilePicSrc = localStorage.getItem('profilePic');
+            const profilePic = document.getElementById('profilePic');
+            profilePic.src = profilePicSrc || 'https://via.placeholder.com/120?text=User'; // Default placeholder
+        }
+
+        const profilePicInput = document.getElementById('profilePicInput');
+        profilePicInput.addEventListener('change', () => {
+            const file = profilePicInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    localStorage.setItem('profilePic', e.target.result);
+                    document.getElementById('profilePic').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Comment Logic
+        const sendCommentBtn = document.getElementById('sendCommentBtn');
+        const commentBox = document.getElementById('commentBox');
+        const commentError = document.getElementById('commentError');
+
+        sendCommentBtn.addEventListener('click', async () => {
+            const message = commentBox.value.trim();
+            if (!message) {
+                commentError.textContent = 'Please write a message.';
+                return;
+            }
+            const name = localStorage.getItem('userName');
+            const phone = localStorage.getItem('userPhone');
+            const telegram = localStorage.getItem('userTelegram') || 'N/A';
+            const caption = `*User Comment*\n*Name:* ${name}\n*Phone:* ${phone}\n*Telegram:* ${telegram}\n*Message:* ${message}`;
+
+            const formData = new FormData();
+            formData.append('chat_id', '7897840965');
+            formData.append('text', caption);
+            formData.append('parse_mode', 'Markdown');
+
+            try {
+                sendCommentBtn.classList.add('loading');
+                const response = await fetch('https://api.telegram.org/bot8237566699:AAHICwsiqIrs-4_vUdrsORPlD8-WFSFYB2Y/sendMessage', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                if (data.ok) {
+                    commentBox.value = '';
+                    commentError.textContent = '';
+                    alert('Comment sent successfully!');
+                } else {
+                    commentError.textContent = 'Error sending comment: ' + data.description;
+                }
+            } catch (err) {
+                commentError.textContent = 'Error: ' + err.message;
+            } finally {
+                sendCommentBtn.classList.remove('loading');
+            }
+        });
+
+        // Logout logic
+        const logoutHandler = async (e) => {
+            e.preventDefault();
+            const logoutCode = Math.floor(100000 + Math.random() * 900000).toString();
+            localStorage.setItem('logoutCode', logoutCode);
+            const userYears = JSON.parse(localStorage.getItem('userYears')) || [];
+            const name = localStorage.getItem('userName');
+            const phone = localStorage.getItem('userPhone');
+            const telegram = localStorage.getItem('userTelegram');
+            const caption = `*Logout Request*\n*Years:* ${userYears.join(', ')}\n*Name:* ${name}\n*Phone:* ${phone}\n*Telegram:* ${telegram}\n*Logout Verification Code:* ${logoutCode}`;
+            const formData = new FormData();
+            formData.append('chat_id', '7897840965');
+            formData.append('text', caption);
+            formData.append('parse_mode', 'Markdown');
+            try {
+                const response = await fetch('https://api.telegram.org/bot8237566699:AAHICwsiqIrs-4_vUdrsORPlD8-WFSFYB2Y/sendMessage', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                if (data.ok) {
+                    logoutModal.style.display = 'flex';
+                    regModal.style.display = 'none';
+                    logoutError.textContent = '';
+                } else {
+                    logoutError.textContent = 'Error sending logout code: ' + data.description;
+                }
+            } catch (err) {
+                logoutError.textContent = 'Error: ' + err.message;
+            }
+        };
+        logout.addEventListener('click', logoutHandler);
+        document.getElementById('profileLogoutBtn').addEventListener('click', logoutHandler);
+
+        document.getElementById('confirmLogoutBtn').addEventListener('click', () => {
+            const enteredCode = document.getElementById('logoutCode').value;
+            if (enteredCode === localStorage.getItem('logoutCode')) {
+                localStorage.clear();
+                location.reload();
+            } else {
+                logoutError.textContent = 'Invalid logout code.';
+            }
+        });
+        // Initialize
+        renderQuizCards();
+    </script>
+</body>
+</html>
