@@ -1,0 +1,3265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>  | Modern Quiz Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <style>
+        /* All existing CSS remains exactly the same */
+        :root {
+            /* Light theme */
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --accent: #4cc9f0;
+            --success: #4ade80;
+            --error: #f87171;
+            --warning: #fbbf24;
+            --bg: #f8fafc;
+            --bg-card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --text: #f1f5f9;
+            --text-light: #94a3b8;
+            --border: #334155;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            --glass-bg: rgba(30, 41, 59, 0.3);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        /* Glass morphism effect */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: var(--bg-card);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            padding: 1rem 1.5rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .mode-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--bg);
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .mode-indicator.batch {
+            color: var(--primary);
+        }
+
+        .mode-indicator.immediate {
+            color: var(--success);
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(67, 97, 238, 0.4);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--bg);
+        }
+
+        .btn-icon {
+            padding: 0.75rem;
+            width: 3rem;
+            height: 3rem;
+            justify-content: center;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            gap: 2rem;
+        }
+
+        @media (min-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr 320px;
+            }
+        }
+
+        /* Questions Container */
+        .questions-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Question Card */
+        .question-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.75rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .question-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.25rem;
+        }
+
+        .question-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .question-id {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.125rem;
+        }
+
+        .category-tag {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 0.375rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .difficulty-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .difficulty-easy {
+            background-color: rgba(74, 222, 128, 0.1);
+            color: var(--success);
+        }
+
+        .difficulty-medium {
+            background-color: rgba(251, 191, 36, 0.1);
+            color: var(--warning);
+        }
+
+        .difficulty-hard {
+            background-color: rgba(248, 113, 113, 0.1);
+            color: var(--error);
+        }
+
+        .question-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-light);
+        }
+
+        .action-btn:hover {
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        .action-btn.active {
+            color: var(--primary);
+        }
+
+        .action-btn.flagged {
+            color: var(--error);
+        }
+
+        .question-text {
+            font-size: 1.125rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            line-height: 1.7;
+        }
+
+        /* Question Image Styles */
+        .question-image-container {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .question-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .question-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            margin-top: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .image-modal.open {
+            display: flex;
+        }
+
+        .modal-image {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: var(--radius);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            background-color: var(--bg-card);
+        }
+
+        .option:hover {
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background-color: rgba(74, 222, 128, 0.1);
+        }
+
+        .option.incorrect {
+            border-color: var(--error);
+            background-color: rgba(248, 113, 113, 0.1);
+        }
+
+        .option input {
+            display: none;
+        }
+
+        .option-marker {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .option.selected .option-marker {
+            border-color: var(--primary);
+            background-color: var(--primary);
+        }
+
+        .option.selected .option-marker::after {
+            content: '';
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background-color: white;
+        }
+
+        .option-label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        .lock-answer-btn {
+            align-self: flex-start;
+            margin-top: 0.5rem;
+        }
+
+        .explanation {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            background-color: var(--bg);
+            display: none;
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation h4 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.125rem;
+        }
+
+        .explanation-section {
+            margin-bottom: 1.25rem;
+        }
+
+        .explanation-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .why-not-list {
+            list-style-type: none;
+            margin-top: 0.5rem;
+        }
+
+        .why-not-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .why-not-list li:last-child {
+            border-bottom: none;
+        }
+
+        .related-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .related-question-link {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.375rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .related-question-link:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .sidebar-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--primary);
+        }
+
+        .category-list, .bookmark-list, .flag-list {
+            list-style: none;
+        }
+
+        .category-item, .bookmark-item, .flag-item {
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .category-item:hover, .bookmark-item:hover, .flag-item:hover {
+            background-color: var(--bg);
+        }
+
+        .category-item.active {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .bookmark-item, .flag-item {
+            justify-content: space-between;
+        }
+
+        .bookmark-text, .flag-text {
+            flex: 1;
+            font-size: 0.875rem;
+        }
+
+        .bookmark-thumbnail, .flag-thumbnail {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 6px;
+            object-fit: cover;
+            background-color: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 2.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background-color: var(--bg-card);
+            color: var(--text);
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .settings-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.875rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .settings-option:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 3rem;
+            height: 1.5rem;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border);
+            transition: var(--transition);
+            border-radius: 100px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 1.125rem;
+            width: 1.125rem;
+            left: 0.1875rem;
+            bottom: 0.1875rem;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(1.5rem);
+        }
+
+        .progress-container {
+            margin-top: 1.5rem;
+        }
+
+        .progress-bar {
+            height: 0.5rem;
+            background-color: var(--border);
+            border-radius: 100px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 100px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        /* Mobile Sidebar */
+        .mobile-sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+            backdrop-filter: blur(4px);
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 85%;
+            max-width: 350px;
+            height: 100%;
+            background-color: var(--bg-card);
+            box-shadow: var(--shadow-lg);
+            z-index: 1001;
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .mobile-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .mobile-sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-sidebar-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .close-sidebar {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .close-sidebar:hover {
+            background-color: var(--bg);
+        }
+
+        .mobile-sidebar-content {
+            flex: 1;
+            padding: 1.5rem;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background-color: var(--bg-card);
+            box-shadow: var(--shadow-lg);
+            z-index: 1002;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .admin-panel.open {
+            right: 0;
+        }
+
+        .admin-panel-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-panel-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .close-admin-panel {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .close-admin-panel:hover {
+            background-color: var(--bg);
+        }
+
+        .admin-panel-content {
+            flex: 1;
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background-color: var(--bg-card);
+            color: var(--text);
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .option-input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .option-input {
+            flex: 1;
+        }
+
+        .remove-option-btn {
+            background: none;
+            border: none;
+            color: var(--error);
+            cursor: pointer;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .remove-option-btn:hover {
+            background-color: rgba(248, 113, 113, 0.1);
+        }
+
+        .add-option-btn {
+            align-self: flex-start;
+            margin-top: 0.5rem;
+        }
+
+        .explanation-input-group {
+            margin-bottom: 1rem;
+        }
+
+        .explanation-input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 2rem;
+        }
+
+        .form-actions .btn {
+            flex: 1;
+        }
+
+        /* Copy protection */
+        .copy-protection {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Focus styles for accessibility */
+        button:focus-visible, .option:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 1rem;
+            }
+            
+            .main-container {
+                padding: 1.5rem 1rem;
+                gap: 1.5rem;
+            }
+            
+            .question-card {
+                padding: 1.5rem;
+            }
+            
+            .question-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .question-actions {
+                align-self: flex-end;
+            }
+            
+            .btn-text {
+                display: none;
+            }
+            
+            .mode-indicator span {
+                display: none;
+            }
+            
+            .admin-panel {
+                width: 100%;
+                right: -100%;
+            }
+        }
+
+        /* Animation for question cards */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-card {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .question-card:nth-child(odd) {
+            animation-delay: 0.05s;
+        }
+
+        .question-card:nth-child(even) {
+            animation-delay: 0.1s;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 100px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-light);
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            background-color: var(--bg-card);
+            color: var(--text);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            z-index: 1003;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--error);
+        }
+
+        .toast.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        .toast.info {
+            border-left: 4px solid var(--primary);
+        }
+
+        .toast-icon {
+            font-size: 1.25rem;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--success);
+        }
+
+        .toast.error .toast-icon {
+            color: var(--error);
+        }
+
+        .toast.warning .toast-icon {
+            color: var(--warning);
+        }
+
+        .toast.info .toast-icon {
+            color: var(--primary);
+        }
+
+        .toast-message {
+            flex: 1;
+        }
+
+        .close-toast {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .close-toast:hover {
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        /* Loading spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .btn.loading {
+            pointer-events: none;
+        }
+
+        .btn.loading .btn-text {
+            margin-left: 0.5rem;
+        }
+
+        /* NEW: Admin Login Modal */
+        .admin-login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .admin-login-modal.open {
+            display: flex;
+        }
+
+        .admin-login-form {
+            background-color: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            animation: slideDown 0.4s ease;
+        }
+
+        .admin-login-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--primary);
+        }
+
+        .admin-login-input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background-color: var(--bg-card);
+            color: var(--text);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .admin-login-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .admin-login-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .admin-login-actions .btn {
+            flex: 1;
+        }
+
+        /* NEW: Floating Action Button for Mobile */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            z-index: 99;
+            transition: var(--transition);
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            background-color: var(--primary-dark);
+        }
+
+        @media (min-width: 769px) {
+            .fab {
+                display: none;
+            }
+        }
+
+        /* NEW: Enhanced Responsive Design */
+        @media (max-width: 480px) {
+            .header-content {
+                padding: 0.75rem;
+            }
+            
+            .logo {
+                font-size: 1.25rem;
+            }
+            
+            .main-container {
+                padding: 1rem 0.75rem;
+                gap: 1rem;
+            }
+            
+            .question-card {
+                padding: 1.25rem;
+            }
+            
+            .question-text {
+                font-size: 1rem;
+            }
+            
+            .option {
+                padding: 0.875rem 1rem;
+            }
+            
+            .sidebar {
+                padding: 1rem;
+            }
+            
+            .admin-panel {
+                width: 100%;
+                right: -100%;
+            }
+        }
+
+        /* NEW: Improved Typography for Small Screens */
+        @media (max-width: 360px) {
+            .logo {
+                font-size: 1.1rem;
+            }
+            
+            .question-card {
+                padding: 1rem;
+            }
+            
+            .question-id {
+                font-size: 1rem;
+            }
+            
+            .question-text {
+                font-size: 0.95rem;
+            }
+            
+            .option {
+                padding: 0.75rem 0.875rem;
+            }
+        }
+
+        /* NEW: Print Styles */
+        @media print {
+            header, .sidebar, .mobile-sidebar, .admin-panel, .fab {
+                display: none !important;
+            }
+            
+            .main-container {
+                grid-template-columns: 1fr;
+                max-width: 100%;
+                padding: 0;
+            }
+            
+            .question-card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+        }
+        /* Responsive FAB size */
+.fab {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: clamp(0.5rem, 4vw, 0.5rem);  /* Min: 2.5rem, Preferred: 8vw, Max: 3.5rem */
+    height: clamp(2.5rem, 8vw, 3.5rem);
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    z-index: 99;
+    transition: var(--transition);
+}
+
+.fab i {
+    font-size: clamp(1rem, 4vw, 1.5rem); /* Responsive icon size */
+}
+        /* Extra small header icons */
+.btn-icon {
+    padding: 0.375rem;
+    width: 2rem;
+    height: 2rem;
+}
+
+.btn-icon i {
+    font-size: 0.75rem;
+}
+
+.mode-indicator i {
+    font-size: 0.75rem;
+}
+
+.btn-primary i, .btn-outline i:not(.btn-icon i) {
+    font-size: 0.75rem;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-brain logo-icon"></i>
+                <span> </span>
+            </div>
+            <div class="header-actions">
+                <div class="mode-indicator batch">
+                    <i class="fas fa-batch"></i>
+                    <span>Batch Mode</span>
+                </div>
+                <button class="btn btn-outline btn-icon" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="btn btn-outline btn-icon" id="adminToggle" aria-label="Admin panel">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <button class="btn btn-primary" id="submitBtn" disabled>
+                    <i class="fas fa-paper-plane"></i>
+                    <span class="btn-text">Submit All</span>
+                </button>
+                <button class="btn btn-outline btn-icon" id="mobileMenuToggle" aria-label="Open menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <main class="questions-container" id="questionsContainer">
+            <!-- Questions will be dynamically inserted here -->
+        </main>
+
+        <aside class="sidebar">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search questions...">
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Categories</h3>
+                <ul class="category-list" id="categoryList">
+                    <!-- Categories will be dynamically inserted here -->
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Bookmarks</h3>
+                <ul class="bookmark-list" id="bookmarkList">
+                    <li class="bookmark-item">
+                        <div class="bookmark-thumbnail">
+                            <i class="fas fa-bookmark"></i>
+                        </div>
+                        <div class="bookmark-text">No bookmarks yet</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Progress</h3>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="progressText">0% Complete</span>
+                        <span id="answeredCount">0/20</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Settings</h3>
+                <div class="settings-option">
+                    <span>Immediate Mode</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="immediateModeToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="settings-option">
+                    <span>Dark Theme</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="darkThemeToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <button class="btn btn-outline" id="exportBookmarksBtn" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-download"></i>
+                    Export Bookmarks
+                </button>
+                <button class="btn btn-outline" id="resetProgressBtn" style="width: 100%; margin-top: 0.5rem;">
+                    <i class="fas fa-undo"></i>
+                    Reset Progress
+                </button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- NEW: Floating Action Button for Mobile -->
+    <div class="fab" id="mobileFab">
+        <i class="fas fa-bar"></i>
+    </div>
+
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar-overlay" id="mobileSidebarOverlay"></div>
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="mobile-sidebar-header">
+            <h2 class="mobile-sidebar-title">Menu</h2>
+            <button class="close-sidebar" id="closeMobileSidebar" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mobile-sidebar-content">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" id="mobileSearchInput" placeholder="Search questions...">
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Categories</h3>
+                <ul class="category-list" id="mobileCategoryList">
+                    <!-- Categories will be dynamically inserted here -->
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Bookmarks</h3>
+                <ul class="bookmark-list" id="mobileBookmarkList">
+                    <li class="bookmark-item">
+                        <div class="bookmark-thumbnail">
+                            <i class="fas fa-bookmark"></i>
+                        </div>
+                        <div class="bookmark-text">No bookmarks yet</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Flagged Questions</h3>
+                <ul class="flag-list" id="flagList">
+                    <li class="flag-item">
+                        <div class="flag-thumbnail">
+                            <i class="fas fa-flag"></i>
+                        </div>
+                        <div class="flag-text">No flagged questions</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Progress</h3>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="mobileProgressFill" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="mobileProgressText">0% Complete</span>
+                        <span id="mobileAnsweredCount">0/20</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Settings</h3>
+                <div class="settings-option">
+                    <span>Immediate Mode</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="mobileImmediateModeToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="settings-option">
+                    <span>Dark Theme</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="mobileDarkThemeToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <button class="btn btn-outline" id="mobileExportBookmarksBtn" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-download"></i>
+                    Export Bookmarks
+                </button>
+                <button class="btn btn-outline" id="mobileResetProgressBtn" style="width: 100%; margin-top: 0.5rem;">
+                    <i class="fas fa-undo"></i>
+                    Reset Progress
+                </button>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">About</h3>
+                <p style="font-size: 0.875rem; color: var(--text-light);">
+                      is a modern, responsive quiz application built with vanilla HTML, CSS, and JavaScript.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: Admin Login Modal -->
+    <div class="admin-login-modal" id="adminLoginModal">
+        <div class="admin-login-form">
+            <h2 class="admin-login-title">Admin Login</h2>
+            <input type="text" class="admin-login-input" id="adminUsername" placeholder="Username" autocomplete="username">
+            <input type="password" class="admin-login-input" id="adminPassword" placeholder="Password" autocomplete="current-password">
+            <div class="admin-login-actions">
+                <button class="btn btn-outline" id="cancelAdminLogin">
+                    Cancel
+                </button>
+                <button class="btn btn-primary" id="confirmAdminLogin">
+                    Login
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-panel-header">
+            <h2 class="admin-panel-title">Admin Panel</h2>
+            <button class="close-admin-panel" id="closeAdminPanel" aria-label="Close admin panel">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="admin-panel-content">
+            <div class="form-group">
+                <label class="form-label" for="questionId">Question ID</label>
+                <input type="text" class="form-input" id="questionId" placeholder="e.g., Q001">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="questionCategory">Category</label>
+                <select class="form-select" id="questionCategory">
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="HTML">HTML</option>
+                    <option value="CSS">CSS</option>
+                    <option value="React">React</option>
+                    <option value="Node.js">Node.js</option>
+                    <option value="Database">Database</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="questionDifficulty">Difficulty</label>
+                <select class="form-select" id="questionDifficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="questionText">Question Text</label>
+                <textarea class="form-textarea" id="questionText" placeholder="Enter the question text"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="questionImage">Image URL (Optional)</label>
+                <input type="text" class="form-input" id="questionImage" placeholder="https://example.com/image.jpg">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="imageCaption">Image Caption (Optional)</label>
+                <input type="text" class="form-input" id="imageCaption" placeholder="Image description">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Options</label>
+                <div id="optionsContainer">
+                    <div class="option-input-group">
+                        <input type="text" class="form-input option-input" placeholder="Option 1">
+                        <button class="remove-option-btn" type="button">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="option-input-group">
+                        <input type="text" class="form-input option-input" placeholder="Option 2">
+                        <button class="remove-option-btn" type="button">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="option-input-group">
+                        <input type="text" class="form-input option-input" placeholder="Option 3">
+                        <button class="remove-option-btn" type="button">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="option-input-group">
+                        <input type="text" class="form-input option-input" placeholder="Option 4">
+                        <button class="remove-option-btn" type="button">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <button class="btn btn-outline add-option-btn" id="addOptionBtn">
+                    <i class="fas fa-plus"></i>
+                    Add Option
+                </button>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="correctAnswer">Correct Answer</label>
+                <select class="form-select" id="correctAnswer">
+                    <option value="0">Option 1</option>
+                    <option value="1">Option 2</option>
+                    <option value="2">Option 3</option>
+                    <option value="3">Option 4</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Explanation</label>
+                <div class="explanation-input-group">
+                    <label class="form-label" for="explanationWhy">Why this is correct</label>
+                    <textarea class="form-textarea" id="explanationWhy" placeholder="Explain why this answer is correct"></textarea>
+                </div>
+                <div class="explanation-input-group">
+                    <label class="form-label" for="explanationWhyNot">Why others are incorrect (one per line)</label>
+                    <textarea class="form-textarea" id="explanationWhyNot" placeholder="Explain why other options are incorrect"></textarea>
+                </div>
+                <div class="explanation-input-group">
+                    <label class="form-label" for="explanationRelated">Related Questions (comma separated)</label>
+                    <input type="text" class="form-input" id="explanationRelated" placeholder="Q002, Q005, Q007">
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button class="btn btn-outline" id="clearFormBtn">
+                    <i class="fas fa-eraser"></i>
+                    Clear
+                </button>
+                <button class="btn btn-primary" id="saveQuestionBtn">
+                    <i class="fas fa-save"></i>
+                    Save Question
+                </button>
+            </div>
+            
+            <div class="sidebar-section" style="margin-top: 2rem;">
+                <h3 class="sidebar-title">Manage Questions</h3>
+                <button class="btn btn-outline" id="loadQuestionsBtn" style="width: 100%; margin-bottom: 0.5rem;">
+                    <i class="fas fa-sync"></i>
+                    Load Questions
+                </button>
+                <button class="btn btn-outline" id="exportQuestionsBtn" style="width: 100%; margin-bottom: 0.5rem;">
+                    <i class="fas fa-download"></i>
+                    Export Questions
+                </button>
+                <button class="btn btn-outline" id="importQuestionsBtn" style="width: 100%;">
+                    <i class="fas fa-upload"></i>
+                    Import Questions
+                </button>
+                <input type="file" id="importQuestionsFile" accept=".json" style="display: none;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div class="image-modal" id="imageModal">
+        <button class="close-modal" id="closeModal" aria-label="Close image">
+            <i class="fas fa-times"></i>
+        </button>
+        <img class="modal-image" id="modalImage" src="" alt="Question image">
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC4DSMVg4c98kQf5sSF8ueD631QgO4SXn0",
+            authDomain: "medical-quiz-40228.firebaseapp.com",
+            projectId: "medical-quiz-40228",
+            storageBucket: "medical-quiz-40228.firebasestorage.app",
+            messagingSenderId: "483043078873",
+            appId: "1:483043078873:web:4029dd83e53557f08b04c8"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Admin credentials
+        const ADMIN_USERNAME = "hammad";
+        const ADMIN_PASSWORD = "umar2nd!!";
+ // Security measures
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.keyCode === 123 ||
+                (e.ctrlKey && e.shiftKey && e.keyCode === 73) ||
+                (e.ctrlKey && e.shiftKey && e.keyCode === 74) ||
+                (e.ctrlKey && e.keyCode === 85) ||
+                (e.ctrlKey && e.keyCode === 83)) {
+                e.preventDefault();
+            }
+        });
+        // Sample questions data with images
+        const defaultQuestionsData = {
+            "questions": [
+                {
+                    "id": "Q001",
+                    "category": "JavaScript",
+                    "difficulty": "easy",
+                    "question": "Which of the following is used to declare a variable in JavaScript?",
+                    "image": {
+                        "src": "https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                        "caption": "JavaScript code example"
+                    },
+                    "options": [
+                        "var",
+                        "let",
+                        "const",
+                        "All of the above"
+                    ],
+                    "correctAnswer": 3,
+                    "explanation": {
+                        "why": "JavaScript provides multiple ways to declare variables: var, let, and const, each with different scoping rules.",
+                        "whyNot": [
+                            "var alone is not the only way to declare variables",
+                            "let alone is not the only way to declare variables", 
+                            "const alone is not the only way to declare variables"
+                        ],
+                        "related": ["Q002", "Q005"]
+                    }
+                },
+                {
+                    "id": "Q002",
+                    "category": "JavaScript",
+                    "difficulty": "medium",
+                    "question": "What is the difference between let and const?",
+                    "options": [
+                        "let allows reassignment, const does not",
+                        "const allows reassignment, let does not",
+                        "Both allow reassignment",
+                        "Neither allows reassignment"
+                    ],
+                    "correctAnswer": 0,
+                    "explanation": {
+                        "why": "Variables declared with let can be reassigned, while variables declared with const cannot be reassigned after initialization.",
+                        "whyNot": [
+                            "const does not allow reassignment",
+                            "let does allow reassignment",
+                            "Both do not have the same reassignment behavior"
+                        ],
+                        "related": ["Q001", "Q003"]
+                    }
+                },
+                {
+                    "id": "Q003",
+                    "category": "JavaScript",
+                    "difficulty": "hard",
+                    "question": "What will be the output of: console.log(typeof null)?",
+                    "image": {
+                        "src": "https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                        "caption": "JavaScript console output"
+                    },
+                    "options": [
+                        "null",
+                        "undefined",
+                        "object",
+                        "string"
+                    ],
+                    "correctAnswer": 2,
+                    "explanation": {
+                        "why": "In JavaScript, typeof null returns 'object' due to a historical bug in the language that has been preserved for compatibility.",
+                        "whyNot": [
+                            "null is not a primitive value of type null",
+                            "null is not undefined",
+                            "null is not a string"
+                        ],
+                        "related": ["Q004", "Q007"]
+                    }
+                },
+                {
+                    "id": "Q004",
+                    "category": "HTML",
+                    "difficulty": "easy",
+                    "question": "Which HTML tag is used to create a hyperlink?",
+                    "image": {
+                        "src": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                        "caption": "HTML code example"
+                    },
+                    "options": [
+                        "<link>",
+                        "<a>",
+                        "<href>",
+                        "<hyperlink>"
+                    ],
+                    "correctAnswer": 1,
+                    "explanation": {
+                        "why": "The <a> tag (anchor tag) is used to create hyperlinks in HTML, with the href attribute specifying the destination.",
+                        "whyNot": [
+                            "<link> is used to link external resources like CSS",
+                            "<href> is not a valid HTML tag",
+                            "<hyperlink> is not a valid HTML tag"
+                        ],
+                        "related": ["Q006", "Q008"]
+                    }
+                },
+                {
+                    "id": "Q005",
+                    "category": "CSS",
+                    "difficulty": "medium",
+                    "question": "Which CSS property is used to change the text color?",
+                    "options": [
+                        "text-color",
+                        "font-color",
+                        "color",
+                        "text-style"
+                    ],
+                    "correctAnswer": 2,
+                    "explanation": {
+                        "why": "The 'color' property in CSS is used to set the color of text content.",
+                        "whyNot": [
+                            "text-color is not a standard CSS property",
+                            "font-color is not a standard CSS property",
+                            "text-style is used for text decoration, not color"
+                        ],
+                        "related": ["Q009", "Q012"]
+                    }
+                },
+                {
+                    "id": "Q006",
+                    "category": "HTML",
+                    "difficulty": "medium",
+                    "question": "What is the purpose of the <meta> tag in HTML?",
+                    "image": {
+                        "src": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                        "caption": "HTML head section with meta tags"
+                    },
+                    "options": [
+                        "To create metadata about the HTML document",
+                        "To define a section of navigation links",
+                        "To embed multimedia content",
+                        "To create a table of contents"
+                    ],
+                    "correctAnswer": 0,
+                    "explanation": {
+                        "why": "The <meta> tag provides metadata about the HTML document, such as character set, viewport settings, and description.",
+                        "whyNot": [
+                            "Navigation links are created with <nav>",
+                            "Multimedia is embedded with <video> or <audio>",
+                            "Table of contents is typically created with headings and lists"
+                        ],
+                        "related": ["Q004", "Q010"]
+                    }
+                }
+            ]
+        };
+
+        // App state
+        const state = {
+            questions: [],
+            userAnswers: {},
+            bookmarks: new Set(),
+            flagged: new Set(),
+            immediateMode: false,
+            darkTheme: false,
+            currentCategory: 'all',
+            isAdminAuthenticated: false
+        };
+
+        // DOM elements
+        const elements = {
+            questionsContainer: document.getElementById('questionsContainer'),
+            mobileMenuToggle: document.getElementById('mobileMenuToggle'),
+            mobileSidebar: document.getElementById('mobileSidebar'),
+            mobileSidebarOverlay: document.getElementById('mobileSidebarOverlay'),
+            closeMobileSidebar: document.getElementById('closeMobileSidebar'),
+            themeToggle: document.getElementById('themeToggle'),
+            submitBtn: document.getElementById('submitBtn'),
+            modeIndicator: document.querySelector('.mode-indicator'),
+            categoryList: document.getElementById('categoryList'),
+            mobileCategoryList: document.getElementById('mobileCategoryList'),
+            bookmarkList: document.getElementById('bookmarkList'),
+            mobileBookmarkList: document.getElementById('mobileBookmarkList'),
+            flagList: document.getElementById('flagList'),
+            searchInput: document.getElementById('searchInput'),
+            mobileSearchInput: document.getElementById('mobileSearchInput'),
+            immediateModeToggle: document.getElementById('immediateModeToggle'),
+            mobileImmediateModeToggle: document.getElementById('mobileImmediateModeToggle'),
+            darkThemeToggle: document.getElementById('darkThemeToggle'),
+            mobileDarkThemeToggle: document.getElementById('mobileDarkThemeToggle'),
+            exportBookmarksBtn: document.getElementById('exportBookmarksBtn'),
+            mobileExportBookmarksBtn: document.getElementById('mobileExportBookmarksBtn'),
+            resetProgressBtn: document.getElementById('resetProgressBtn'),
+            mobileResetProgressBtn: document.getElementById('mobileResetProgressBtn'),
+            progressFill: document.getElementById('progressFill'),
+            mobileProgressFill: document.getElementById('mobileProgressFill'),
+            progressText: document.getElementById('progressText'),
+            mobileProgressText: document.getElementById('mobileProgressText'),
+            answeredCount: document.getElementById('answeredCount'),
+            mobileAnsweredCount: document.getElementById('mobileAnsweredCount'),
+            imageModal: document.getElementById('imageModal'),
+            modalImage: document.getElementById('modalImage'),
+            closeModal: document.getElementById('closeModal'),
+            adminToggle: document.getElementById('adminToggle'),
+            adminPanel: document.getElementById('adminPanel'),
+            closeAdminPanel: document.getElementById('closeAdminPanel'),
+            questionId: document.getElementById('questionId'),
+            questionCategory: document.getElementById('questionCategory'),
+            questionDifficulty: document.getElementById('questionDifficulty'),
+            questionText: document.getElementById('questionText'),
+            questionImage: document.getElementById('questionImage'),
+            imageCaption: document.getElementById('imageCaption'),
+            optionsContainer: document.getElementById('optionsContainer'),
+            addOptionBtn: document.getElementById('addOptionBtn'),
+            correctAnswer: document.getElementById('correctAnswer'),
+            explanationWhy: document.getElementById('explanationWhy'),
+            explanationWhyNot: document.getElementById('explanationWhyNot'),
+            explanationRelated: document.getElementById('explanationRelated'),
+            clearFormBtn: document.getElementById('clearFormBtn'),
+            saveQuestionBtn: document.getElementById('saveQuestionBtn'),
+            loadQuestionsBtn: document.getElementById('loadQuestionsBtn'),
+            exportQuestionsBtn: document.getElementById('exportQuestionsBtn'),
+            importQuestionsBtn: document.getElementById('importQuestionsBtn'),
+            importQuestionsFile: document.getElementById('importQuestionsFile'),
+            toastContainer: document.getElementById('toastContainer'),
+            // NEW: Admin login elements
+            adminLoginModal: document.getElementById('adminLoginModal'),
+            adminUsername: document.getElementById('adminUsername'),
+            adminPassword: document.getElementById('adminPassword'),
+            cancelAdminLogin: document.getElementById('cancelAdminLogin'),
+            confirmAdminLogin: document.getElementById('confirmAdminLogin'),
+            // NEW: Mobile FAB
+            mobileFab: document.getElementById('mobileFab')
+        };
+
+        // Initialize the app
+        function init() {
+            loadState();
+            loadQuestionsFromFirebase();
+            setupEventListeners();
+            updateUI();
+            updateProgress();
+        }
+
+        // Load state from localStorage
+        function loadState() {
+            const savedState = localStorage.getItem('quizAppState');
+            if (savedState) {
+                const parsedState = JSON.parse(savedState);
+                state.userAnswers = parsedState.userAnswers || {};
+                state.bookmarks = new Set(parsedState.bookmarks || []);
+                state.flagged = new Set(parsedState.flagged || []);
+                state.immediateMode = parsedState.immediateMode || false;
+                state.darkTheme = parsedState.darkTheme || false;
+            }
+            
+            // Apply theme
+            document.body.setAttribute('data-theme', state.darkTheme ? 'dark' : 'light');
+        }
+
+        // Save state to localStorage
+        function saveState() {
+            const stateToSave = {
+                userAnswers: state.userAnswers,
+                bookmarks: Array.from(state.bookmarks),
+                flagged: Array.from(state.flagged),
+                immediateMode: state.immediateMode,
+                darkTheme: state.darkTheme
+            };
+            localStorage.setItem('quizAppState', JSON.stringify(stateToSave));
+        }
+
+        // Load questions from Firebase
+        async function loadQuestionsFromFirebase() {
+            showToast('Loading questions...', 'info');
+            
+            try {
+                const snapshot = await db.collection('questions').get();
+                if (snapshot.empty) {
+                    // If no questions in Firebase, use default questions
+                    state.questions = defaultQuestionsData.questions;
+                    showToast('Using default questions', 'info');
+                    renderQuestions();
+                    return;
+                }
+                
+                state.questions = [];
+                snapshot.forEach(doc => {
+                    state.questions.push(doc.data());
+                });
+                
+                // Sort questions by ID
+                state.questions.sort((a, b) => a.id.localeCompare(b.id));
+                
+                showToast(`Loaded ${state.questions.length} questions`, 'success');
+                renderQuestions();
+            } catch (error) {
+                console.error('Error loading questions:', error);
+                state.questions = defaultQuestionsData.questions;
+                showToast('Error loading questions. Using default questions.', 'error');
+                renderQuestions();
+            }
+        }
+
+        // Save question to Firebase
+        async function saveQuestionToFirebase(question) {
+            try {
+                await db.collection('questions').doc(question.id).set(question);
+                showToast(`Question ${question.id} saved successfully`, 'success');
+                return true;
+            } catch (error) {
+                console.error('Error saving question:', error);
+                showToast(`Error saving question ${question.id}`, 'error');
+                return false;
+            }
+        }
+
+        // Delete question from Firebase
+        async function deleteQuestionFromFirebase(questionId) {
+            try {
+                await db.collection('questions').doc(questionId).delete();
+                showToast(`Question ${questionId} deleted successfully`, 'success');
+                return true;
+            } catch (error) {
+                console.error('Error deleting question:', error);
+                showToast(`Error deleting question ${questionId}`, 'error');
+                return false;
+            }
+        }
+
+        // Render all questions
+        function renderQuestions() {
+            elements.questionsContainer.innerHTML = '';
+            
+            state.questions.forEach(question => {
+                const questionElement = createQuestionElement(question);
+                elements.questionsContainer.appendChild(questionElement);
+            });
+            
+            updateCategories();
+            updateBookmarks();
+            updateFlagged();
+            updateProgress();
+        }
+
+        // Create a question element (FIXED VERSION)
+        function createQuestionElement(question) {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `question-${question.id}`;
+            
+            const isBookmarked = state.bookmarks.has(question.id);
+            const isFlagged = state.flagged.has(question.id);
+            const userAnswer = state.userAnswers[question.id];
+            const isAnswered = userAnswer !== undefined;
+            const isChecked = isAnswered && (state.immediateMode || Object.keys(state.userAnswers).length === state.questions.length);
+            
+            // Copy protection overlay
+            const copyProtection = document.createElement('div');
+            copyProtection.className = 'copy-protection';
+            card.appendChild(copyProtection);
+            
+            // Question header
+            const header = document.createElement('div');
+            header.className = 'question-header';
+            
+            const meta = document.createElement('div');
+            meta.className = 'question-meta';
+            
+            const idSpan = document.createElement('span');
+            idSpan.className = 'question-id';
+            idSpan.textContent = question.id;
+            
+            const categorySpan = document.createElement('span');
+            categorySpan.className = 'category-tag';
+            categorySpan.textContent = question.category;
+            
+            const difficultySpan = document.createElement('span');
+            difficultySpan.className = `difficulty-badge difficulty-${question.difficulty}`;
+            difficultySpan.textContent = question.difficulty.charAt(0).toUpperCase() + question.difficulty.slice(1);
+            
+            meta.appendChild(idSpan);
+            meta.appendChild(categorySpan);
+            meta.appendChild(difficultySpan);
+            
+            const actions = document.createElement('div');
+            actions.className = 'question-actions';
+            
+            const bookmarkBtn = document.createElement('button');
+            bookmarkBtn.className = `action-btn ${isBookmarked ? 'active' : ''}`;
+            bookmarkBtn.innerHTML = '<i class="fas fa-bookmark"></i>';
+            bookmarkBtn.setAttribute('aria-label', isBookmarked ? 'Remove bookmark' : 'Bookmark question');
+            bookmarkBtn.addEventListener('click', () => toggleBookmark(question.id));
+            
+            const flagBtn = document.createElement('button');
+            flagBtn.className = `action-btn ${isFlagged ? 'flagged' : ''}`;
+            flagBtn.innerHTML = '<i class="fas fa-flag"></i>';
+            flagBtn.setAttribute('aria-label', isFlagged ? 'Unflag question' : 'Flag question');
+            flagBtn.addEventListener('click', () => toggleFlag(question.id));
+            
+            // Admin delete button (only visible in admin mode)
+            if (state.isAdminAuthenticated) {
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'action-btn';
+                deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                deleteBtn.setAttribute('aria-label', 'Delete question');
+                deleteBtn.addEventListener('click', () => deleteQuestion(question.id));
+                actions.appendChild(deleteBtn);
+            }
+            
+            actions.appendChild(bookmarkBtn);
+            actions.appendChild(flagBtn);
+            
+            header.appendChild(meta);
+            header.appendChild(actions);
+            card.appendChild(header);
+            
+            // Question text
+            const textDiv = document.createElement('div');
+            textDiv.className = 'question-text';
+            textDiv.textContent = question.question;
+            card.appendChild(textDiv);
+            
+            // Question image (if exists)
+            if (question.image && question.image.src) {
+                const imageContainer = document.createElement('div');
+                imageContainer.className = 'question-image-container';
+                
+                const image = document.createElement('img');
+                image.className = 'question-image';
+                image.src = question.image.src;
+                image.alt = question.image.caption || 'Question image';
+                image.loading = 'lazy';
+                
+                // Add click to enlarge functionality
+                image.addEventListener('click', () => openImageModal(question.image.src));
+                
+                imageContainer.appendChild(image);
+                
+                if (question.image.caption) {
+                    const caption = document.createElement('div');
+                    caption.className = 'image-caption';
+                    caption.textContent = question.image.caption;
+                    imageContainer.appendChild(caption);
+                }
+                
+                card.appendChild(imageContainer);
+            }
+            
+            // Options container
+            const optionsContainer = document.createElement('div');
+            optionsContainer.className = 'options-container';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                if (userAnswer === index) optionDiv.classList.add('selected');
+                if (isChecked) {
+                    if (index === question.correctAnswer) {
+                        optionDiv.classList.add('correct');
+                    } else if (userAnswer === index) {
+                        optionDiv.classList.add('incorrect');
+                    }
+                }
+                
+                optionDiv.tabIndex = 0;
+                optionDiv.addEventListener('click', () => selectAnswer(question.id, index));
+                optionDiv.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        selectAnswer(question.id, index);
+                    }
+                });
+                
+                const marker = document.createElement('div');
+                marker.className = 'option-marker';
+                
+                const label = document.createElement('div');
+                label.className = 'option-label';
+                label.textContent = option;
+                
+                optionDiv.appendChild(marker);
+                optionDiv.appendChild(label);
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            card.appendChild(optionsContainer);
+            
+            // Explanation (FIXED - Handle whyNot as string or array)
+            if (isChecked && question.explanation) {
+                const explanation = document.createElement('div');
+                explanation.className = 'explanation show';
+                
+                const whySection = document.createElement('div');
+                whySection.className = 'explanation-section';
+                whySection.innerHTML = `<h4>Why this is correct:</h4><p>${question.explanation.why || 'No explanation provided.'}</p>`;
+                explanation.appendChild(whySection);
+                
+                // Handle whyNot - could be string or array
+                if (question.explanation.whyNot) {
+                    const whyNotSection = document.createElement('div');
+                    whyNotSection.className = 'explanation-section';
+                    whyNotSection.innerHTML = '<h4>Why others are incorrect:</h4>';
+                    
+                    const whyNotList = document.createElement('ul');
+                    whyNotList.className = 'why-not-list';
+                    
+                    let whyNotItems = [];
+                    if (Array.isArray(question.explanation.whyNot)) {
+                        whyNotItems = question.explanation.whyNot;
+                    } else if (typeof question.explanation.whyNot === 'string') {
+                        whyNotItems = [question.explanation.whyNot];
+                    }
+                    
+                    whyNotItems.forEach(reason => {
+                        const li = document.createElement('li');
+                        li.textContent = reason;
+                        whyNotList.appendChild(li);
+                    });
+                    
+                    whyNotSection.appendChild(whyNotList);
+                    explanation.appendChild(whyNotSection);
+                }
+                
+                // Handle related questions
+                if (question.explanation.related && question.explanation.related.length > 0) {
+                    const relatedSection = document.createElement('div');
+                    relatedSection.className = 'explanation-section';
+                    relatedSection.innerHTML = '<h4>Related Questions:</h4>';
+                    
+                    const relatedLinks = document.createElement('div');
+                    relatedLinks.className = 'related-questions';
+                    
+                    let relatedItems = [];
+                    if (Array.isArray(question.explanation.related)) {
+                        relatedItems = question.explanation.related;
+                    } else if (typeof question.explanation.related === 'string') {
+                        relatedItems = question.explanation.related.split(',').map(item => item.trim()).filter(item => item);
+                    }
+                    
+                    relatedItems.forEach(relatedId => {
+                        const link = document.createElement('a');
+                        link.className = 'related-question-link';
+                        link.href = `#question-${relatedId}`;
+                        link.textContent = relatedId;
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const targetElement = document.getElementById(`question-${relatedId}`);
+                            if (targetElement) {
+                                targetElement.scrollIntoView({ 
+                                    behavior: 'smooth',
+                                    block: 'center'
+                                });
+                            }
+                            closeMobileSidebar();
+                        });
+                        relatedLinks.appendChild(link);
+                    });
+                    
+                    relatedSection.appendChild(relatedLinks);
+                    explanation.appendChild(relatedSection);
+                }
+                
+                card.appendChild(explanation);
+            }
+            
+            return card;
+        }
+
+        // Open image modal
+        function openImageModal(src) {
+            elements.modalImage.src = src;
+            elements.imageModal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close image modal
+        function closeImageModal() {
+            elements.imageModal.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Select an answer for a question
+        function selectAnswer(questionId, answerIndex) {
+            state.userAnswers[questionId] = answerIndex;
+            saveState();
+            
+            if (state.immediateMode) {
+                renderQuestions();
+            } else {
+                // Update just this question for performance
+                const questionElement = document.getElementById(`question-${questionId}`);
+                if (questionElement) {
+                    const newQuestionElement = createQuestionElement(
+                        state.questions.find(q => q.id === questionId)
+                    );
+                    questionElement.parentNode.replaceChild(newQuestionElement, questionElement);
+                }
+                
+                // Enable submit button if all questions are answered
+                const allAnswered = Object.keys(state.userAnswers).length === state.questions.length;
+                elements.submitBtn.disabled = !allAnswered;
+            }
+            
+            updateProgress();
+        }
+
+        // Toggle bookmark for a question
+        function toggleBookmark(questionId) {
+            if (state.bookmarks.has(questionId)) {
+                state.bookmarks.delete(questionId);
+            } else {
+                state.bookmarks.add(questionId);
+            }
+            saveState();
+            updateBookmarks();
+            
+            // Update the bookmark button in the question card
+            const questionElement = document.getElementById(`question-${questionId}`);
+            if (questionElement) {
+                const bookmarkBtn = questionElement.querySelector('.action-btn:first-child');
+                if (bookmarkBtn) {
+                    bookmarkBtn.classList.toggle('active', state.bookmarks.has(questionId));
+                }
+            }
+        }
+
+        // Toggle flag for a question
+        function toggleFlag(questionId) {
+            if (state.flagged.has(questionId)) {
+                state.flagged.delete(questionId);
+            } else {
+                state.flagged.add(questionId);
+            }
+            saveState();
+            updateFlagged();
+            
+            // Update the flag button in the question card
+            const questionElement = document.getElementById(`question-${questionId}`);
+            if (questionElement) {
+                const flagBtn = questionElement.querySelector('.action-btn:last-child');
+                if (flagBtn) {
+                    flagBtn.classList.toggle('flagged', state.flagged.has(questionId));
+                }
+            }
+        }
+
+        // Delete a question
+        async function deleteQuestion(questionId) {
+            if (confirm(`Are you sure you want to delete question ${questionId}?`)) {
+                const success = await deleteQuestionFromFirebase(questionId);
+                if (success) {
+                    // Remove from local state
+                    state.questions = state.questions.filter(q => q.id !== questionId);
+                    renderQuestions();
+                }
+            }
+        }
+
+        // Submit all answers (Batch mode)
+        function submitAll() {
+            renderQuestions();
+            elements.submitBtn.disabled = true;
+        }
+
+        // Toggle immediate mode
+        function toggleImmediateMode() {
+            state.immediateMode = !state.immediateMode;
+            saveState();
+            updateUI();
+        }
+
+        // Toggle theme
+        function toggleTheme() {
+            state.darkTheme = !state.darkTheme;
+            document.body.setAttribute('data-theme', state.darkTheme ? 'dark' : 'light');
+            saveState();
+            updateUI();
+        }
+
+        // NEW: Show admin login modal
+        function showAdminLogin() {
+            elements.adminLoginModal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // NEW: Hide admin login modal
+        function hideAdminLogin() {
+            elements.adminLoginModal.classList.remove('open');
+            document.body.style.overflow = 'auto';
+            // Clear the form
+            elements.adminUsername.value = '';
+            elements.adminPassword.value = '';
+        }
+
+        // NEW: Authenticate admin
+        function authenticateAdmin() {
+            const username = elements.adminUsername.value.trim();
+            const password = elements.adminPassword.value;
+            
+            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                state.isAdminAuthenticated = true;
+                hideAdminLogin();
+                openAdminPanel();
+                showToast('Admin access granted', 'success');
+            } else {
+                showToast('Invalid username or password', 'error');
+            }
+        }
+
+        // Open admin panel
+        function openAdminPanel() {
+            if (state.isAdminAuthenticated) {
+                elements.adminPanel.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            } else {
+                showAdminLogin();
+            }
+        }
+
+        // Close admin panel
+        function closeAdminPanel() {
+            elements.adminPanel.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Add option to admin form
+        function addOption() {
+            const optionCount = elements.optionsContainer.children.length;
+            if (optionCount >= 6) {
+                showToast('Maximum 6 options allowed', 'warning');
+                return;
+            }
+            
+            const optionGroup = document.createElement('div');
+            optionGroup.className = 'option-input-group';
+            
+            const optionInput = document.createElement('input');
+            optionInput.type = 'text';
+            optionInput.className = 'form-input option-input';
+            optionInput.placeholder = `Option ${optionCount + 1}`;
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'remove-option-btn';
+            removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+            removeBtn.addEventListener('click', () => {
+                if (elements.optionsContainer.children.length > 2) {
+                    optionGroup.remove();
+                    updateCorrectAnswerOptions();
+                } else {
+                    showToast('At least 2 options required', 'warning');
+                }
+            });
+            
+            optionGroup.appendChild(optionInput);
+            optionGroup.appendChild(removeBtn);
+            elements.optionsContainer.appendChild(optionGroup);
+            
+            updateCorrectAnswerOptions();
+        }
+
+        // Update correct answer options in admin form
+        function updateCorrectAnswerOptions() {
+            const optionCount = elements.optionsContainer.children.length;
+            elements.correctAnswer.innerHTML = '';
+            
+            for (let i = 0; i < optionCount; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `Option ${i + 1}`;
+                elements.correctAnswer.appendChild(option);
+            }
+        }
+
+        // Clear admin form
+        function clearAdminForm() {
+            elements.questionId.value = '';
+            elements.questionCategory.value = 'JavaScript';
+            elements.questionDifficulty.value = 'easy';
+            elements.questionText.value = '';
+            elements.questionImage.value = '';
+            elements.imageCaption.value = '';
+            
+            // Reset options to 4
+            while (elements.optionsContainer.children.length > 4) {
+                elements.optionsContainer.lastChild.remove();
+            }
+            
+            // Clear option inputs
+            const optionInputs = elements.optionsContainer.querySelectorAll('.option-input');
+            optionInputs.forEach((input, index) => {
+                input.value = '';
+                input.placeholder = `Option ${index + 1}`;
+            });
+            
+            elements.correctAnswer.value = '0';
+            elements.explanationWhy.value = '';
+            elements.explanationWhyNot.value = '';
+            elements.explanationRelated.value = '';
+            
+            updateCorrectAnswerOptions();
+        }
+
+        // Save question from admin form (FIXED VERSION)
+        async function saveQuestion() {
+            // Validate form
+            if (!elements.questionId.value.trim()) {
+                showToast('Question ID is required', 'error');
+                return;
+            }
+            
+            if (!elements.questionText.value.trim()) {
+                showToast('Question text is required', 'error');
+                return;
+            }
+            
+            const optionInputs = elements.optionsContainer.querySelectorAll('.option-input');
+            const options = [];
+            let hasEmptyOption = false;
+            
+            optionInputs.forEach(input => {
+                if (!input.value.trim()) {
+                    hasEmptyOption = true;
+                }
+                options.push(input.value.trim());
+            });
+            
+            if (hasEmptyOption) {
+                showToast('All options must be filled', 'error');
+                return;
+            }
+            
+            if (options.length < 2) {
+                showToast('At least 2 options required', 'error');
+                return;
+            }
+            
+            // Create question object with proper data types
+            const question = {
+                id: elements.questionId.value.trim(),
+                category: elements.questionCategory.value,
+                difficulty: elements.questionDifficulty.value,
+                question: elements.questionText.value.trim(),
+                options: options,
+                correctAnswer: parseInt(elements.correctAnswer.value),
+                explanation: {
+                    why: elements.explanationWhy.value.trim(),
+                    // Ensure whyNot is an array
+                    whyNot: elements.explanationWhyNot.value.trim().split('\n').filter(line => line.trim()),
+                    // Ensure related is an array
+                    related: elements.explanationRelated.value.trim().split(',').map(id => id.trim()).filter(id => id)
+                }
+            };
+            
+            // Add image if provided
+            if (elements.questionImage.value.trim()) {
+                question.image = {
+                    src: elements.questionImage.value.trim(),
+                    caption: elements.imageCaption.value.trim() || ''
+                };
+            }
+            
+            // Save to Firebase
+            const success = await saveQuestionToFirebase(question);
+            if (success) {
+                // Update local state
+                const existingIndex = state.questions.findIndex(q => q.id === question.id);
+                if (existingIndex >= 0) {
+                    state.questions[existingIndex] = question;
+                } else {
+                    state.questions.push(question);
+                    // Sort questions by ID
+                    state.questions.sort((a, b) => a.id.localeCompare(b.id));
+                }
+                
+                renderQuestions();
+                clearAdminForm();
+            }
+        }
+
+        // Export questions to JSON
+        function exportQuestions() {
+            const dataStr = JSON.stringify({ questions: state.questions }, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'techquiz-questions.json';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            showToast('Questions exported successfully', 'success');
+        }
+
+        // Import questions from JSON
+        function importQuestions() {
+            elements.importQuestionsFile.click();
+        }
+
+        // Handle imported questions file
+        async function handleImportedQuestionsFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (!data.questions || !Array.isArray(data.questions)) {
+                        showToast('Invalid questions file format', 'error');
+                        return;
+                    }
+                    
+                    // Save each question to Firebase
+                    let successCount = 0;
+                    for (const question of data.questions) {
+                        const success = await saveQuestionToFirebase(question);
+                        if (success) successCount++;
+                    }
+                    
+                    showToast(`Imported ${successCount} questions successfully`, 'success');
+                    
+                    // Reload questions
+                    await loadQuestionsFromFirebase();
+                    
+                    // Reset file input
+                    elements.importQuestionsFile.value = '';
+                } catch (error) {
+                    console.error('Error importing questions:', error);
+                    showToast('Error importing questions', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icon = document.createElement('div');
+            icon.className = 'toast-icon';
+            
+            switch (type) {
+                case 'success':
+                    icon.innerHTML = '<i class="fas fa-check-circle"></i>';
+                    break;
+                case 'error':
+                    icon.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+                    break;
+                case 'warning':
+                    icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+                    break;
+                default:
+                    icon.innerHTML = '<i class="fas fa-info-circle"></i>';
+            }
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'toast-message';
+            messageDiv.textContent = message;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'close-toast';
+            closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+            closeBtn.addEventListener('click', () => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            });
+            
+            toast.appendChild(icon);
+            toast.appendChild(messageDiv);
+            toast.appendChild(closeBtn);
+            
+            elements.toastContainer.appendChild(toast);
+            
+            // Show toast
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, 5000);
+        }
+
+        // Update categories in sidebar
+        function updateCategories() {
+            const categories = [...new Set(state.questions.map(q => q.category))];
+            
+            // Desktop category list
+            elements.categoryList.innerHTML = '';
+            categories.forEach(category => {
+                const li = document.createElement('li');
+                li.className = `category-item ${state.currentCategory === category ? 'active' : ''}`;
+                li.textContent = category;
+                li.addEventListener('click', () => filterByCategory(category));
+                elements.categoryList.appendChild(li);
+            });
+            
+            // Mobile category list
+            elements.mobileCategoryList.innerHTML = '';
+            categories.forEach(category => {
+                const li = document.createElement('li');
+                li.className = `category-item ${state.currentCategory === category ? 'active' : ''}`;
+                li.textContent = category;
+                li.addEventListener('click', () => {
+                    filterByCategory(category);
+                    closeMobileSidebar();
+                });
+                elements.mobileCategoryList.appendChild(li);
+            });
+            
+            // Add "All" category
+            const allLi = document.createElement('li');
+            allLi.className = `category-item ${state.currentCategory === 'all' ? 'active' : ''}`;
+            allLi.textContent = 'All';
+            allLi.addEventListener('click', () => filterByCategory('all'));
+            elements.categoryList.prepend(allLi);
+            
+            const mobileAllLi = document.createElement('li');
+            mobileAllLi.className = `category-item ${state.currentCategory === 'all' ? 'active' : ''}`;
+            mobileAllLi.textContent = 'All';
+            mobileAllLi.addEventListener('click', () => {
+                filterByCategory('all');
+                closeMobileSidebar();
+            });
+            elements.mobileCategoryList.prepend(mobileAllLi);
+        }
+
+        // Update bookmarks in sidebar
+        function updateBookmarks() {
+            // Desktop bookmark list
+            elements.bookmarkList.innerHTML = '';
+            if (state.bookmarks.size === 0) {
+                const li = document.createElement('li');
+                li.className = 'bookmark-item';
+                
+                const thumbnail = document.createElement('div');
+                thumbnail.className = 'bookmark-thumbnail';
+                thumbnail.innerHTML = '<i class="fas fa-bookmark"></i>';
+                
+                const text = document.createElement('div');
+                text.className = 'bookmark-text';
+                text.textContent = 'No bookmarks yet';
+                
+                li.appendChild(thumbnail);
+                li.appendChild(text);
+                elements.bookmarkList.appendChild(li);
+            } else {
+                state.bookmarks.forEach(questionId => {
+                    const question = state.questions.find(q => q.id === questionId);
+                    if (question) {
+                        const li = document.createElement('li');
+                        li.className = 'bookmark-item';
+                        
+                        const thumbnail = document.createElement('div');
+                        thumbnail.className = 'bookmark-thumbnail';
+                        // Use question image as thumbnail if available
+                        if (question.image) {
+                            thumbnail.innerHTML = '';
+                            const img = document.createElement('img');
+                            img.src = question.image.src;
+                            img.alt = '';
+                            img.style.width = '100%';
+                            img.style.height = '100%';
+                            img.style.objectFit = 'cover';
+                            thumbnail.appendChild(img);
+                        } else {
+                            thumbnail.innerHTML = '<i class="fas fa-bookmark"></i>';
+                        }
+                        
+                        const text = document.createElement('div');
+                        text.className = 'bookmark-text';
+                        text.textContent = `${question.id}: ${question.question.substring(0, 40)}...`;
+                        
+                        li.appendChild(thumbnail);
+                        li.appendChild(text);
+                        li.addEventListener('click', () => {
+                            document.getElementById(`question-${questionId}`).scrollIntoView({ 
+                                behavior: 'smooth',
+                                block: 'center'
+                            });
+                        });
+                        elements.bookmarkList.appendChild(li);
+                    }
+                });
+            }
+            
+            // Mobile bookmark list
+            elements.mobileBookmarkList.innerHTML = '';
+            if (state.bookmarks.size === 0) {
+                const li = document.createElement('li');
+                li.className = 'bookmark-item';
+                
+                const thumbnail = document.createElement('div');
+                thumbnail.className = 'bookmark-thumbnail';
+                thumbnail.innerHTML = '<i class="fas fa-bookmark"></i>';
+                
+                const text = document.createElement('div');
+                text.className = 'bookmark-text';
+                text.textContent = 'No bookmarks yet';
+                
+                li.appendChild(thumbnail);
+                li.appendChild(text);
+                elements.mobileBookmarkList.appendChild(li);
+            } else {
+                state.bookmarks.forEach(questionId => {
+                    const question = state.questions.find(q => q.id === questionId);
+                    if (question) {
+                        const li = document.createElement('li');
+                        li.className = 'bookmark-item';
+                        
+                        const thumbnail = document.createElement('div');
+                        thumbnail.className = 'bookmark-thumbnail';
+                        // Use question image as thumbnail if available
+                        if (question.image) {
+                            thumbnail.innerHTML = '';
+                            const img = document.createElement('img');
+                            img.src = question.image.src;
+                            img.alt = '';
+                            img.style.width = '100%';
+                            img.style.height = '100%';
+                            img.style.objectFit = 'cover';
+                            thumbnail.appendChild(img);
+                        } else {
+                            thumbnail.innerHTML = '<i class="fas fa-bookmark"></i>';
+                        }
+                        
+                        const text = document.createElement('div');
+                        text.className = 'bookmark-text';
+                        text.textContent = `${question.id}: ${question.question.substring(0, 40)}...`;
+                        
+                        li.appendChild(thumbnail);
+                        li.appendChild(text);
+                        li.addEventListener('click', () => {
+                            document.getElementById(`question-${questionId}`).scrollIntoView({ 
+                                behavior: 'smooth',
+                                block: 'center'
+                            });
+                            closeMobileSidebar();
+                        });
+                        elements.mobileBookmarkList.appendChild(li);
+                    }
+                });
+            }
+        }
+
+        // Update flagged questions in sidebar
+        function updateFlagged() {
+            elements.flagList.innerHTML = '';
+            if (state.flagged.size === 0) {
+                const li = document.createElement('li');
+                li.className = 'flag-item';
+                
+                const thumbnail = document.createElement('div');
+                thumbnail.className = 'flag-thumbnail';
+                thumbnail.innerHTML = '<i class="fas fa-flag"></i>';
+                
+                const text = document.createElement('div');
+                text.className = 'flag-text';
+                text.textContent = 'No flagged questions';
+                
+                li.appendChild(thumbnail);
+                li.appendChild(text);
+                elements.flagList.appendChild(li);
+            } else {
+                state.flagged.forEach(questionId => {
+                    const question = state.questions.find(q => q.id === questionId);
+                    if (question) {
+                        const li = document.createElement('li');
+                        li.className = 'flag-item';
+                        
+                        const thumbnail = document.createElement('div');
+                        thumbnail.className = 'flag-thumbnail';
+                        // Use question image as thumbnail if available
+                        if (question.image) {
+                            thumbnail.innerHTML = '';
+                            const img = document.createElement('img');
+                            img.src = question.image.src;
+                            img.alt = '';
+                            img.style.width = '100%';
+                            img.style.height = '100%';
+                            img.style.objectFit = 'cover';
+                            thumbnail.appendChild(img);
+                        } else {
+                            thumbnail.innerHTML = '<i class="fas fa-flag"></i>';
+                        }
+                        
+                        const text = document.createElement('div');
+                        text.className = 'flag-text';
+                        text.textContent = `${question.id}: ${question.question.substring(0, 40)}...`;
+                        
+                        li.appendChild(thumbnail);
+                        li.appendChild(text);
+                        li.addEventListener('click', () => {
+                            document.getElementById(`question-${questionId}`).scrollIntoView({ 
+                                behavior: 'smooth',
+                                block: 'center'
+                            });
+                            closeMobileSidebar();
+                        });
+                        elements.flagList.appendChild(li);
+                    }
+                });
+            }
+        }
+
+        // Update progress
+        function updateProgress() {
+            const answeredCount = Object.keys(state.userAnswers).length;
+            const totalQuestions = state.questions.length;
+            const progressPercent = Math.round((answeredCount / totalQuestions) * 100);
+            
+            // Update progress bars
+            elements.progressFill.style.width = `${progressPercent}%`;
+            elements.mobileProgressFill.style.width = `${progressPercent}%`;
+            
+            // Update progress text
+            elements.progressText.textContent = `${progressPercent}% Complete`;
+            elements.mobileProgressText.textContent = `${progressPercent}% Complete`;
+            
+            // Update answered count
+            elements.answeredCount.textContent = `${answeredCount}/${totalQuestions}`;
+            elements.mobileAnsweredCount.textContent = `${answeredCount}/${totalQuestions}`;
+        }
+
+        // Filter questions by category
+        function filterByCategory(category) {
+            state.currentCategory = category;
+            
+            // Update active category in sidebar
+            document.querySelectorAll('.category-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.category-item').forEach(item => {
+                if (item.textContent === category) {
+                    item.classList.add('active');
+                }
+            });
+            
+            if (category === 'all') {
+                // Show all questions
+                document.querySelectorAll('.question-card').forEach(card => {
+                    card.style.display = 'block';
+                });
+            } else {
+                // Show only questions in the selected category
+                document.querySelectorAll('.question-card').forEach(card => {
+                    const questionId = card.id.replace('question-', '');
+                    const question = state.questions.find(q => q.id === questionId);
+                    if (question && question.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            updateCategories();
+        }
+
+        // Search questions
+        function searchQuestions(query) {
+            if (!query) {
+                // Show all questions if search is empty
+                document.querySelectorAll('.question-card').forEach(card => {
+                    card.style.display = 'block';
+                });
+                return;
+            }
+            
+            const lowerQuery = query.toLowerCase();
+            document.querySelectorAll('.question-card').forEach(card => {
+                const questionId = card.id.replace('question-', '');
+                const question = state.questions.find(q => q.id === questionId);
+                
+                if (question && (
+                    question.id.toLowerCase().includes(lowerQuery) ||
+                    question.question.toLowerCase().includes(lowerQuery) ||
+                    question.category.toLowerCase().includes(lowerQuery)
+                )) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Export bookmarks
+        function exportBookmarks() {
+            const bookmarkedQuestions = state.questions.filter(q => state.bookmarks.has(q.id));
+            const dataStr = JSON.stringify(bookmarkedQuestions, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'techquiz-bookmarks.json';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            showToast('Bookmarks exported successfully', 'success');
+        }
+
+        // Reset progress
+        function resetProgress() {
+            if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
+                state.userAnswers = {};
+                state.bookmarks.clear();
+                state.flagged.clear();
+                saveState();
+                renderQuestions();
+                updateUI();
+                updateProgress();
+                showToast('Progress reset successfully', 'success');
+            }
+        }
+
+        // Open mobile sidebar
+        function openMobileSidebar() {
+            elements.mobileSidebar.classList.add('open');
+            elements.mobileSidebarOverlay.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Focus trap for accessibility
+            elements.mobileSidebar.setAttribute('aria-hidden', 'false');
+            elements.closeMobileSidebar.focus();
+        }
+
+        // Close mobile sidebar
+        function closeMobileSidebar() {
+            elements.mobileSidebar.classList.remove('open');
+            elements.mobileSidebarOverlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            
+            // Focus trap for accessibility
+            elements.mobileSidebar.setAttribute('aria-hidden', 'true');
+            elements.mobileMenuToggle.focus();
+        }
+
+        // Update UI based on state
+        function updateUI() {
+            // Update mode indicator
+            elements.modeIndicator.className = `mode-indicator ${state.immediateMode ? 'immediate' : 'batch'}`;
+            elements.modeIndicator.innerHTML = state.immediateMode ? 
+                '<i class="fas fa-bolt"></i><span>Immediate Mode</span>' : 
+                '<i class="fas fa-layer-group"></i><span>Batch Mode</span>';
+                
+            // Update theme toggle icon
+            const themeIcon = elements.themeToggle.querySelector('i');
+            themeIcon.className = state.darkTheme ? 'fas fa-sun' : 'fas fa-moon';
+                
+            // Update toggle switches
+            elements.immediateModeToggle.checked = state.immediateMode;
+            elements.mobileImmediateModeToggle.checked = state.immediateMode;
+            elements.darkThemeToggle.checked = state.darkTheme;
+            elements.mobileDarkThemeToggle.checked = state.darkTheme;
+            
+            // Update submit button
+            const allAnswered = Object.keys(state.userAnswers).length === state.questions.length;
+            elements.submitBtn.disabled = state.immediateMode || !allAnswered;
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Mobile menu
+            elements.mobileMenuToggle.addEventListener('click', openMobileSidebar);
+            elements.closeMobileSidebar.addEventListener('click', closeMobileSidebar);
+            elements.mobileSidebarOverlay.addEventListener('click', closeMobileSidebar);
+            
+            // NEW: Mobile FAB
+            elements.mobileFab.addEventListener('click', openMobileSidebar);
+            
+            // Image modal
+            elements.closeModal.addEventListener('click', closeImageModal);
+            elements.imageModal.addEventListener('click', (e) => {
+                if (e.target === elements.imageModal) {
+                    closeImageModal();
+                }
+            });
+            
+            // Admin panel
+            elements.adminToggle.addEventListener('click', openAdminPanel);
+            elements.closeAdminPanel.addEventListener('click', closeAdminPanel);
+            
+            // NEW: Admin login
+            elements.cancelAdminLogin.addEventListener('click', hideAdminLogin);
+            elements.confirmAdminLogin.addEventListener('click', authenticateAdmin);
+            elements.adminLoginModal.addEventListener('click', (e) => {
+                if (e.target === elements.adminLoginModal) {
+                    hideAdminLogin();
+                }
+            });
+            // Enter key for admin login
+            elements.adminPassword.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    authenticateAdmin();
+                }
+            });
+            
+            // Admin form
+            elements.addOptionBtn.addEventListener('click', addOption);
+            elements.clearFormBtn.addEventListener('click', clearAdminForm);
+            elements.saveQuestionBtn.addEventListener('click', saveQuestion);
+            elements.loadQuestionsBtn.addEventListener('click', loadQuestionsFromFirebase);
+            elements.exportQuestionsBtn.addEventListener('click', exportQuestions);
+            elements.importQuestionsBtn.addEventListener('click', importQuestions);
+            elements.importQuestionsFile.addEventListener('change', handleImportedQuestionsFile);
+            
+            // Add remove option functionality to existing options
+            const removeOptionBtns = elements.optionsContainer.querySelectorAll('.remove-option-btn');
+            removeOptionBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (elements.optionsContainer.children.length > 2) {
+                        this.parentNode.remove();
+                        updateCorrectAnswerOptions();
+                    } else {
+                        showToast('At least 2 options required', 'warning');
+                    }
+                });
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (elements.mobileSidebar.classList.contains('open')) {
+                        closeMobileSidebar();
+                    }
+                    if (elements.imageModal.classList.contains('open')) {
+                        closeImageModal();
+                    }
+                    if (elements.adminPanel.classList.contains('open')) {
+                        closeAdminPanel();
+                    }
+                    if (elements.adminLoginModal.classList.contains('open')) {
+                        hideAdminLogin();
+                    }
+                }
+            });
+            
+            // Theme toggle
+            elements.themeToggle.addEventListener('click', toggleTheme);
+            
+            // Submit button
+            elements.submitBtn.addEventListener('click', submitAll);
+            
+            // Search
+            elements.searchInput.addEventListener('input', (e) => {
+                searchQuestions(e.target.value);
+            });
+            elements.mobileSearchInput.addEventListener('input', (e) => {
+                searchQuestions(e.target.value);
+            });
+            
+            // Toggle switches
+            elements.immediateModeToggle.addEventListener('change', toggleImmediateMode);
+            elements.mobileImmediateModeToggle.addEventListener('change', toggleImmediateMode);
+            elements.darkThemeToggle.addEventListener('change', toggleTheme);
+            elements.mobileDarkThemeToggle.addEventListener('change', toggleTheme);
+            
+            // Export bookmarks
+            elements.exportBookmarksBtn.addEventListener('click', exportBookmarks);
+            elements.mobileExportBookmarksBtn.addEventListener('click', exportBookmarks);
+            
+            // Reset progress
+            elements.resetProgressBtn.addEventListener('click', resetProgress);
+            elements.mobileResetProgressBtn.addEventListener('click', resetProgress);
+            
+            // Copy protection
+            document.addEventListener('contextmenu', (e) => e.preventDefault());
+            document.addEventListener('copy', (e) => e.preventDefault());
+            document.addEventListener('dragstart', (e) => e.preventDefault());
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
