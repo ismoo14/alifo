@@ -1875,555 +1875,1687 @@ document.addEventListener('keydown', function(e) {
 // Enhanced quiz data with more questions
 const quizData = [
     {
-"id": "Q001",
-"category": "Immunology",
-"difficulty": "easy",
-"question": "The type of immunity that follows the injection of an immunogen is termed",
-"options": [
-"Artificial active",
-"Natural active",
-"Artificial passive",
-"Natural passive"
-],
-"correctAnswer": 0,
-"explanation": {
-"why": "Injection of an immunogen stimulates the body's own immune system to produce antibodies and memory cells, making it artificial (induced) and active (self-produced response).",
-"whyNot": [
-"Natural active immunity results from natural exposure to a pathogen, not injection.",
-"Artificial passive immunity involves transfer of pre-formed antibodies, not stimulation of the immune system.",
-"Natural passive immunity is acquired naturally, such as through maternal antibodies, without active production."
-],
-"related": ["Q011", "Q012"]
-}
-},
-{
-"id": "Q002",
-"category": "Immunology",
-"difficulty": "easy",
-"question": "A hapten is",
-"options": [
-"Half of an immunoglobulin molecule",
-"A carrier molecule for an antigen",
-"An immunoglobulin functional only in the presence of complement",
-"A determinant capable of stimulating an immune response only when bound to a carrier"
-],
-"correctAnswer": 3,
-"explanation": {
-"why": "A hapten is a small molecule that can elicit an immune response only when attached to a larger carrier protein, as it is not immunogenic on its own.",
-"whyNot": [
-"Half of an immunoglobulin refers to light or heavy chains, not a hapten.",
-"A carrier is the larger molecule to which a hapten binds, not the hapten itself.",
-"Immunoglobulins can function in various ways, but this does not define a hapten."
-],
-"related": ["Q013", "Q014"]
-}
-},
-{
-"id": "Q003",
-"category": "Immunology",
-"difficulty": "medium",
-"question": "The first line of defense in protecting the body from infection includes all of the following components except",
-"options": [
-"Unbroken skin",
-"Normal microbial flora",
-"Phagocytic leukocytes",
-"Secretions such as lysozyme of virally infected cells"
-],
-"correctAnswer": 2,
-"explanation": {
-"why": "Phagocytic leukocytes are part of the second line of defense (innate immunity effectors), not the first line, which consists of physical and chemical barriers.",
-"whyNot": [
-"Unbroken skin is a physical barrier in the first line of defense.",
-"Normal microbial flora competes with pathogens as part of the first line.",
-"Lysozyme secretions are chemical barriers in the first line."
-],
-"related": ["Q004", "Q015"]
-}
-},
-{
-"id": "Q004",
-"category": "Immunology",
-"difficulty": "medium",
-"question": "Which of the following is normal components of the adaptive immune system causes the release of cytokines",
-"options": [
-"Activated B cells(plasma cells)",
-"CD4+ activated T cells",
-"CD8+ cytotoxic T cells(CTL)",
-"Resting lymphocytes (B cells, CD4+ T cells, CD8+ T cells)"
-],
-"correctAnswer": 2,
-"explanation": {
-"why": "CD8+ cytotoxic T cells release cytokines like IFN-gamma and TNF-alpha to mediate immune responses and kill infected cells.",
-"whyNot": [
-"Activated B cells primarily produce antibodies, though they can release some cytokines.",
-"CD4+ T cells are major cytokine producers, but the question specifies this option as not the best.",
-"Resting lymphocytes do not actively release cytokines until activated."
-],
-"related": ["Q005", "Q006"]
-}
-},
-{
-"id": "Q005",
-"category": "Immunology",
-"difficulty": "easy",
-"question": "A single plasma cell secretes",
-"options": [
-"Antibody of a single specificity related to that on the surface of the parent B-cell",
-"Antibody of two antigen specificities",
-"The antigen it recognizes",
-"Many different types of antibody"
-],
-"correctAnswer": 0,
-"explanation": {
-"why": "Each plasma cell, derived from a single B cell, produces antibodies of one specific type matching the B cell receptor's specificity.",
-"whyNot": [
-"A single plasma cell produces antibodies of only one specificity.",
-"Plasma cells do not secrete antigens; they produce antibodies against them.",
-"Plasma cells are monoclonal, producing one type of antibody."
-],
-"related": ["Q013", "Q016"]
-}
-},
-{
-"id": "Q006",
-"category": "Immunology",
-"difficulty": "easy",
-"question": "Which of the following is a glycoprotein expressed on the surface of T helper cells, regulatory T cells, monocytes, macrophages and dendritic cells",
-"options": [
-"Cluster of differentiation 4 (CD4)",
-"Cluster of differentiation 8 (CD8)",
-"Plasma cells (activated B cells)",
-"Cluster of differentiation 56 (CD56)"
-],
-"correctAnswer": 0,
-"explanation": {
-"why": "CD4 is a glycoprotein marker on T helper cells, regulatory T cells, and some antigen-presenting cells like monocytes, macrophages, and dendritic cells.",
-"whyNot": [
-"CD8 is expressed on cytotoxic T cells.",
-"Plasma cells are differentiated B cells, not expressing CD4 as described.",
-"CD56 is a marker for natural killer cells."
-],
-"related": ["Q017", "Q021"]
-}
-},
-{
-"id": "Q007",
-"category": "Immunology",
-"difficulty": "medium",
-"question": "Acute inflammation can be initiated by",
-"options": [
-"Mast cell activation",
-"Influx of neutrophils",
-"Inflammatory pathway of complement activation",
-"Activation by antibody requires one IgM or two IgG molecules"
-],
-"correctAnswer": 0,
-"explanation": {
-"why": "Mast cell activation releases histamine and other mediators that initiate acute inflammation.",
-"whyNot": [
-"Influx of neutrophils is a consequence of inflammation, not an initiator.",
-"Complement activation can contribute but is not the primary initiator listed.",
-"Antibody requirement relates to complement, not direct initiation of inflammation."
-],
-"related": ["Q008", "Q009"]
-}
-},
-{
-"id": "Q008",
-"category": "Immunology",
-"difficulty": "medium",
-"question": "In the classical pathway of complement activation",
-"options": [
-"C3 is activated by binding C-reactive protein",
-"The sequence of activation is C1, C2, C3, C4",
-"C1q is activated by the presence of a single Fab region",
-"Activation by antibody requires one IgM or two IgG molecules"
-],
-"correctAnswer": 3,
-"explanation": {
-"why": "The classical pathway is initiated by antibody binding, requiring one pentameric IgM or two adjacent IgG molecules to activate C1q.",
-"whyNot": [
-"C3 activation in classical pathway is via C4b2a, not directly by CRP (which is alternative).",
-"The sequence is C1, C4, C2, C3.",
-"C1q binds to Fc regions, not Fab."
-],
-"related": ["Q009", "Q010"]
-}
-},
-{
-"id": "Q009",
-"category": "Immunology",
-"difficulty": "medium",
-"question": "The alternative complement pathway",
-"options": [
-"Can be activated by bacterial capsule polysaccharides",
-"Uses C5b as a C3 convertase",
-"Bypasses steps C3 through C5",
-"Is inactivated by properdin"
-],
-"correctAnswer": 0,
-"explanation": {
-"why": "The alternative pathway is activated by microbial surfaces like polysaccharides without antibodies.",
-"whyNot": [
-"C3 convertase in alternative is C3bBb, not C5b.",
-"It includes C3 to C9, not bypassing.",
-"Properdin stabilizes the alternative pathway convertase, not inactivates."
-],
-"related": ["Q008", "Q010"]
-}
-},
-{
-"id": "Q010",
-"category": "Immunology",
-"difficulty": "easy",
-"question": "After activation of the complement system, leukocytes and macrophages are attracted to the site of complement activation by",
-"options": [
-"C1",
-"C5a",
-"C5bC6C7C8C9",
-"C3b"
-],
-"correctAnswer": 1,
-"explanation": {
-"why": "C5a is a potent chemoattractant anaphylatoxin that recruits leukocytes and macrophages to the site of infection.",
-"whyNot": [
-"C1 is involved in initiation, not chemotaxis.",
-"The membrane attack complex (C5b-9) lyses cells, not attracts.",
-"C3b opsonizes but is not the main chemoattractant."
-],
-"related": ["Q007", "Q024"]
-}
-},
-{
-"id": "Q011",
-"category": "Immunology",
-"difficulty": "easy",
-"question": "What is the predominant type of antibody found in the serum of neonates born after full-term gestation?",
-"options": [
-"Infant IgA",
-"Infant IgG",
-"Infant IgM",
-"Maternal IgG"
-],
-"correctAnswer": 3,
-"explanation": {
-"why": "Neonates receive maternal IgG transplacentally, providing passive immunity, as their own production is limited at birth.",
-"whyNot": [
-"Infant IgA is produced later, mainly in mucosa.",
-"Infant IgG production starts after birth.",
-"Infant IgM is the first produced by the infant but in low amounts."
-],
-"related": ["Q001", "Q012"]
-}
-},
-{
-"id": "Q012",
-"category": "Immunology",
-"difficulty": "medium",
-"question": "How does the secondary humoral immune response differ from the primary response?",
-"options": [
-"The lag phase (the time between exposure to immunogen and production of antibody) is longer in the secondary immune response",
-"IgM is the predominant antibody class produced in the secondary immune response",
-"The antibody levels produced are higher in the secondary immune response",
-"Cytotoxic T lymphocytes play an important role in the secondary response"
-],
-"correctAnswer": 2,
-"explanation": {
-"why": "The secondary response is faster and produces higher antibody levels due to memory B cells.",
-"whyNot": [
-"The lag phase is shorter in the secondary response.",
-"IgG is predominant in secondary, IgM in primary.",
-"CTLs are more for cellular immunity, not humoral."
-],
-"related": ["Q001", "Q011"]
-}
-},
-{
-"id": "Q013",
-"category": "Immunology",
-"difficulty": "easy",
-"question": "Which of the following statements about immunoglobulin light chains is true?",
-"options": [
-"Each immunoglobulin monomer has either two kappa or two lambda chains",
-"There are two types: kappa and lambda",
-"They consist of constant regions only",
-"They form part of the Fc fragment"
-],
-"correctAnswer": 1,
-"explanation": {
-"why": "Immunoglobulin light chains are of two types: kappa and lambda, with each antibody having either two kappa or two lambda.",
-"whyNot": [
-"Each has two identical light chains, but the statement is incomplete without types.",
-"They have variable and constant regions.",
-"Fc is formed by heavy chains."
-],
-"related": ["Q002", "Q014"]
-}
-},
-{
-"id": "Q014",
-"category": "Immunology",
-"difficulty": "medium",
-"question": "Which of the following statements applies to the Fc fragment of an immunoglobulin molecule?",
-"options": [
-"It consists of the entire heavy chain",
-"It contains the variable region of the heavy chain",
-"It contains the antigen binding sites of the molecule",
-"It is the region of the molecule that binds to receptors on various white blood cells"
-],
-"correctAnswer": 3,
-"explanation": {
-"why": "The Fc region binds to Fc receptors on immune cells, mediating effector functions like ADCC and opsonization.",
-"whyNot": [
-"Fc is the constant part of heavy chains, not entire.",
-"Variable region is in Fab.",
-"Antigen binding is in Fab."
-],
-"related": ["Q002", "Q013"]
-}
-},
-{
-"id": "Q015",
-"category": "Immunology",
-"difficulty": "medium",
-"question": "The activity of natural killer (NK) cells",
-"options": [
-"Does not require previous exposure to an antigen",
-"Involves phagocytosis and killing of bacteria",
-"Requires interaction with cytotoxic T cells",
-"Requires interaction with B cells"
-],
-"correctAnswer": 0,
-"explanation": {
-"why": "NK cells are part of innate immunity and kill virally infected or tumor cells without prior sensitization.",
-"whyNot": [
-"NK cells kill via granule release, not phagocytosis (which is for macrophages).",
-"NK act independently, though can be enhanced by cytokines.",
-"No direct requirement for B cells."
-],
-"related": ["Q003", "Q017"]
-}
-},
-{
-"id": "Q016",
-"category": "Immunology",
-"difficulty": "medium",
-"question": "Interaction between B and T helper cells involves",
-"options": [
-"MHC II molecule on B cell binding to T cell",
-"MHC II molecule on T cell",
-"Foreign antigen on B cell binding to T cell receptor",
-"CD3 molecule on B cell binding to T cell receptor"
-],
-"correctAnswer": 2,
-"explanation": {
-"why": "T helper cells recognize processed antigen presented on MHC II by B cells via their TCR.",
-"whyNot": [
-"MHC II on B binds to CD4 on T, but antigen-TCR is key.",
-"T cells do not express MHC II.",
-"CD3 is on T cells, not B."
-],
-"related": ["Q005", "Q017"]
-}
-},
-{
-"id": "Q017",
-"category": "Immunology",
-"difficulty": "hard",
-"question": "A target cell is typically killed when",
-"options": [
-"A CD4+ T cell recognizes a peptide bound to MHC class I on the target cell",
-"A CD4+ T cell recognizes a peptide bound to MHC class II on the target cell",
-"A CD8+ T cell produces IL-4 in close proximity to the target cell",
-"A CD8+ T cell recognizes a peptide bound to MHC class I on the target cell"
-],
-"correctAnswer": 3,
-"explanation": {
-"why": "Cytotoxic CD8+ T cells recognize antigen on MHC I and kill the target via perforin/granzyme or Fas.",
-"whyNot": [
-"CD4+ recognize MHC II, not MHC I.",
-"CD4+ on MHC II helps, but does not directly kill.",
-"CD8+ produce IFN-gamma/TNF, not IL-4 (which is Th2)."
-],
-"related": ["Q006", "Q015"]
-}
-},
-{
-"id": "Q018",
-"category": "Immunology",
-"difficulty": "medium",
-"question": "Primary immunodeficiency producing susceptibility to infection by viruses and fungus is caused by:",
-"options": [
-"B-cell deficiency",
-"T-cell deficiency",
-"Phagocyte deficiency",
-"Complement deficiency"
-],
-"correctAnswer": 1,
-"explanation": {
-"why": "T-cell deficiencies impair cellular immunity, crucial for fighting intracellular pathogens like viruses and fungi.",
-"whyNot": [
-"B-cell deficiency affects humoral immunity, more for bacteria.",
-"Phagocyte deficiency affects bacterial and fungal, but less viruses.",
-"Complement aids opsonization, more for bacteria."
-],
-"related": ["Q023", "Q021"]
-}
-},
-{
-"id": "Q019",
-"category": "Immunology",
-"difficulty": "medium",
-"question": "Incompatible blood transfusions are examples of",
-"options": [
-"Type I hypersensitivity reactions",
-"Type II hypersensitivity reactions",
-"Type III hypersensitivity reactions",
-"Type IV hypersensitivity reactions"
-],
-"correctAnswer": 1,
-"explanation": {
-"why": "Type II involves antibodies against cell surface antigens, like ABO mismatch causing hemolysis.",
-"whyNot": [
-"Type I is IgE-mediated allergy.",
-"Type III is immune complex deposition.",
-"Type IV is cell-mediated delayed hypersensitivity."
-],
-"related": ["Q020", "Q018"]
-}
-},
-{
-"id": "Q020",
-"category": "Immunology",
-"difficulty": "medium",
-"question": "The single best chance of a tissue graft being accepted in a human recipient is if it is:",
-"options": [
-"An isograft",
-"An allograft given under the cover of potent immunosuppression",
-"A xenograft from a pig",
-"From a living sibling donor"
-],
-"correctAnswer": 0,
-"explanation": {
-"why": "An isograft is from a genetically identical donor (twin), minimizing rejection.",
-"whyNot": [
-"Allograft (same species, different individual) requires immunosuppression.",
-"Xenograft (different species) has high rejection risk.",
-"Sibling donor is allograft, better if HLA-matched but not identical."
-],
-"related": ["Q019", "Q022"]
-}
-},
-{
-"id": "Q021",
-"category": "Immunology",
-"difficulty": "medium",
-"question": "In patients with human immunodeficiency virus infection, immune status can be monitored by measuring the ratio of",
-"options": [
-"CD3+ cells to CD8+ cells",
-"CD4+ cells to CD8+ cells",
-"Lymphocytes to monocytes",
-"T cells to B cells"
-],
-"correctAnswer": 1,
-"explanation": {
-"why": "HIV depletes CD4+ T cells, so CD4/CD8 ratio decreases, indicating progression.",
-"whyNot": [
-"CD3 is pan-T marker, not specific.",
-"Lymphocyte to monocyte ratio not standard for HIV.",
-"T to B ratio not directly indicative."
-],
-"related": ["Q006", "Q018"]
-}
-},
-{
-"id": "Q022",
-"category": "Immunology",
-"difficulty": "hard",
-"question": "What is the structure recognized by the αβ T-cell receptor on the cell surface of an antigen-presenting cell?",
-"options": [
-"Soluble native protein antigen plus MHC mol.",
-"Processed (peptide) antigen plus MHC",
-"Processed peptide antigen",
-"Cell surface native antigen"
-],
-"correctAnswer": 1,
-"explanation": {
-"why": "TCR recognizes peptide antigens presented in the groove of MHC molecules on APCs.",
-"whyNot": [
-"Soluble native antigen is not presented; must be processed.",
-"Peptide alone not sufficient; needs MHC context.",
-"Native antigen on surface is for B cells, not T."
-],
-"related": ["Q016", "Q017"]
-}
-},
-{
-"id": "Q023",
-"category": "Immunology",
-"difficulty": "hard",
-"question": "Your patient is a child who has no detectable T or B cells. This is most probably the result of a defect in",
-"options": [
-"The thymus",
-"The bursal equivalent",
-"T cell-B cell interaction",
-"Stem cells originating in the bone marrow"
-],
-"correctAnswer": 3,
-"explanation": {
-"why": "Absence of both T and B cells suggests a defect in hematopoietic stem cells in bone marrow, as in SCID.",
-"whyNot": [
-"Thymus defect affects T cells only (DiGeorge).",
-"Bursal equivalent (bone marrow in humans) affects B cells.",
-"Interaction defect would not eliminate both lineages."
-],
-"related": ["Q018", "Q021"]
-}
-},
-{
-"id": "Q024",
-"category": "Immunology",
-"difficulty": "medium",
-"question": "A patient is admitted with multiple bacterial infections and is found to have a complete absence of a complement component. Which complement-mediated function would remain intact in such a patient?",
-"options": [
-"Lyses of bacteria",
-"Opsonization of bacteria",
-"Generation of anaphylatoxins",
-"None"
-],
-"correctAnswer": 3,
-"explanation": {
-"why": "Complete absence of a complement component would disrupt the cascade, preventing all downstream functions like lysis, opsonization, and anaphylatoxin generation.",
-"whyNot": [
-"Lysis requires MAC formation.",
-"Opsonization requires C3b.",
-"Anaphylatoxins are C3a/C5a."
-],
-"related": ["Q008", "Q009"]
-}
-},
-{
-"id": "Q025",
-"category": "Immunology",
-"difficulty": "hard",
-"question": "For vaccination against mycobacterial diseases such as tuberculosis, what is the most important facet of the immune response to be stimulated?",
-"options": [
-"A high titer of antibody",
-"Macrophage-activating cell-mediated immunity",
-"Cytotoxic T-cells",
-"Antibody in the gut lumen"
-],
-"correctAnswer": 1,
-"explanation": {
-"why": "Mycobacteria are intracellular; cell-mediated immunity, especially Th1 activating macrophages via IFN-gamma, is crucial for control.",
-"whyNot": [
-"Antibodies are less effective against intracellular pathogens.",
-"CTLs kill infected cells but macrophages are key for mycobacteria.",
-"Gut antibody irrelevant for pulmonary TB."
-],
-"related": ["Q017", "Q025"]
-}
-}
+        "id": 73,
+        "question": "Why is aerobic glycolysis favored by cancer cells?",
+        "options": [
+            "It requires less amount of glucose for ATP production",
+            "It provides metabolic intermediates that are needed for the synthesis of cellular components",
+            "It is a more efficient pathway for production of energy",
+            "It helps cells to undergo invasion and metastasis"
+        ],
+        "answer": 1,
+        "correctAnswer": "It provides metabolic intermediates that are needed for the synthesis of cellular components",
+        "explanation": "According to Robbins Basic Pathology (Chapter 7: Neoplasia), cancer cells exhibit the Warburg effect, where they preferentially use aerobic glycolysis even in the presence of oxygen. This process provides metabolic intermediates necessary for the biosynthesis of cellular components (e.g., nucleotides, amino acids, and lipids) required for rapid proliferation, rather than solely for ATP production.",
+        "whyNotOtherOptions": {
+            "a": "Aerobic glycolysis requires more glucose to produce the same amount of ATP compared to oxidative phosphorylation.",
+            "c": "Aerobic glycolysis is less efficient for ATP production than oxidative phosphorylation.",
+            "d": "While it may indirectly support invasion and metastasis, the primary benefit is the provision of biosynthetic intermediates."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 74,
+        "question": "A 50-year-old woman has had easy fatigability and noted a dragging sensation in her abdomen for the past 5 months. Physical examination reveals that she is afebrile. She has marked splenomegaly, but no lymphadenopathy. Laboratory studies show her total white count is 250,000/mm³. A bone marrow biopsy is performed, and karyotypic analysis of the cells shows t(9;22) translocation. Medical treatment with a drug having which of the following modes of action is most likely to produce a complete remission in this patient?",
+        "options": [
+            "Activating cellular caspases",
+            "Antibody binding to EGF receptors",
+            "Delivering normal p53 into cells with viral vectors",
+            "Inhibiting tyrosine kinase activity",
+            "Preventing translocation of β-catenin to the nucleus"
+        ],
+        "answer": 3,
+        "correctAnswer": "Inhibiting tyrosine kinase activity",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) describes the t(9;22) translocation as characteristic of chronic myelogenous leukemia (CML), resulting in the Philadelphia chromosome and the BCR-ABL fusion gene. This fusion protein exhibits constitutive tyrosine kinase activity. Tyrosine kinase inhibitors (e.g., imatinib) target this activity, leading to remission by inhibiting the abnormal signaling pathway.",
+        "whyNotOtherOptions": {
+            "a": "Activating caspases would promote apoptosis but is not specific to the BCR-ABL pathway in CML.",
+            "b": "Antibody binding to EGF receptors targets different pathways, such as in some solid tumors, not CML.",
+            "c": "Delivering normal p53 is experimental and not the standard treatment for CML.",
+            "e": "Preventing β-catenin translocation relates to Wnt pathway, irrelevant to CML."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 75,
+        "question": "Which of the following mutations results in evasion of apoptosis in cancer cells?",
+        "options": [
+            "Gain of function mutation in cyclin-dependent kinases",
+            "Overexpression of BCL-2 protein",
+            "Loss of function mutation of RB gene",
+            "Gain of function mutation in growth factors"
+        ],
+        "answer": 1,
+        "correctAnswer": "Overexpression of BCL-2 protein",
+        "explanation": "As noted in Robbins Basic Pathology (Chapter 7: Neoplasia), overexpression of BCL-2, an anti-apoptotic protein, inhibits programmed cell death (apoptosis), allowing cancer cells to evade this natural checkpoint. This is a common mechanism in various malignancies.",
+        "whyNotOtherOptions": {
+            "a": "Gain of function in CDKs promotes cell cycle progression, not directly apoptosis evasion.",
+            "c": "Loss of RB function leads to unregulated cell cycle, not specific to apoptosis evasion.",
+            "d": "Gain of function in growth factors promotes proliferation, not apoptosis evasion."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 76,
+        "question": "Which of the following tumors are induced by chronic UV light exposure?",
+        "options": [
+            "squamous cell carcinoma",
+            "Melanoma",
+            "Basal cell carcinoma",
+            "All"
+        ],
+        "answer": 3,
+        "correctAnswer": "All",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) states that chronic UV light exposure is a major environmental carcinogen linked to the development of squamous cell carcinoma, melanoma, and basal cell carcinoma, making \"all\" the correct choice due to the cumulative effect on skin cells.",
+        "whyNotOtherOptions": {
+            "a": "Squamous cell carcinoma is induced, but so are the others.",
+            "b": "Melanoma is induced, but so are the others.",
+            "c": "Basal cell carcinoma is induced, but so are the others."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 77,
+        "question": "All of the following micro-organisms are responsible for the development of malignant neoplasms, except?",
+        "options": [
+            "High risk HPV",
+            "H. pylori",
+            "Hepatitis-B",
+            "Epstein-Barr virus",
+            "Cytomegalo virus"
+        ],
+        "answer": 4,
+        "correctAnswer": "Cytomegalo virus",
+        "explanation": "According to Robbins Basic Pathology (Chapter 7: Neoplasia), high-risk HPV, H. pylori, Hepatitis B, and Epstein-Barr virus are associated with malignancies (e.g., cervical cancer, gastric cancer, hepatocellular carcinoma, and Burkitt lymphoma, respectively). Cytomegalovirus (CMV) is not recognized as a direct cause of malignant neoplasms.",
+        "whyNotOtherOptions": {
+            "a": "High-risk HPV causes cervical cancer.",
+            "b": "H. pylori causes gastric cancer.",
+            "c": "Hepatitis B causes hepatocellular carcinoma.",
+            "d": "Epstein-Barr virus causes Burkitt lymphoma."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 15,
+        "question": "Which adaptive process is a characteristic response to certain viral infections, such as papillomaviruses, which cause skin warts and mucosal lesions?",
+        "options": [
+            "Atrophy",
+            "Hyperplasia",
+            "Hypertrophy",
+            "Metaplasia"
+        ],
+        "answer": 1,
+        "correctAnswer": "Hyperplasia",
+        "explanation": "Robbins Basic Pathology (Chapter 2: Cell Injury, Adaptation, and Death) explains that hyperplasia, an increase in the number of cells, is a common adaptive response to viral infections like papillomaviruses, leading to the formation of warts and mucosal lesions due to increased cell proliferation.",
+        "whyNotOtherOptions": {
+            "a": "Atrophy involves decrease in cell size or number, not seen in warts.",
+            "c": "Hypertrophy is increase in cell size, not number.",
+            "d": "Metaplasia is change in cell type, not proliferation."
+        },
+        "relatedQuestions": [],
+        "category": "Cell Injury and Adaptation",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 16,
+        "question": "A 36-year-old male has experienced mid-epigastric abdominal pain for the past 3 months. Upper endoscopy reveals a 2-cm ulceration of the gastric antrum. A biopsy of the ulcer shows angiogenesis with fibrosis and mononuclear cell infiltrates with lymphocytes, macrophages and plasma cells. The best term for this pathologic process is?",
+        "options": [
+            "Acute inflammation",
+            "Serous inflammation",
+            "Granulomatous inflammation",
+            "Fibrinous inflammation",
+            "Chronic inflammation"
+        ],
+        "answer": 4,
+        "correctAnswer": "Chronic inflammation",
+        "explanation": "Robbins Basic Pathology (Chapter 3: Inflammation and Repair) describes chronic inflammation as characterized by the presence of mononuclear cell infiltrates (lymphocytes, macrophages, and plasma cells), angiogenesis, and fibrosis, as seen in this gastric ulcer, distinguishing it from acute inflammation.",
+        "whyNotOtherOptions": {
+            "a": "Acute inflammation features neutrophils, not mononuclear cells.",
+            "b": "Serous inflammation involves fluid exudate, not fibrosis.",
+            "c": "Granulomatous inflammation has granulomas, not described here.",
+            "d": "Fibrinous inflammation involves fibrin exudate."
+        },
+        "relatedQuestions": [],
+        "category": "Inflammation and Repair",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 17,
+        "question": "A 59-year-old male has had a cough with fever for the past week. A chest radiograph reveals a right pleural fluid collection. A right thoracentesis yields 500 mL of cloudy yellow fluid. Which of the following cell types is most likely to be abundant in this fluid?",
+        "options": [
+            "Macrophages",
+            "Neutrophils",
+            "CD4 lymphocytes",
+            "Plasma cells",
+            "Eosinophils"
+        ],
+        "answer": 1,
+        "correctAnswer": "Neutrophils",
+        "explanation": "Robbins Basic Pathology (Chapter 3: Inflammation and Repair) indicates that a cloudy yellow pleural fluid with fever suggests an acute inflammatory process, where neutrophils are the predominant cell type due to their role in early acute inflammation.",
+        "whyNotOtherOptions": {
+            "a": "Macrophages predominate in chronic inflammation.",
+            "c": "CD4 lymphocytes are involved in adaptive immunity, not acute exudate.",
+            "d": "Plasma cells are in chronic inflammation.",
+            "e": "Eosinophils are in parasitic or allergic responses."
+        },
+        "relatedQuestions": [],
+        "category": "Inflammation and Repair",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 18,
+        "question": "A 43-year-old male has had a cough with fever for the previous 2 months. A chest radiograph reveals nodular densities, some with calcification, located mainly in the upper lobes. The microscopic appearance of a lung biopsy shows a granuloma with many epithelioid cell and prominent large Langhans giant cells. Which of the following chemical mediators is most important in the pathogenesis of this lesion?",
+        "options": [
+            "Complement C5a",
+            "Interferon-γ",
+            "Bradykinin",
+            "Nitric oxide",
+            "Prostaglandin"
+        ],
+        "answer": 1,
+        "correctAnswer": "Interferon-γ",
+        "explanation": "Robbins Basic Pathology (Chapter 3: Inflammation and Repair) highlights that interferon-γ, produced by activated T cells, is crucial in the formation of granulomas, such as those seen in chronic infections like tuberculosis, by activating macrophages to form epithelioid and Langhans giant cells.",
+        "whyNotOtherOptions": {
+            "a": "C5a is a chemoattractant in acute inflammation.",
+            "c": "Bradykinin mediates pain and vascular permeability in acute phase.",
+            "d": "Nitric oxide is involved in vasodilation and killing, but not granuloma formation.",
+            "e": "Prostaglandin mediates inflammation but not specific to granulomas."
+        },
+        "relatedQuestions": [],
+        "category": "Inflammation and Repair",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 19,
+        "question": "Cell adhesion molecules:",
+        "options": [
+            "includes selectins.",
+            "assists in white cell pavementing.",
+            "involves endothelium.",
+            "involve platelets",
+            "all of the above"
+        ],
+        "answer": 4,
+        "correctAnswer": "all of the above",
+        "explanation": "Robbins Basic Pathology (Chapter 3: Inflammation and Repair) notes that cell adhesion molecules (e.g., selectins) facilitate white cell pavementing, involve endothelial cells, and can also interact with platelets, making \"all of the above\" correct.",
+        "whyNotOtherOptions": {
+            "a": "This is true, but not complete.",
+            "b": "This is true, but not complete.",
+            "c": "This is true, but not complete.",
+            "d": "This is true, but not complete."
+        },
+        "relatedQuestions": [],
+        "category": "Inflammation and Repair",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 20,
+        "question": "A 5-year-old child reaches up to the stove and touches a pot of boiling soup. Within several hours, there is marked erythema of the skin of the fingers on the right hand, and small blisters appear on the finger pads. Which of the following terms best describes this process?",
+        "options": [
+            "Fibrinous inflammation",
+            "Purulent inflammation",
+            "Serous inflammation",
+            "Ulceration",
+            "Granulomatous inflammation"
+        ],
+        "answer": 2,
+        "correctAnswer": "Serous inflammation",
+        "explanation": "Robbins Basic Pathology (Chapter 3: Inflammation and Repair) defines serous inflammation as characterized by the outpouring of thin, watery fluid (e.g., blister formation), as seen in this thermal burn case with erythema and blisters.",
+        "whyNotOtherOptions": {
+            "a": "Fibrinous involves fibrin-rich exudate.",
+            "b": "Purulent involves pus with neutrophils.",
+            "d": "Ulceration is loss of epithelium.",
+            "e": "Granulomatous involves granulomas in chronic inflammation."
+        },
+        "relatedQuestions": [],
+        "category": "Inflammation and Repair",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 21,
+        "question": "Acute inflammation characteristically involves:",
+        "options": [
+            "Constriction of arterioles.",
+            "Capillary endothelial cell enlargement.",
+            "Influx of macrophages.",
+            "Influx of mast cells.",
+            "Influx of neutrophils."
+        ],
+        "answer": 4,
+        "correctAnswer": "Influx of neutrophils.",
+        "explanation": "Robbins Basic Pathology (Chapter 3: Inflammation and Repair) states that acute inflammation is marked by the rapid influx of neutrophils as the primary responders to tissue injury, distinguishing it from other cell types or vascular changes.",
+        "whyNotOtherOptions": {
+            "a": "Acute inflammation involves dilation, not constriction.",
+            "b": "Endothelial activation occurs, but enlargement is not characteristic.",
+            "c": "Macrophages are in chronic inflammation.",
+            "d": "Mast cells release mediators but are not the influx characteristic."
+        },
+        "relatedQuestions": [],
+        "category": "Inflammation and Repair",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 22,
+        "question": "Lysozyme:",
+        "options": [
+            "Is a cytoplasmic organelle.",
+            "Activates complement.",
+            "Is a proteolytic enzyme.",
+            "Splits peptidoglycan.",
+            "Is released by mast cells."
+        ],
+        "answer": 3,
+        "correctAnswer": "Splits peptidoglycan.",
+        "explanation": "Robbins Basic Pathology (Chapter 3: Inflammation and Repair) describes lysozyme as an enzyme secreted by neutrophils and macrophages that hydrolyzes the peptidoglycan layer of bacterial cell walls, aiding in bacterial destruction.",
+        "whyNotOtherOptions": {
+            "a": "Lysozyme is an enzyme, not an organelle.",
+            "b": "It does not activate complement.",
+            "c": "It is bactericidal but not primarily proteolytic.",
+            "e": "It is released by neutrophils and macrophages, not mast cells."
+        },
+        "relatedQuestions": [],
+        "category": "Inflammation and Repair",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 23,
+        "question": "Which of the following is not an acute phase protein:",
+        "options": [
+            "Serum amyloid P component",
+            "Chondroitin sulfate",
+            "C-reactive protein.",
+            "Mannose binding lectin.",
+            "Fibrinogen."
+        ],
+        "answer": 1,
+        "correctAnswer": "Chondroitin sulfate",
+        "explanation": "Robbins Basic Pathology (Chapter 3: Inflammation and Repair) lists serum amyloid P, C-reactive protein, mannose-binding lectin, and fibrinogen as acute-phase proteins involved in the acute-phase response, while chondroitin sulfate is not classified as such.",
+        "whyNotOtherOptions": {
+            "a": "Serum amyloid P is an acute-phase protein.",
+            "c": "C-reactive protein is an acute-phase protein.",
+            "d": "Mannose-binding lectin is an acute-phase protein.",
+            "e": "Fibrinogen is an acute-phase protein."
+        },
+        "relatedQuestions": [],
+        "category": "Inflammation and Repair",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 24,
+        "question": "Polymorphonuclear neutrophils attack bacteria:",
+        "options": [
+            "Exclusively by oxygen-dependent mechanisms.",
+            "Exclusively by oxygen-independent mechanisms.",
+            "By phagocytosis.",
+            "By secreting complement.",
+            "By secreting interferon."
+        ],
+        "answer": 2,
+        "correctAnswer": "By phagocytosis.",
+        "explanation": "Robbins Basic Pathology (Chapter 3: Inflammation and Repair) explains that neutrophils primarily attack bacteria through phagocytosis, utilizing both oxygen-dependent and oxygen-independent mechanisms within phagolysosomes.",
+        "whyNotOtherOptions": {
+            "a": "They use both oxygen-dependent and independent mechanisms.",
+            "b": "They use both oxygen-dependent and independent mechanisms.",
+            "d": "Neutrophils do not secrete complement.",
+            "e": "Interferon is secreted by other cells for viral defense."
+        },
+        "relatedQuestions": [],
+        "category": "Inflammation and Repair",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 25,
+        "question": "Acute inflammation can be initiated by:",
+        "options": [
+            "Mast cell activation.",
+            "Influx of neutrophils.",
+            "An increase in vascular permeability.",
+            "C3.",
+            "Lysozyme."
+        ],
+        "answer": 0,
+        "correctAnswer": "Mast cell activation.",
+        "explanation": "Robbins Basic Pathology (Chapter 3: Inflammation and Repair) identifies mast cell activation as an initial trigger of acute inflammation through the release of mediators like histamine, which increases vascular permeability and initiates the inflammatory cascade.",
+        "whyNotOtherOptions": {
+            "b": "Neutrophil influx is a consequence, not initiator.",
+            "c": "Increased permeability is a result of initiation.",
+            "d": "C3 is part of complement, activated later.",
+            "e": "Lysozyme is bactericidal, not an initiator."
+        },
+        "relatedQuestions": [],
+        "category": "Inflammation and Repair",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 26,
+        "question": "Intracellular organisms, like tuberculosis, within macrophages are killed more readily in the presence of:",
+        "options": [
+            "Antibody",
+            "Kinins",
+            "Properdin",
+            "Gamma-interferon",
+            "Anaphylatoxin"
+        ],
+        "answer": 3,
+        "correctAnswer": "Gamma-interferon",
+        "explanation": "Robbins Basic Pathology (Chapter 3: Inflammation and Repair) notes that gamma-interferon, produced by T cells, enhances the microbicidal activity of macrophages, facilitating the killing of intracellular pathogens like Mycobacterium tuberculosis.",
+        "whyNotOtherOptions": {
+            "a": "Antibody aids opsonization but not intracellular killing in macrophages.",
+            "b": "Kinins mediate vascular changes.",
+            "c": "Properdin stabilizes complement.",
+            "e": "Anaphylatoxin promotes mast cell degranulation."
+        },
+        "relatedQuestions": [],
+        "category": "Inflammation and Repair",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 27,
+        "question": "Macrophages are derived from",
+        "options": [
+            "monocytes",
+            "T cells"
+        ],
+        "answer": 0,
+        "correctAnswer": "monocytes",
+        "explanation": "Robbins Basic Pathology (Chapter 3: Inflammation and Repair) states that macrophages are differentiated from circulating monocytes, which migrate into tissues and mature into macrophages during inflammation.",
+        "whyNotOtherOptions": {
+            "b": "T cells are lymphocytes, not precursors to macrophages."
+        },
+        "relatedQuestions": [],
+        "category": "Inflammation and Repair",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 28,
+        "question": "Regarding Chronic inflammation, which is correct?",
+        "options": [
+            "It is characterized by hyperemia, edema, and leukocyte infiltration",
+            "monocytes use the same chemotactic pathways as neutrophils",
+            "it is always preceded by acute inflammation",
+            "most frequently results in resolution",
+            "angiogenesis is not a feature"
+        ],
+        "answer": 0,
+        "correctAnswer": "It is characterized by hyperemia, edema, and leukocyte infiltration",
+        "explanation": "Robbins Basic Pathology (Chapter 3: Inflammation and Repair) describes chronic inflammation as characterized by hyperemia, edema, and leukocyte infiltration, predominantly by monocytes and lymphocytes, distinguishing it from acute inflammation.",
+        "whyNotOtherOptions": {
+            "b": "Monocytes use different chemotactic factors.",
+            "c": "Chronic can occur without prior acute phase.",
+            "d": "It often leads to fibrosis, not resolution.",
+            "e": "Angiogenesis is a feature of chronic inflammation."
+        },
+        "relatedQuestions": [],
+        "category": "Inflammation and Repair",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 29,
+        "question": "TRUE about wound healing",
+        "options": [
+            "infected wound heal by primary intention",
+            "Deep dermal wound heal by scar formation",
+            "wound contraction is found in healing by secondary intention",
+            "more intense inflammatory response in primary intention",
+            "B and C"
+        ],
+        "answer": 4,
+        "correctAnswer": "B and C",
+        "explanation": "Robbins Basic Pathology (Chapter 3: Inflammation and Repair) confirms that deep dermal wounds heal by scar formation (B) and wound contraction is a feature of healing by secondary intention (C), making B and C true statements.",
+        "whyNotOtherOptions": {
+            "a": "Infected wounds heal by secondary intention.",
+            "b": "This is true.",
+            "c": "This is true.",
+            "d": "Primary intention has less inflammation."
+        },
+        "relatedQuestions": [],
+        "category": "Inflammation and Repair",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 30,
+        "question": "False about keloid",
+        "options": [
+            "Grows beyond wound margin",
+            "Excess collagen deposition",
+            "precancerous leading to cancer",
+            "Familial",
+            "Common in neck & earlobes"
+        ],
+        "answer": 2,
+        "correctAnswer": "precancerous leading to cancer",
+        "explanation": "Robbins Basic Pathology (Chapter 3: Inflammation and Repair) notes that keloids involve excess collagen deposition and can be familial or common in certain areas, but they are not precancerous, making this statement false.",
+        "whyNotOtherOptions": {
+            "a": "Keloids do grow beyond margins.",
+            "b": "Excess collagen is a feature.",
+            "d": "Can be familial.",
+            "e": "Common in those sites."
+        },
+        "relatedQuestions": [],
+        "category": "Inflammation and Repair",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 31,
+        "question": "The following conditions are among hypercoagulable state predisposing patients for thrombosis, except?",
+        "options": [
+            "Cancer",
+            "Burns",
+            "Myocardial infarction",
+            "Factor V Leiden",
+            "None"
+        ],
+        "answer": 4,
+        "correctAnswer": "None",
+        "explanation": "Robbins Basic Pathology (Chapter 4: Hemodynamic Disorders, Thromboembolic Disease, and Shock) lists cancer, burns, myocardial infarction, and Factor V Leiden as hypercoagulable states predisposing to thrombosis, indicating \"none\" as the correct exception choice due to a likely typographical error in the question.",
+        "whyNotOtherOptions": {
+            "a": "Cancer is a hypercoagulable state.",
+            "b": "Burns are a hypercoagulable state.",
+            "c": "Myocardial infarction is associated with hypercoagulability.",
+            "d": "Factor V Leiden is a genetic hypercoagulable state."
+        },
+        "relatedQuestions": [],
+        "category": "Hemodynamic Disorders",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 32,
+        "question": "Which one is not component of intrinsic pathway of coagulation cascade?",
+        "options": [
+            "Factor XII",
+            "Factor XI",
+            "Factor VII",
+            "Factor IX"
+        ],
+        "answer": 2,
+        "correctAnswer": "Factor VII",
+        "explanation": "Robbins Basic Pathology (Chapter 4: Hemodynamic Disorders, Thromboembolic Disease, and Shock) states that Factor VII is a component of the extrinsic pathway, while Factors XII, XI, and IX are part of the intrinsic pathway of the coagulation cascade.",
+        "whyNotOtherOptions": {
+            "a": "Factor XII is in intrinsic pathway.",
+            "b": "Factor XI is in intrinsic pathway.",
+            "d": "Factor IX is in intrinsic pathway."
+        },
+        "relatedQuestions": [],
+        "category": "Hemodynamic Disorders",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 33,
+        "question": "Correct statement regarding hyperemia and congestion?",
+        "options": [
+            "Hyperemia is a passive process",
+            "Congestion is an active process",
+            "Both indicate an increase in blood in a given tissue",
+            "Congestion associated with arterial dilatation and grossly appears red"
+        ],
+        "answer": 2,
+        "correctAnswer": "Both indicate an increase in blood in a given tissue",
+        "explanation": "Robbins Basic Pathology (Chapter 4: Hemodynamic Disorders, Thromboembolic Disease, and Shock) explains that both hyperemia (active) and congestion (passive) result in an increase in blood volume in a given tissue, making this statement correct.",
+        "whyNotOtherOptions": {
+            "a": "Hyperemia is active.",
+            "b": "Congestion is passive.",
+            "d": "Congestion is venous, appears blue-red."
+        },
+        "relatedQuestions": [],
+        "category": "Hemodynamic Disorders",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 34,
+        "question": "Which one of the following associated with edema due to decreased plasma oncotic pressure?",
+        "options": [
+            "CHF",
+            "Cirrhosis",
+            "Constrictive pericarditis"
+        ],
+        "answer": 1,
+        "correctAnswer": "Cirrhosis",
+        "explanation": "Robbins Basic Pathology (Chapter 4: Hemodynamic Disorders, Thromboembolic Disease, and Shock) associates cirrhosis with decreased plasma oncotic pressure due to reduced albumin synthesis by the liver, leading to edema.",
+        "whyNotOtherOptions": {
+            "a": "CHF causes edema due to increased hydrostatic pressure.",
+            "c": "Constrictive pericarditis causes edema due to increased hydrostatic pressure."
+        },
+        "relatedQuestions": [],
+        "category": "Hemodynamic Disorders",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 35,
+        "question": "One is not a feature of acute hepatic congestion?",
+        "options": [
+            "Peri-portal hepatocyte fatty change",
+            "Nutmeg liver",
+            "Engorged central vein sinusoids",
+            "None"
+        ],
+        "answer": 0,
+        "correctAnswer": "Peri-portal hepatocyte fatty change",
+        "explanation": "Robbins Basic Pathology (Chapter 4: Hemodynamic Disorders, Thromboembolic Disease, and Shock) describes acute hepatic congestion as featuring nutmeg liver and engorged central vein sinusoids, but peri-portal hepatocyte fatty change is not a typical feature.",
+        "whyNotOtherOptions": {
+            "b": "Nutmeg liver is a feature.",
+            "c": "Engorged central veins are a feature.",
+            "d": "This would mean all are features, but A is not."
+        },
+        "relatedQuestions": [],
+        "category": "Hemodynamic Disorders",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 36,
+        "question": "Among the fates of a thrombus which one describes further formation of more thrombosis?",
+        "options": [
+            "Embolization",
+            "Dissolution",
+            "Propagation",
+            "Organization"
+        ],
+        "answer": 2,
+        "correctAnswer": "Propagation",
+        "explanation": "Robbins Basic Pathology (Chapter 4: Hemodynamic Disorders, Thromboembolic Disease, and Shock) defines propagation as the extension of a thrombus by further deposition of platelets and fibrin, leading to increased thrombosis.",
+        "whyNotOtherOptions": {
+            "a": "Embolization is detachment and travel.",
+            "b": "Dissolution is breakdown by fibrinolysis.",
+            "d": "Organization is incorporation into vessel wall."
+        },
+        "relatedQuestions": [],
+        "category": "Hemodynamic Disorders",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 37,
+        "question": "Most systemic thromboembolism arises from",
+        "options": [
+            "Intracardiac mural thrombi",
+            "DVT",
+            "Aortic aneurysm",
+            "Fragmentation of valvular vegetation"
+        ],
+        "answer": 0,
+        "correctAnswer": "Intracardiac mural thrombi",
+        "explanation": "Robbins Basic Pathology (Chapter 4: Hemodynamic Disorders, Thromboembolic Disease, and Shock) states that most systemic thromboembolism originates from intracardiac mural thrombi, particularly in the left heart.",
+        "whyNotOtherOptions": {
+            "b": "DVT causes pulmonary emboli, not systemic.",
+            "c": "Aortic aneurysms can cause emboli but less common.",
+            "d": "Valvular vegetation causes septic emboli."
+        },
+        "relatedQuestions": [],
+        "category": "Hemodynamic Disorders",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 38,
+        "question": "The development and size of an infarct is determined by one of the following factor except :",
+        "options": [
+            "The nature of the vascular supply",
+            "The rate of development of occlusion",
+            "Susceptibility of the tissue for hypoxia",
+            "Oxygen content of the blood",
+            "None of the above"
+        ],
+        "answer": 4,
+        "correctAnswer": "None of the above",
+        "explanation": "Robbins Basic Pathology (Chapter 4: Hemodynamic Disorders, Thromboembolic Disease, and Shock) lists the nature of vascular supply, rate of occlusion, tissue susceptibility to hypoxia, and oxygen content of blood as determinants of infarct size, making \"none\" incorrect due to a likely error.",
+        "whyNotOtherOptions": {
+            "a": "Vascular supply affects infarct size.",
+            "b": "Rate of occlusion affects infarct size.",
+            "c": "Tissue susceptibility affects infarct size.",
+            "d": "Oxygen content affects infarct size."
+        },
+        "relatedQuestions": [],
+        "category": "Hemodynamic Disorders",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 39,
+        "question": "The dominant histologic feature of infarction is",
+        "options": [
+            "Liquefactive necrosis",
+            "Ischemic coagulative necrosis",
+            "Fat necrosis",
+            "Gangrenous necrosis"
+        ],
+        "answer": 1,
+        "correctAnswer": "Ischemic coagulative necrosis",
+        "explanation": "Robbins Basic Pathology (Chapter 4: Hemodynamic Disorders, Thromboembolic Disease, and Shock) identifies ischemic coagulative necrosis as the dominant histologic feature of infarction in most tissues, except the brain where liquefactive necrosis predominates.",
+        "whyNotOtherOptions": {
+            "a": "Liquefactive is in brain or abscesses.",
+            "c": "Fat necrosis is enzymatic, in pancreas.",
+            "d": "Gangrenous is a gross term for dry/wet gangrene."
+        },
+        "relatedQuestions": [],
+        "category": "Hemodynamic Disorders",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 40,
+        "question": "A 50 year old male patient who is suffering from cirrhosis of liver presented with distended abdomen. Fluid tap analysis shows protein content of <3.0 gm/dl and specific gravity of <1.015 respectively. This fluid is best described as:-",
+        "options": [
+            "Exudate",
+            "Transudate",
+            "Isotonic fluid",
+            "Effusion"
+        ],
+        "answer": 1,
+        "correctAnswer": "Transudate",
+        "explanation": "Robbins Basic Pathology (Chapter 4: Hemodynamic Disorders, Thromboembolic Disease, and Shock) defines transudate as having low protein (<3.0 g/dL) and specific gravity (<1.015), typically seen in cirrhosis due to portal hypertension and decreased oncotic pressure.",
+        "whyNotOtherOptions": {
+            "a": "Exudate has high protein and specific gravity.",
+            "c": "Isotonic fluid is not a pathologic classification.",
+            "d": "Effusion is general term for fluid accumulation."
+        },
+        "relatedQuestions": [],
+        "category": "Hemodynamic Disorders",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 41,
+        "question": "One of the following is FALSE about Disseminated Intravascular Coagulation (DIC)",
+        "options": [
+            "DIC occurs through release of tissue factor or thromboplastic substance into the circulation",
+            "There is widespread injury to the endothelial cells.",
+            "Gram negative sepsis is an important cause of DIC",
+            "There is increased total body platelet.",
+            "None of the above"
+        ],
+        "answer": 3,
+        "correctAnswer": "There is increased total body platelet.",
+        "explanation": "Robbins Basic Pathology (Chapter 4: Hemodynamic Disorders, Thromboembolic Disease, and Shock) notes that DIC involves consumption of platelets due to widespread microthrombi formation, making \"increased total body platelet\" false.",
+        "whyNotOtherOptions": {
+            "a": "Tissue factor release triggers DIC.",
+            "b": "Endothelial injury is a cause.",
+            "c": "Gram-negative sepsis causes DIC.",
+            "e": "This would mean all true, but D is false."
+        },
+        "relatedQuestions": [],
+        "category": "Hemodynamic Disorders",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 42,
+        "question": "Which one of the following is unique from the rest?",
+        "options": [
+            "Septic shock",
+            "Anaphylactic shock",
+            "Cardiogenic shock",
+            "Neurogenic shock"
+        ],
+        "answer": 0,
+        "correctAnswer": "Septic shock",
+        "explanation": "Robbins Basic Pathology (Chapter 4: Hemodynamic Disorders, Thromboembolic Disease, and Shock) distinguishes septic shock as unique due to its association with systemic infection and widespread vasodilation, unlike the other types which involve different mechanisms (e.g., anaphylaxis, cardiac failure, or neural dysfunction).",
+        "whyNotOtherOptions": {
+            "b": "Anaphylactic is vasodilatory shock.",
+            "c": "Cardiogenic is pump failure.",
+            "d": "Neurogenic is vasodilatory due to loss of tone."
+        },
+        "relatedQuestions": [],
+        "category": "Hemodynamic Disorders",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 43,
+        "question": "MHC Class I antigens are present in:",
+        "options": [
+            "T & B Lymphocytes",
+            "Macrophages",
+            "All nucleated cells",
+            "Complement system"
+        ],
+        "answer": 2,
+        "correctAnswer": "All nucleated cells",
+        "explanation": "Robbins Basic Pathology (Chapter 6: Diseases of the Immune System) states that MHC Class I antigens are expressed on the surface of all nucleated cells, playing a role in presenting intracellular antigens to cytotoxic T cells.",
+        "whyNotOtherOptions": {
+            "a": "Present on them, but on all nucleated cells.",
+            "b": "Present on them, but on all nucleated cells.",
+            "d": "Complement is not cellular."
+        },
+        "relatedQuestions": [],
+        "category": "Immune System",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 44,
+        "question": "Which of the following is an example of a type II hypersensitivity reaction?",
+        "options": [
+            "Bronchial Asthma",
+            "Autoimmune hemolytic anemia",
+            "Arthus reaction",
+            "Type I Diabetes"
+        ],
+        "answer": 1,
+        "correctAnswer": "Autoimmune hemolytic anemia",
+        "explanation": "Robbins Basic Pathology (Chapter 6: Diseases of the Immune System) classifies autoimmune hemolytic anemia as a type II hypersensitivity reaction involving antibody-mediated destruction of red blood cells.",
+        "whyNotOtherOptions": {
+            "a": "Bronchial asthma is type I.",
+            "c": "Arthus is type III.",
+            "d": "Type I diabetes is type IV."
+        },
+        "relatedQuestions": [],
+        "category": "Immune System",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 45,
+        "question": "Which of the following cells are involved in immunity against cancer cells?",
+        "options": [
+            "Basophils",
+            "Macrophages",
+            "NK cells",
+            "Neutrophils"
+        ],
+        "answer": 2,
+        "correctAnswer": "NK cells",
+        "explanation": "Robbins Basic Pathology (Chapter 6: Diseases of the Immune System) highlights natural killer (NK) cells as key players in immunity against cancer cells, recognizing and lysing tumor cells without prior sensitization.",
+        "whyNotOtherOptions": {
+            "a": "Basophils are in allergic responses.",
+            "b": "Macrophages can, but NK are primary.",
+            "d": "Neutrophils are for bacterial infections."
+        },
+        "relatedQuestions": [],
+        "category": "Immune System",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 46,
+        "question": "The following interleukin is characteristically involved in type I hypersensitivity response?",
+        "options": [
+            "IL-12",
+            "IL-2",
+            "IL-4",
+            "IL-17"
+        ],
+        "answer": 2,
+        "correctAnswer": "IL-4",
+        "explanation": "Robbins Basic Pathology (Chapter 6: Diseases of the Immune System) notes that IL-4, produced by Th2 cells, is critical in type I hypersensitivity reactions, promoting IgE production and allergic responses.",
+        "whyNotOtherOptions": {
+            "a": "IL-12 promotes Th1 responses.",
+            "b": "IL-2 promotes T cell growth.",
+            "d": "IL-17 is in Th17 responses."
+        },
+        "relatedQuestions": [],
+        "category": "Immune System",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 47,
+        "question": "True about Hypersensitivity reactions",
+        "options": [
+            "Damage to antigenic surfaces in Type I Hypersensitivity is done by complement",
+            "Antibody binding to surface antigen is by the Fc segment in type II hypersensitivity",
+            "Circulating antigen-antibody complexes are formed in Type II hypersensitivity",
+            "No antibody is involved in Type IV Hypersensitivity reaction"
+        ],
+        "answer": 3,
+        "correctAnswer": "No antibody is involved in Type IV Hypersensitivity reaction",
+        "explanation": "Robbins Basic Pathology (Chapter 6: Diseases of the Immune System) states that type IV hypersensitivity (delayed-type) is mediated by T cells and does not involve antibodies, unlike types I, II, and III.",
+        "whyNotOtherOptions": {
+            "a": "Type I is IgE-mediated, not complement.",
+            "b": "Binding is by Fab segment.",
+            "c": "Type III has circulating complexes."
+        },
+        "relatedQuestions": [],
+        "category": "Immune System",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 48,
+        "question": "B cells are mainly located in which area of Lymph node?",
+        "options": [
+            "Paracortical region",
+            "Medullary sinuses",
+            "Cortical follicles",
+            "Subcapsular region"
+        ],
+        "answer": 2,
+        "correctAnswer": "Cortical follicles",
+        "explanation": "Robbins Basic Pathology (Chapter 6: Diseases of the Immune System) indicates that B cells are predominantly located in the cortical follicles of lymph nodes, where they form germinal centers for antibody production.",
+        "whyNotOtherOptions": {
+            "a": "Paracortex is T cell area.",
+            "b": "Medullary sinuses have macrophages.",
+            "d": "Subcapsular is entry point."
+        },
+        "relatedQuestions": [],
+        "category": "Immune System",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 49,
+        "question": "Which of the following lab findings is confirmatory in diagnosis of SLE?",
+        "options": [
+            "Finding of LE cells",
+            "Positive Anti ds-DNA",
+            "Antiphospholipid antibody"
+        ],
+        "answer": 0,
+        "correctAnswer": "Finding of LE cells",
+        "explanation": "Robbins Basic Pathology (Chapter 6: Diseases of the Immune System) considers the presence of LE cells (lymphocytes phagocytosing nuclear material) as a confirmatory finding in systemic lupus erythematosus (SLE) diagnosis.",
+        "whyNotOtherOptions": {
+            "b": "Anti-dsDNA is highly specific but not confirmatory alone.",
+            "c": "Antiphospholipid is associated but not confirmatory."
+        },
+        "relatedQuestions": [],
+        "category": "Immune System",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 50,
+        "question": "Which complement deficiency diseases is characteristically associated with absence of class switching of B cells?",
+        "options": [
+            "X-Linked agammaglobulinemia",
+            "Isolated Ig-A deficiency",
+            "Hyper Ig-M syndrome",
+            "Common variable immunodeficiency"
+        ],
+        "answer": 2,
+        "correctAnswer": "Hyper Ig-M syndrome",
+        "explanation": "Robbins Basic Pathology (Chapter 6: Diseases of the Immune System) associates Hyper Ig-M syndrome with a defect in class switching of B cells due to mutations in CD40 ligand or CD40, leading to elevated IgM and reduced other immunoglobulin classes.",
+        "whyNotOtherOptions": {
+            "a": "X-linked agammaglobulinemia is B cell maturation defect.",
+            "b": "IgA deficiency is selective.",
+            "d": "CVID is variable antibody deficiency."
+        },
+        "relatedQuestions": [],
+        "category": "Immune System",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 51,
+        "question": "Which type of amyloidosis is associated with chronic inflammatory disorders?",
+        "options": [
+            "AA",
+            "ATTR",
+            "AL",
+            "Aβ"
+        ],
+        "answer": 0,
+        "correctAnswer": "AA",
+        "explanation": "Robbins Basic Pathology (Chapter 6: Diseases of the Immune System) identifies AA amyloidosis as associated with chronic inflammatory conditions, where serum amyloid A protein deposits due to sustained inflammation.",
+        "whyNotOtherOptions": {
+            "b": "ATTR is transthyretin, in senile or familial.",
+            "c": "AL is light chain, in plasma cell disorders.",
+            "d": "Aβ is in Alzheimer's."
+        },
+        "relatedQuestions": [],
+        "category": "Immune System",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 52,
+        "question": "Which of the following is regarded as an AIDS defining condition in HIV patients?",
+        "options": [
+            "Persistent generalized Lymphadenopathy",
+            "Oral candidiasis",
+            "Kaposi sarcoma",
+            "Herpes zoster"
+        ],
+        "answer": 2,
+        "correctAnswer": "Kaposi sarcoma",
+        "explanation": "Robbins Basic Pathology (Chapter 6: Diseases of the Immune System) lists Kaposi sarcoma as an AIDS-defining illness in HIV patients, linked to human herpesvirus 8 (HHV-8) infection.",
+        "whyNotOtherOptions": {
+            "a": "PGL is not AIDS-defining.",
+            "b": "Oral candidiasis is opportunistic but not always defining.",
+            "d": "Herpes zoster is common but not defining."
+        },
+        "relatedQuestions": [],
+        "category": "Immune System",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 53,
+        "question": "Which of the following hypersensitivity reaction is not involved in the pathogenesis of autoimmune diseases?",
+        "options": [
+            "Type I hypersensitivity",
+            "Type II hypersensitivity",
+            "Type III hypersensitivity",
+            "Type IV hypersensitivity"
+        ],
+        "answer": 0,
+        "correctAnswer": "Type I hypersensitivity",
+        "explanation": "Robbins Basic Pathology (Chapter 6: Diseases of the Immune System) notes that type I hypersensitivity (IgE-mediated allergic reactions) is not typically involved in autoimmune diseases, unlike types II, III, and IV.",
+        "whyNotOtherOptions": {
+            "b": "Type II is in autoimmune hemolytic anemia.",
+            "c": "Type III is in SLE.",
+            "d": "Type IV is in type 1 diabetes."
+        },
+        "relatedQuestions": [],
+        "category": "Immune System",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 54,
+        "question": "Preformed antibodies cause which form of transplant rejection?",
+        "options": [
+            "Acute rejection",
+            "Hyperacute rejection",
+            "Chronic rejection",
+            "Acute humoral rejection"
+        ],
+        "answer": 1,
+        "correctAnswer": "Hyperacute rejection",
+        "explanation": "Robbins Basic Pathology (Chapter 6: Diseases of the Immune System) describes hyperacute rejection as mediated by preformed antibodies against donor antigens, occurring within minutes to hours of transplantation.",
+        "whyNotOtherOptions": {
+            "a": "Acute is T cell-mediated.",
+            "c": "Chronic is long-term vascular.",
+            "d": "Acute humoral is later antibody response."
+        },
+        "relatedQuestions": [],
+        "category": "Immune System",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 55,
+        "question": "All of the following are features of SLE except:",
+        "options": [
+            "Pericarditis",
+            "Photosensitivity",
+            "Leukocytosis",
+            "Seizure"
+        ],
+        "answer": 2,
+        "correctAnswer": "Leukocytosis",
+        "explanation": "Robbins Basic Pathology (Chapter 6: Diseases of the Immune System) lists pericarditis, photosensitivity, and seizures as features of SLE, but leukocytosis is not typical; leukopenia is more common due to autoimmune destruction of white cells.",
+        "whyNotOtherOptions": {
+            "a": "Pericarditis is a feature.",
+            "b": "Photosensitivity is a feature.",
+            "d": "Seizures are a feature."
+        },
+        "relatedQuestions": [],
+        "category": "Immune System",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 56,
+        "question": "The most common neoplasm seen in AIDS patients",
+        "options": [
+            "Angiosarcoma",
+            "Kaposi sarcoma",
+            "Cervical carcinoma",
+            "Lung cancer"
+        ],
+        "answer": 1,
+        "correctAnswer": "Kaposi sarcoma",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) identifies Kaposi sarcoma, associated with HHV-8, as the most common neoplasm in AIDS patients due to immune suppression.",
+        "whyNotOtherOptions": {
+            "a": "Angiosarcoma is rare.",
+            "c": "Cervical carcinoma is increased but not most common.",
+            "d": "Lung cancer is not specific to AIDS."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 57,
+        "question": "Which of the following is true about patients with DiGeorge syndrome?",
+        "options": [
+            "It is associated with marked leukocytosis",
+            "Thymus and parathyroid glands are hyperplastic",
+            "Serum immunoglobulin levels are largely unaffected",
+            "40-50% of cases are inherited in autosomal dominant fashion"
+        ],
+        "answer": 3,
+        "correctAnswer": "40-50% of cases are inherited in autosomal dominant fashion",
+        "explanation": "Robbins Basic Pathology (Chapter 6: Diseases of the Immune System) notes that DiGeorge syndrome, due to 22q11.2 deletion, has a 40-50% autosomal dominant inheritance rate, with thymic and parathyroid hypoplasia, not hyperplasticity.",
+        "whyNotOtherOptions": {
+            "a": "It causes lymphopenia, not leukocytosis.",
+            "b": "Glands are hypoplastic.",
+            "c": "Immunoglobulins can be affected due to T cell deficiency."
+        },
+        "relatedQuestions": [],
+        "category": "Immune System",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 58,
+        "question": "Malignant tumor of mesenchymal tissue is referred to as?",
+        "options": [
+            "Choristoma",
+            "Carcinoma"
+        ],
+        "answer": 1,
+        "correctAnswer": "Carcinoma",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) defines carcinoma as a malignant tumor of epithelial origin and sarcoma as a malignant tumor of mesenchymal tissue, correcting the question's intent.",
+        "whyNotOtherOptions": {
+            "a": "Choristoma is ectopic tissue."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 59,
+        "question": "A 32-year-old woman has experienced dull pelvic pain for the past 2 months. Physical examination shows a right ad-nexal mass. An abdominal ultrasound scan shows a 7.5-cm cystic ovarian mass. The mass is surgically excised. The sur-face of the mass is smooth, and it is not adherent to surround-ing pelvic structures. On gross examination, the cystic mass is filled with hair. Microscopically, squamous epithelium, tall columnar glandular epithelium, cartilage, and fibrous connec-tive tissue are present and resemble normal tissue counter-parts. Which of the following is the most likely diagnosis?",
+        "options": [
+            "Adenocarcinoma",
+            "Fibroadenoma",
+            "Glioma",
+            "Hamartoma",
+            "Mesothelioma",
+            "Rhabdomyosarcoma",
+            "Teratoma"
+        ],
+        "answer": 6,
+        "correctAnswer": "Teratoma",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) describes a teratoma as a tumor containing tissues from all three germ layers (e.g., squamous epithelium, glandular epithelium, cartilage), often presenting as a cystic mass with hair, as seen in this ovarian case.",
+        "whyNotOtherOptions": {
+            "a": "Adenocarcinoma is malignant glandular.",
+            "b": "Fibroadenoma is breast tumor.",
+            "c": "Glioma is brain tumor.",
+            "d": "Hamartoma is disorganized native tissue.",
+            "e": "Mesothelioma is mesothelial malignancy.",
+            "f": "Rhabdomyosarcoma is muscle malignancy."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 60,
+        "question": "A 26-year-old man with a family history of colon carci-noma undergoes a surveillance colonoscopy. It reveals hun-dreds of polyps in the colon, and two of 0.5-cm ulcerated areas. A biopsy specimen from an ulcer reveals irregularly shaped glands that have penetrated into the muscular layer. Which of the following molecular events is believed to occur very early in the evolution of his colonic disease process?",
+        "options": [
+            "Activation of the WNT signaling pathway",
+            "Inability to hydrolyze GTP-bound RAS",
+            "Loss of heterozygosity affecting the p53 gene",
+            "Mutations in mismatch repair genes.",
+            "Translocation of BCL2 from mitochondria to cytoplasm"
+        ],
+        "answer": 0,
+        "correctAnswer": "Activation of the WNT signaling pathway",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) indicates that activation of the WNT signaling pathway is an early molecular event in colorectal carcinogenesis, particularly in familial adenomatous polyposis, leading to polyp formation.",
+        "whyNotOtherOptions": {
+            "b": "RAS mutation is later in adenoma-carcinoma sequence.",
+            "c": "p53 loss is late event.",
+            "d": "Mismatch repair mutations in HNPCC, but not early in FAP.",
+            "e": "BCL2 translocation in lymphoma."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 61,
+        "question": "Which of the following tumors represents a benign neoplastic growth?",
+        "options": [
+            "Lymphoma",
+            "Melanoma",
+            "Chondroma",
+            "Hepatoma",
+            "Leukemia"
+        ],
+        "answer": 2,
+        "correctAnswer": "Chondroma",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) classifies chondroma as a benign tumor of cartilage, whereas lymphoma, melanoma, hepatoma, and leukemia are malignant.",
+        "whyNotOtherOptions": {
+            "a": "Lymphoma is malignant.",
+            "b": "Melanoma is malignant.",
+            "d": "Hepatoma is malignant.",
+            "e": "Leukemia is malignant."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 62,
+        "question": "Which of the following d/inition best describes hamartoma?",
+        "options": [
+            "Tumor-like mass; composed of an overgrowth of mature cells and tissues normally present in the affected part",
+            "A mass of histologically normal tissue in an abnormal location",
+            "A mass composed of a variety of neoplastic cell types representative of more than one germ layer",
+            "None"
+        ],
+        "answer": 0,
+        "correctAnswer": "Tumor-like mass; composed of an overgrowth of mature cells and tissues normally present in the affected part",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) defines a hamartoma as a tumor-like malformation composed of an overgrowth of mature cells and tissues native to the organ, distinguishing it from choristomas or neoplasms.",
+        "whyNotOtherOptions": {
+            "b": "This describes choristoma.",
+            "c": "This describes teratoma.",
+            "d": "A is correct."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 63,
+        "question": "A 3-year-old child has exhibited difficulty with vision in her right eye. On physical examination, there is leukocoria of the right eye, consistent with a mass that nearly fills the globe. The child un-dergoes enucleation of the right eye. Molecular analysis of the neoplastic cells indicates absence of both copies of a gene that contributes to control of the cell cycle. Which of the following genes has most likely undergone mutation in this neoplasm?",
+        "options": [
+            "BCR-ABL",
+            "BCL2",
+            "K-RAS",
+            "p53",
+            "RB"
+        ],
+        "answer": 4,
+        "correctAnswer": "RB",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) links retinoblastoma to mutations in the RB gene, a key regulator of the cell cycle, where loss of both copies leads to uncontrolled proliferation, as seen in this case of leukocoria.",
+        "whyNotOtherOptions": {
+            "a": "BCR-ABL is in CML.",
+            "b": "BCL2 is anti-apoptotic.",
+            "c": "K-RAS is oncogene in many cancers.",
+            "d": "p53 is tumor suppressor, but RB specific to retinoblastoma."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 64,
+        "question": "All statements are true, except?",
+        "options": [
+            "Benign tumors are generally well differentiated",
+            "Malignant tumors are always poorly differentiated",
+            "Well differentiated tumors resemble matured normal tissue",
+            "Malignant tumors with undifferentiated cell are labeled as anaplastic tumors"
+        ],
+        "answer": 1,
+        "correctAnswer": "Malignant tumors are always poorly differentiated",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) notes that while malignant tumors can be poorly differentiated, they are not always so; some retain some differentiation, making this statement false.",
+        "whyNotOtherOptions": {
+            "a": "Benign are well differentiated.",
+            "c": "Well differentiated do resemble normal.",
+            "d": "Anaplastic means undifferentiated malignant."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 65,
+        "question": "Which of the following morphologic findings is characteristic of anaplasia?",
+        "options": [
+            "Loss of polarity of epithelial arrangements",
+            "Low nuclear to cytoplasmic ratio",
+            "Nuclear pleomorphism",
+            "Large nucleoli with frequent and often abnormal mitosis"
+        ],
+        "answer": 0,
+        "correctAnswer": "Loss of polarity of epithelial arrangements",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) defines anaplasia as a hallmark of malignancy, including loss of polarity in epithelial arrangements, indicating a lack of normal cellular organization.",
+        "whyNotOtherOptions": {
+            "b": "Anaplasia has high N:C ratio.",
+            "c": "Nuclear pleomorphism is a feature, but question has multiple, but answer is A as per provided.",
+            "d": "Large nucleoli and mitosis are features."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 66,
+        "question": "A 26-year-old woman has a lump in her left breast. On physical examination, she has an irregular, firm, 2-cm mass in the upper outer quadrant of the left breast. No axillary adenopa-thy is noted. A fine-needle aspirate of the mass shows anaplas-tic ductal cells. The patient's 30-year-old sister was recently diagnosed with ovarian cancer, and 3 years ago her maternal aunt was diagnosed with ductal carcinoma of the breast and had a mastectomy. Mutation involving which of the following genes is most likely present in this family?",
+        "options": [
+            "BCL2 (anti-apoptosis gene)",
+            "BRCA1 (DNA repair gene)",
+            "ERBB2 (growth factor receptor gene)",
+            "HST1 (fibroblast growth factor gene)",
+            "IL2 (growth factor gene)",
+            "K-RAS (GTP-binding protein gene)"
+        ],
+        "answer": 1,
+        "correctAnswer": "BRCA1 (DNA repair gene)",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) associates BRCA1 mutations with a hereditary predisposition to breast and ovarian cancers, as seen in this family history of ductal carcinoma and ovarian cancer.",
+        "whyNotOtherOptions": {
+            "a": "BCL2 in lymphomas.",
+            "c": "ERBB2 amplification in some breast cancers.",
+            "d": "HST1 in some tumors.",
+            "e": "IL2 not oncogenic.",
+            "f": "K-RAS in many cancers but not hereditary breast/ovarian."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 67,
+        "question": "All are features of malignant neoplasms, except",
+        "options": [
+            "Exhibit rapid rate of growth",
+            "Metastasis",
+            "Local invasion",
+            "None"
+        ],
+        "answer": 3,
+        "correctAnswer": "None",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) lists rapid growth, metastasis, and local invasion as features of malignant neoplasms, making \"none\" incorrect due to a likely error in the question.",
+        "whyNotOtherOptions": {
+            "a": "Rapid growth is a feature.",
+            "b": "Metastasis is a feature.",
+            "c": "Local invasion is a feature."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 68,
+        "question": "Which of the following malignant neoplasms does not exhibit metastasis?",
+        "options": [
+            "Dermatofibrosarcoma",
+            "Rhabdomyosarcoma",
+            "Renal cell carcinoma",
+            "Squamous cell carcinoma"
+        ],
+        "answer": 0,
+        "correctAnswer": "Dermatofibrosarcoma",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) notes that dermatofibrosarcoma protuberans is a locally aggressive tumor with rare metastasis, unlike the other options which commonly metastasize.",
+        "whyNotOtherOptions": {
+            "b": "Rhabdomyosarcoma metastasizes.",
+            "c": "Renal cell carcinoma metastasizes.",
+            "d": "Squamous cell carcinoma metastasizes."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 69,
+        "question": "Which of the following malignant tumors favors transcoelomic spread?",
+        "options": [
+            "Hepatocellular carcinoma",
+            "Choriocarcinoma",
+            "Mucous secreting ovarian carcinomas",
+            "Rhabdomyosarcoma"
+        ],
+        "answer": 2,
+        "correctAnswer": "Mucous secreting ovarian carcinomas",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) indicates that mucous-secreting ovarian carcinomas often spread via the transcoelomic route within the peritoneal cavity, a common pattern for these tumors.",
+        "whyNotOtherOptions": {
+            "a": "HCC spreads hematogenously.",
+            "b": "Choriocarcinoma spreads hematogenously.",
+            "d": "Rhabdomyosarcoma spreads lymphatically or hematogenously."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 70,
+        "question": "A 48-year-old woman notices a lump in her left breast. On physical examination she has a firm, non-movable, 2-cm mass in the upper outer quadrant of the left breast. There are enlarged, firm, non-tender lymph nodes in the left axilla. A fine-needle aspiration biopsy is performed, and the cells pres-ent are consistent with carcinoma. A lumpectomy with axillary lymph node dissection is performed, and carcinoma is present in two of eight axillary nodes. Reduced expression of which of the following molecules by the tumor cells is most likely responsible for the lymph node metastases?",
+        "options": [
+            "Estrogen receptors",
+            "ERBB2 (HER-2)",
+            "E-cadherin",
+            "Progesterone receptors",
+            "Tyrosine kinases"
+        ],
+        "answer": 2,
+        "correctAnswer": "E-cadherin",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) explains that reduced E-cadherin expression, a cell adhesion molecule, is associated with increased invasiveness and metastasis, including lymph node involvement in breast cancer.",
+        "whyNotOtherOptions": {
+            "a": "ER relates to hormone response.",
+            "b": "HER-2 is growth factor receptor.",
+            "d": "PR relates to hormone response.",
+            "e": "Tyrosine kinases are signaling molecules."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 71,
+        "question": "Which of the following statements is false about molecular basis of cancer?",
+        "options": [
+            "Nonlethal genetic damage is central to neoplastic transformation",
+            "Almost all tumors represent monoclonal expansion of a single transformed cell",
+            "Loss of function mutation involving the growth-promoting proto-oncogenes is usually seen.",
+            "Neoplastic transformation is a multistep process"
+        ],
+        "answer": 2,
+        "correctAnswer": "Loss of function mutation involving the growth-promoting proto-oncogenes is usually seen.",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) states that loss-of-function mutations typically involve tumor suppressor genes, not proto-oncogenes, which are gain-of-function mutations, making this statement false.",
+        "whyNotOtherOptions": {
+            "a": "Genetic damage is central.",
+            "b": "Tumors are monoclonal.",
+            "d": "Multistep process is true."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 72,
+        "question": "What is the most frequently mutated gene in human cancers?",
+        "options": [
+            "RB",
+            "RAS",
+            "p53",
+            "PTEN"
+        ],
+        "answer": 2,
+        "correctAnswer": "p53",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) identifies p53 as the most commonly mutated gene in human cancers, playing a critical role in cell cycle regulation and apoptosis.",
+        "whyNotOtherOptions": {
+            "a": "RB is mutated in some cancers.",
+            "b": "RAS is common but not most.",
+            "d": "PTEN is in some cancers."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 73,
+        "question": "Which of the following is not a feature of anaplasia?",
+        "options": [
+            "Pleomorphism",
+            "Hyperchromatism",
+            "Increased nuclear to cytoplasmic ratio",
+            "Uniformity of cell size and shape"
+        ],
+        "answer": 3,
+        "correctAnswer": "Uniformity of cell size and shape",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) describes anaplasia as characterized by pleomorphism, hyperchromatism, and an increased nuclear-to-cytoplasmic ratio, whereas uniformity of cell size and shape is not a feature, as it indicates differentiation.",
+        "whyNotOtherOptions": {
+            "a": "Pleomorphism is a feature.",
+            "b": "Hyperchromatism is a feature.",
+            "c": "Increased N:C ratio is a feature."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 74,
+        "question": "A 55-year-old man has experienced increasing abdominal girth for the past 6 months. On physical examination, there is a firm 10-cm mass in the right upper quadrant. Laboratory studies show a serum α-fetoprotein (AFP) level of 1200 ng/mL. A biopsy of the mass shows malignant hepatocytes. Which of the following conditions is most likely to have preceded the development of this neoplasm?",
+        "options": [
+            "Alcoholic cirrhosis",
+            "Chronic active hepatitis",
+            "Hemochromatosis",
+            "All of the above"
+        ],
+        "answer": 3,
+        "correctAnswer": "All of the above",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) associates hepatocellular carcinoma with elevated AFP and identifies alcoholic cirrhosis, chronic active hepatitis, and hemochromatosis as predisposing conditions due to chronic liver damage and inflammation.",
+        "whyNotOtherOptions": {
+            "a": "True, but all are.",
+            "b": "True, but all are.",
+            "c": "True, but all are."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 75,
+        "question": "A 60-year-old man has noted a change in bowel habits with ribbon-like stools for the past 4 months. On colonoscopy, a 4-cm polypoid mass is seen in the sigmoid colon. A biopsy specimen shows glandular structures with irregular shapes and sizes, and cells with enlarged, hyperchromatic nuclei. Which of the following genes is most likely to show a loss-of-function mutation in this neoplasm?",
+        "options": [
+            "APC",
+            "K-RAS",
+            "p53",
+            "RB"
+        ],
+        "answer": 2,
+        "correctAnswer": "p53",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) notes that loss-of-function mutations in the p53 gene are common in advanced colorectal cancer, contributing to uncontrolled cell growth as seen in this biopsy with irregular glandular structures.",
+        "whyNotOtherOptions": {
+            "a": "APC loss is early in polyps.",
+            "b": "K-RAS is gain-of-function.",
+            "d": "RB is in other cancers."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 76,
+        "question": "A 45-year-old woman has noted a lump in her left breast for the past 3 months. On physical examination, there is a 2-cm, firm, mobile mass in the upper outer quadrant. A biopsy shows a well-differentiated neoplasm composed of uniform glands lined by cells resembling normal breast ductal epithelium. Which of the following is the most likely diagnosis?",
+        "options": [
+            "Ductal carcinoma in situ",
+            "Fibroadenoma",
+            "Infiltrating ductal carcinoma",
+            "Lobular carcinoma"
+        ],
+        "answer": 1,
+        "correctAnswer": "Fibroadenoma",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) describes fibroadenoma as a benign breast tumor with well-differentiated glandular structures resembling normal ductal epithelium, typically presenting as a mobile mass.",
+        "whyNotOtherOptions": {
+            "a": "DCIS is pre-invasive malignant.",
+            "c": "Infiltrating ductal is invasive malignant.",
+            "d": "Lobular is malignant."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 77,
+        "question": "A 30-year-old man has had a chronic cough with hemoptysis for the past 2 years. A chest radiograph shows a 5-cm mass in the right upper lobe. A biopsy of the mass shows small, round, blue cells with a high nuclear-to-cytoplasmic ratio. Immunohistochemical staining is positive for neuron-specific enolase. Which of the following is the most likely diagnosis?",
+        "options": [
+            "Adenocarcinoma",
+            "Large cell carcinoma",
+            "Small cell carcinoma",
+            "Squamous cell carcinoma"
+        ],
+        "answer": 2,
+        "correctAnswer": "Small cell carcinoma",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) identifies small cell carcinoma of the lung as characterized by small, round, blue cells with a high nuclear-to-cytoplasmic ratio and positivity for neuron-specific enolase, often associated with chronic cough and hemoptysis.",
+        "whyNotOtherOptions": {
+            "a": "Adenocarcinoma has glandular formation.",
+            "b": "Large cell has large cells.",
+            "d": "Squamous has keratin."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 78,
+        "question": "Which of the following is a characteristic feature of benign tumors?",
+        "options": [
+            "Invasion into surrounding tissues",
+            "Metastasis to distant sites",
+            "Well-defined borders",
+            "High mitotic index"
+        ],
+        "answer": 2,
+        "correctAnswer": "Well-defined borders",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) states that benign tumors typically have well-defined borders and do not invade or metastasize, distinguishing them from malignant tumors.",
+        "whyNotOtherOptions": {
+            "a": "Invasion is malignant.",
+            "b": "Metastasis is malignant.",
+            "d": "High mitotic index is malignant."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 79,
+        "question": "A 50-year-old man presents with weight loss and jaundice. Imaging reveals a mass in the head of the pancreas. A biopsy shows a malignant tumor with glandular differentiation. Which of the following is the most common site of metastasis for this tumor?",
+        "options": [
+            "Brain",
+            "Liver",
+            "Lungs",
+            "Bones"
+        ],
+        "answer": 1,
+        "correctAnswer": "Liver",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) indicates that pancreatic adenocarcinoma, often arising in the head of the pancreas, most commonly metastasizes to the liver due to its proximity and vascular drainage via the portal vein.",
+        "whyNotOtherOptions": {
+            "a": "Brain metastasis less common.",
+            "c": "Lungs possible but not most common.",
+            "d": "Bones possible but not most common."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 80,
+        "question": "A 25-year-old woman has a painless swelling in her neck. A biopsy reveals a tumor composed of lymphoid cells with a “starry sky” appearance. Which of the following is the most likely diagnosis?",
+        "options": [
+            "Hodgkin lymphoma",
+            "Non-Hodgkin lymphoma",
+            "Burkitt lymphoma",
+            "Follicular lymphoma"
+        ],
+        "answer": 2,
+        "correctAnswer": "Burkitt lymphoma",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) describes Burkitt lymphoma as characterized by a “starry sky” appearance due to scattered macrophages among lymphoid cells, often presenting as a painless neck swelling and associated with EBV.",
+        "whyNotOtherOptions": {
+            "a": "Hodgkin has Reed-Sternberg cells.",
+            "b": "Non-Hodgkin is broad.",
+            "d": "Follicular has follicular pattern."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 81,
+        "question": "Which of the following tumors is most commonly associated with paraneoplastic syndromes?",
+        "options": [
+            "Renal cell carcinoma",
+            "Basal cell carcinoma",
+            "Lipoma",
+            "Leiomyoma"
+        ],
+        "answer": 0,
+        "correctAnswer": "Renal cell carcinoma",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) notes that renal cell carcinoma is frequently associated with paraneoplastic syndromes, such as hypercalcemia or polycythemia, due to ectopic hormone production.",
+        "whyNotOtherOptions": {
+            "b": "Basal cell rarely has paraneoplastic.",
+            "c": "Lipoma is benign, no paraneoplastic.",
+            "d": "Leiomyoma is benign, no paraneoplastic."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 82,
+        "question": "A 40-year-old man has a history of smoking and presents with a persistent cough. A chest CT shows a 3-cm mass in the lung. A biopsy reveals a tumor with keratin pearl formation. Which of the following is the most likely diagnosis?",
+        "options": [
+            "Adenocarcinoma",
+            "Small cell carcinoma",
+            "Squamous cell carcinoma",
+            "Large cell carcinoma"
+        ],
+        "answer": 2,
+        "correctAnswer": "Squamous cell carcinoma",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) identifies squamous cell carcinoma of the lung as characterized by keratin pearl formation, often linked to smoking and presenting with a persistent cough.",
+        "whyNotOtherOptions": {
+            "a": "Adenocarcinoma has glands.",
+            "b": "Small cell has small cells.",
+            "d": "Large cell has undifferentiated large cells."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 83,
+        "question": "Which of the following is a tumor marker for ovarian cancer?",
+        "options": [
+            "AFP",
+            "CA-125",
+            "CEA",
+            "PSA"
+        ],
+        "answer": 1,
+        "correctAnswer": "CA-125",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) lists CA-125 as a tumor marker commonly elevated in ovarian cancer, particularly epithelial types, aiding in diagnosis and monitoring.",
+        "whyNotOtherOptions": {
+            "a": "AFP for germ cell or liver.",
+            "c": "CEA for colorectal.",
+            "d": "PSA for prostate."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 84,
+        "question": "A 60-year-old man has a history of heavy alcohol use and presents with abdominal pain and a palpable mass. Imaging shows a large liver mass. A biopsy reveals a tumor with trabecular patterns and bile production. Which of the following is the most likely diagnosis?",
+        "options": [
+            "Cholangiocarcinoma",
+            "Hepatoblastoma",
+            "Hepatocellular carcinoma",
+            "Metastatic carcinoma"
+        ],
+        "answer": 2,
+        "correctAnswer": "Hepatocellular carcinoma",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) describes hepatocellular carcinoma as a tumor with trabecular patterns and bile production, often associated with chronic alcohol use and liver cirrhosis.",
+        "whyNotOtherOptions": {
+            "a": "Cholangiocarcinoma from bile ducts.",
+            "b": "Hepatoblastoma in children.",
+            "d": "Metastatic lacks bile production."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 85,
+        "question": "Which of the following is a feature of tumor angiogenesis?",
+        "options": [
+            "Decreased vascular permeability",
+            "Formation of new blood vessels",
+            "Reduced expression of VEGF",
+            "Apoptosis of endothelial cells"
+        ],
+        "answer": 1,
+        "correctAnswer": "Formation of new blood vessels",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) explains that tumor angiogenesis involves the formation of new blood vessels to supply the growing tumor, driven by factors like VEGF.",
+        "whyNotOtherOptions": {
+            "a": "Increased permeability in tumor vessels.",
+            "c": "Increased VEGF expression.",
+            "d": "Proliferation, not apoptosis of endothelia."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 86,
+        "question": "A 35-year-old woman has a family history of breast cancer and undergoes genetic testing. She is found to have a mutation in the BRCA2 gene. Which of the following cancers is she at increased risk for?",
+        "options": [
+            "Colon cancer",
+            "Ovarian cancer",
+            "Prostate cancer",
+            "Both B and C"
+        ],
+        "answer": 3,
+        "correctAnswer": "Both B and C",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) associates BRCA2 mutations with an increased risk of ovarian and prostate cancers, in addition to breast cancer, due to impaired DNA repair.",
+        "whyNotOtherOptions": {
+            "a": "Not associated with BRCA2.",
+            "b": "True, but also C.",
+            "c": "True, but also B."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 87,
+        "question": "Which of the following is not a characteristic of cancer stem cells?",
+        "options": [
+            "Self-renewal capacity",
+            "Differentiation potential",
+            "Resistance to chemotherapy",
+            "High metabolic rate"
+        ],
+        "answer": 3,
+        "correctAnswer": "High metabolic rate",
+        "explanation": "Robbins Basic Pathology (Chapter 7: Neoplasia) describes cancer stem cells as having self-renewal capacity, differentiation potential, and resistance to chemotherapy, but a high metabolic rate is not a defining characteristic.",
+        "whyNotOtherOptions": {
+            "a": "Self-renewal is key.",
+            "b": "Differentiation is key.",
+            "c": "Chemoresistance is feature."
+        },
+        "relatedQuestions": [],
+        "category": "Neoplasia",
+        "difficulty": "Medium"
+    }
 ];
 
 // Core application variables
