@@ -1861,6 +1861,20 @@
         </div>
     </div>
 
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+  const tg = window.Telegram.WebApp;
+
+  // Show Telegram's native back button
+  tg.BackButton.show();
+
+  // Handle Telegram back button press
+  tg.BackButton.onClick(() => {
+    // Example: navigate back
+    window.history.back();
+  });
+</script>
+
      <script>
         // Anti-copy, anti-inspect measures
 document.addEventListener('contextmenu', function(e) {
