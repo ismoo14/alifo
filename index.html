@@ -732,7 +732,7 @@
                     <select id="year" required>
                         <option value="" disabled selected>Select Year of Study</option>
                         <option value="1">1st Year - 100 ETB</option>
-                        <option value="2">2nd Year - 120 ETB</option>
+                        <option value="2">2nd Year - 200 ETB</option>
                         <option value="3">3rd Year - 140 ETB</option>
                         <option value="4">4th Year - 160 ETB</option>
                     </select>
@@ -980,14 +980,17 @@
                 { id: 7, title: "ENTREPRENUERSHIP", icon: "fas fa-heartbeat", questions: 25, time: 20, difficulty: "intermediate", rating: 4.5, page: "year2/physiology-i.html" },
                 { id: 8, title: "ECONOMICS", icon: "fas fa-microscope", questions: 20, time: 15, difficulty: "intermediate", rating: 4.3, page: "year2/histology.html" },
                 { id: 9, title: "CIVIC", icon: "fas fa-flask", questions: 28, time: 22, difficulty: "intermediate", rating: 4.4, page: "year2/biochemistry-ii.html" }
-               ],
+            ],
             2: [
                 { id: 1, title: "Anatomy", icon: "fas fa-brain", questions: 20, time: 15, difficulty: "beginner", rating: 4.5, page: "yr1/an.html" },
-                { id: 2, title: "Physiology", icon: "fas fa-microscope", questions: 15, time: 10, difficulty: "beginner", rating: 4.2, page: "yr1/ps.html" },
+                { id: 2, title: "Physiology", icon: "fas fa-microscope", questions: 15, time: 10, difficulty: "intermediate", rating: 4.2, page: "yr1/ps.html" },
                 { id: 3, title: "Biochemistry", icon: "fas fa-book", questions: 25, time: 20, difficulty: "beginner", rating: 4.7, page: "yr1/bc.html" },
                 { id: 4, title: "Pathology", icon: "fas fa-flask", questions: 18, time: 15, difficulty: "beginner", rating: 4.3, page: "yr1/pt.html" },
-                { id: 5, title: "Pharmacology", icon: "fas fa-heartbeat", questions: 22, time: 18, difficulty: "beginner", rating: 4.4, page: "yr1/pc.html" }
-           ],
+                { id: 5, title: "Pharmacology", icon: "fas fa-heartbeat", questions: 22, time: 18, difficulty: "beginner", rating: 4.4, page: "yr1/pc.html" },
+                { id: 6, title: "PCD", icon: "fas fa-heartbeat", questions: 100, time: 18, difficulty: "beginner", rating: 4.4, page: "yr1/pcd.html" },
+                { id: 7, title: "PARASITOLOGY", icon: "fas fa-heartbeat", questions: 22, time: 18, difficulty: "beginner", rating: 4.4, page: "yr1/pr.html" },
+                { id: 5, title: "immunology", icon: "fas fa-heartbeat", questions: 123, time: 18, difficulty: "beginner", rating: 4.4, page: "yr1/im.html" }
+            ],  
             3: [
                 { id: 10, title: "Pathology", icon: "fas fa-virus", questions: 35, time: 30, difficulty: "intermediate", page: "year3/pathology.html", rating: 4.7 },
                 { id: 11, title: "Pharmacology I", icon: "fas fa-pills", questions: 30, time: 25, difficulty: "intermediate", rating: 4.6, page: "year3/pharmacology-i.html" },
@@ -1022,7 +1025,7 @@
         // Price data
         const prices = {
             1: 100,
-            2: 120,
+            2: 200,
             3: 140,
             4: 160,
             5: 180,
