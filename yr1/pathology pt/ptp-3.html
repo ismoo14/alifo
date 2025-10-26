@@ -1,0 +1,4699 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ALIF | Advanced Medical Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="/protect.js"></script>
+    <style type="text/css">
+        /* Import Inter font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --primary: #3b82f6; 
+            --primary-dark: #2563eb; 
+            --primary-light: #dbeafe; 
+            --secondary: #6b7280; 
+            --success: #22c55e; 
+            --error: #ef4444; 
+            --warning: #eab308; 
+            --info: #0ea5e9; 
+            --background: #ffffff; 
+            --surface: #f9fafb; 
+            --text-primary: #111827; 
+            --text-secondary: #4b5563; 
+            --text-tertiary: #9ca3af; 
+            --border: #e5e7eb; 
+            --shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
+            --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 8px 16px rgba(0, 0, 0, 0.05);
+            --radius: 8px; 
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
+            --gradient: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+            --glass: rgba(255, 255, 255, 0.85); 
+            --glass-border: rgba(229, 231, 235, 0.3);
+        }
+
+        .dark-mode {
+            --primary: #60a5fa;
+            --primary-dark: #3b82f6;
+            --primary-light: #93c5fd;
+            --secondary: #94a3b8;
+            --background: #000000; 
+            --surface: #111827; 
+            --text-primary: #f9fafb; 
+            --text-secondary: #d1d5db; 
+            --text-tertiary: #6b7280; 
+            --border: #1f2937; 
+            --shadow: 0 2px 4px rgba(0, 0, 0, 0.6); 
+            --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.6);
+            --shadow-xl: 0 8px 16px rgba(0, 0, 0, 0.6);
+            --glass: rgba(17, 24, 39, 0.85); 
+            --glass-border: rgba(31, 41, 55, 0.3);
+            .mode-btn,
+    .question-text,
+    .option-text {
+        color: var(--text-primary) !important;
+    }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none; 
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+            transition: var(--transition);
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 24px 0;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transform: translateX(-100%);
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            padding: 0 24px 16px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .logo i {
+            font-size: 24px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            font-weight: 400;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            background: var(--glass);
+            border-radius: var(--radius);
+            margin: 0 16px 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .user-info h3 {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .user-info p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: var(--glass);
+            border-left-color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-item.active {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-left-color: var(--primary);
+        }
+
+        .nav-item.active .nav-icon {
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+        }
+
+        .categories-section {
+            margin-top: 24px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .categories-grid {
+            padding: 0 16px;
+        }
+
+        .category-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .category-card:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .category-card.active {
+            background: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .category-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+        }
+
+        .category-card.active .category-icon {
+            background: var(--primary);
+        }
+
+        .category-name {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .category-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-right: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: width 0.4s ease;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+
+        .category-card.active .progress-text {
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 0;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .main-content.sidebar-open {
+            margin-left: 280px;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 32px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .menu-toggle:hover {
+            background: var(--primary-light);
+        }
+
+        .page-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .mode-selector {
+            display: flex;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: 4px;
+        }
+
+        .mode-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .mode-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            padding: 24px 32px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            padding: 0 32px 32px;
+        }
+
+        .question-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .question-card.fade-in {
+            opacity: 1;
+        }
+
+        .question-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .question-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .question-number {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 6px 12px;
+            border-radius: 16px;
+        }
+
+        .question-category {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            background: var(--glass);
+            padding: 6px 12px;
+            border-radius: 16px;
+        }
+
+        .question-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-secondary);
+        }
+
+        .action-btn:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-color: var(--primary-light);
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--glass);
+            min-height: 60px;
+        }
+
+        .option:hover {
+            border-color: var(--primary-light);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .option.incorrect {
+            border-color: var(--error);
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .option.selected .option-letter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .option.correct .option-letter {
+            background: var(--success);
+            color: white;
+        }
+
+        .option.incorrect .option-letter {
+            background: var(--error);
+            color: white;
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 400;
+        }
+
+        /* Explanation Section */
+        .explanation-section {
+            margin-top: 24px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: 24px;
+        }
+
+        .explanation-section details {
+            margin-bottom: 16px;
+        }
+
+        .explanation-section summary {
+            padding: 12px 16px;
+            background: var(--surface);
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 15px;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .explanation-section summary:hover {
+            background: var(--primary-light);
+        }
+
+        .explanation-section details[open] summary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .explanation-content {
+            padding: 16px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .explanation-content strong {
+            color: var(--text-primary);
+        }
+
+        .correct-answer, .why-not-section, .related-questions {
+            margin-bottom: 16px;
+            padding: 16px;
+            border-radius: var(--radius);
+        }
+
+        .correct-answer {
+            background: rgba(34, 197, 94, 0.05);
+            border-left: 4px solid var(--success);
+        }
+
+        .why-not-section {
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 4px solid var(--error);
+        }
+
+        .related-questions {
+            background: rgba(59, 130, 246, 0.05);
+            border-left: 4px solid var(--primary);
+        }
+
+        .related-questions-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .related-question-tag {
+            padding: 6px 12px;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary);
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .related-question-tag:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-1px);
+        }
+
+        /* Quiz Controls */
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .quiz-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .quiz-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .check-btn {
+            background: var(--primary);
+            color: white;
+        }
+
+        .check-btn:hover:not(:disabled) {
+            background: var(--primary-dark);
+        }
+
+        .next-btn {
+            background: var(--success);
+            color: white;
+        }
+
+        .next-btn:hover:not(:disabled) {
+            background: #16a34a;
+        }
+
+        .submit-btn {
+            background: var(--gradient);
+            color: white;
+            padding: 12px 32px;
+            font-size: 16px;
+        }
+
+        /* Results Screen */
+        .results-screen {
+            padding: 32px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .results-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 48px;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+        }
+
+        .results-header {
+            margin-bottom: 32px;
+        }
+
+        .results-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .score-display {
+            font-size: 64px;
+            font-weight: 700;
+            margin: 32px 0;
+            color: var(--text-primary);
+        }
+
+        .score-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .results-details {
+            text-align: left;
+            margin: 48px 0;
+            background: var(--glass);
+            border-radius: var(--radius);
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-question {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .result-status {
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .result-correct {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
+        }
+
+        .result-incorrect {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+        }
+
+        .restart-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            display: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Enhanced Features */
+        .search-container {
+            padding: 16px 32px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: 12px 16px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-box i {
+            color: var(--text-tertiary);
+            margin-right: 8px;
+        }
+
+
+        .export-section {
+            padding: 16px 32px;
+            text-align: center;
+        }
+
+        .export-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Custom Quiz Modal */
+/* Custom Quiz Modal Styles */
+.custom-quiz-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.custom-quiz-modal.active {
+    display: flex;
+}
+
+.custom-quiz-content {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--border);
+}
+
+.custom-quiz-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+}
+
+.custom-quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.custom-quiz-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    background: var(--glass);
+}
+
+.custom-quiz-option:hover {
+    border-color: var(--primary-light);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+}
+
+.custom-quiz-option.selected {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.custom-quiz-option .option-selector {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.custom-quiz-option.selected .option-selector {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.custom-quiz-option.selected .option-selector::after {
+    content: '✓';
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.custom-quiz-option label {
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-primary);
+    flex: 1;
+    margin: 0;
+}
+
+.quiz-options-section {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+.quiz-options-section label {
+    display: block;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.custom-quiz-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+/* Modern Dropdown for Custom Quiz */
+.custom-quiz-content .modern-dropdown {
+    position: relative;
+    margin-top: 8px;
+}
+
+.custom-quiz-content .modern-dropdown select {
+    width: 100%;
+    padding: 12px 48px 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 18px;
+}
+
+.custom-quiz-content .modern-dropdown select:hover {
+    border-color: var(--primary);
+    background-color: var(--primary-light);
+}
+
+.custom-quiz-content .modern-dropdown select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Glass effect for modal */
+.custom-quiz-content.glass-effect {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark-mode .custom-quiz-content.glass-effect {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 66vw;
+            }
+
+            .main-content.sidebar-open {
+                margin-left: 100vw;
+            }
+
+            .top-nav {
+                padding: 12px 16px;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .nav-left {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .nav-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                padding: 16px;
+            }
+
+            .quiz-container {
+                padding: 0 16px 16px;
+            }
+
+            .question-card {
+                padding: 24px;
+            }
+
+            .question-text {
+                font-size: 17px;
+            }
+
+            .option {
+                padding: 12px;
+                min-height: 70px;
+            }
+
+            .results-card {
+                padding: 32px 24px;
+            }
+
+            .score-display {
+                font-size: 48px;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-container {
+                padding: 12px 16px;
+            }
+
+            .analytics-section {
+                margin: 16px;
+                padding: 16px;
+            }
+
+            .quiz-btn {
+                padding: 16px 20px;
+                font-size: 16px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .quiz-container {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 24px;
+            }
+
+            .question-card {
+                max-width: 1000px;
+                margin: 0 auto 24px;
+            }
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .glass {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+        }
+
+        .text-gradient {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .question-difficulty {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .question-dropdown {
+            margin-top: 8px;
+            display: block;
+        }
+
+        .question-dropdown select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            color: var(--text-primary);
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .option.disabled {
+            pointer-events: none;
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .timer-warning {
+            color: var(--warning);
+        }
+
+        .timer-error {
+            color: var(--error);
+        }
+
+        .loading-spinner {
+            display: none;
+            border: 2px solid var(--border);
+            border-top: 2px solid var(--primary);
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-spinner.active {
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Ultra Modern Styles */
+        /* Glass Morphism Effects */
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark-mode .glass-effect {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Enhanced Hover Effects with Glow */
+        .nav-item:hover {
+            background: linear-gradient(135deg, var(--primary-light) 0%, rgba(59, 130, 246, 0.15) 100%) !important;
+            border-left-color: var(--primary) !important;
+            transform: translateX(8px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.25) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        .category-card:hover {
+            background: linear-gradient(135deg, var(--glass) 0%, rgba(255, 255, 255, 0.95) 100%) !important;
+            transform: translateY(-5px) scale(1.03) !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 0 30px rgba(59, 130, 246, 0.1) !important;
+            border-color: var(--primary) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        .option:hover {
+            background: linear-gradient(135deg, var(--primary-light) 0%, rgba(59, 130, 246, 0.12) 100%) !important;
+            transform: translateY(-3px) scale(1.03) !important;
+            box-shadow: 0 12px 30px rgba(59, 130, 246, 0.2) !important;
+            border-color: var(--primary) !important;
+        }
+
+        .quiz-btn:hover:not(:disabled) {
+            transform: translateY(-3px) scale(1.08) !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25) !important;
+            filter: brightness(1.1);
+        }
+
+        .action-btn:hover {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%) !important;
+            color: white !important;
+            transform: scale(1.15) rotate(8deg) !important;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5) !important;
+        }
+
+        /* Ultra Modern Dropdown */
+        .modern-dropdown {
+            position: relative;
+            margin-top: 12px;
+        }
+
+        .modern-dropdown select {
+            width: 100%;
+            padding: 12px 48px 12px 16px;
+            border: 2px solid transparent;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--surface) 0%, var(--glass) 100%);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 18px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(10px);
+        }
+
+        .modern-dropdown select:hover {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary-light) 0%, rgba(59, 130, 246, 0.08) 100%);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .modern-dropdown select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15), 0 8px 25px rgba(59, 130, 246, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* Enhanced Search with Blur Effect */
+        .search-container {
+            transition: all 0.4s ease;
+        }
+
+        .search-box {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .search-box:focus-within {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .search-blur-active .main-content > *:not(.search-container):not(.quiz-container) {
+            filter: blur(8px);
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        /* Beautiful Stats Cards */
+        .stat-card {
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.05) !important;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        /* Modern Progress Bars */
+        .progress-fill {
+            transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark), #8b5cf6) !important;
+            box-shadow: 0 2px 12px rgba(59, 130, 246, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Beautiful Notification */
+        .notification {
+            border-radius: 20px !important;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15)) !important;
+        }
+
+        .dark-mode .notification {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2)) !important;
+        }
+
+        /* Enhanced Question Cards */
+        .question-card {
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .question-card:hover {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15) !important;
+            transform: translateY(-3px);
+            border-color: var(--primary-light);
+        }
+
+        /* Modern Settings Panel */
+        .settings-panel {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+        }
+
+        .dark-mode .settings-panel {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Custom Question Creator */
+        .custom-question-creator {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 32px;
+        }
+
+        .dark-mode .custom-question-creator {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fab:hover {
+            transform: scale(1.15) rotate(15deg);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.6);
+        }
+
+        /* Dark mode adjustments */
+        .dark-mode .nav-item:hover {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(59, 130, 246, 0.1) 100%) !important;
+        }
+
+        .dark-mode .category-card:hover {
+            background: linear-gradient(135deg, var(--glass) 0%, rgba(17, 24, 39, 0.95) 100%) !important;
+        }
+
+        .dark-mode .option:hover {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.08) 100%) !important;
+        }
+
+        /* Search Results Highlight */
+        .search-highlight {
+            background: linear-gradient(120deg, var(--primary-light) 0%, transparent 50%);
+            border-radius: 4px;
+            padding: 2px 4px;
+        }
+        @media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 12px 16px;
+    }
+
+    .stat-card {
+        padding: 16px 12px;
+        min-height: 80px;
+    }
+
+    .stat-header {
+        margin-bottom: 8px;
+        flex-wrap: wrap;
+    }
+
+    .stat-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+
+    .stat-value {
+        font-size: 20px;
+        margin-bottom: 2px;
+    }
+
+    .stat-label {
+        font-size: 11px;
+        line-height: 1.3;
+    }
+
+    .stat-trend {
+        font-size: 10px;
+    }
+
+    .stat-trend i {
+        font-size: 10px;
+    }
+}
+
+/* Extra small devices (phones under 400px) */
+@media (max-width: 400px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 10px 12px;
+    }
+
+    .stat-card {
+        padding: 14px 10px;
+        min-height: 70px;
+    }
+
+    .stat-value {
+        font-size: 18px;
+    }
+
+    .stat-label {
+        font-size: 10px;
+    }
+}
+.analytics-grid {
+    display: none;
+}
+
+/* OR hide individual cards */
+.analytics-card {
+    display: none;
+}
+
+/* If you want to keep the section structure but hide content */
+.analytics-section {
+    padding: 0;
+    margin: 0;
+    height: 0;
+    overflow: hidden;
+}
+@media (max-width: 768px) {
+    /* Your existing mobile styles... */
+    
+    .sidebar {
+        width: 66vw;
+    }
+
+    .main-content.sidebar-open {
+        margin-left: 100vw;
+    }
+
+    .top-nav {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    /* Hide all custom question and export buttons on mobile */
+    .fab {
+        display: none !important;
+    }
+    
+    #createCustomQuizBtn {
+        display: none !important;
+    }
+    
+    /* Hide both buttons in Settings section */
+    .settings-panel .quiz-btn:has(i.fa-download),
+    .settings-panel .quiz-btn:has(i.fa-plus) {
+        display: none !important;
+    }
+
+    /* Your stats grid and other mobile styles... */
+    .stats-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 6px;
+        padding: 6px 10px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        margin: 0 -4px;
+    }
+    /* ... rest of your mobile CSS */
+}
+@media (max-width: 768px) {
+    .fab {
+        display: none !important;
+    }
+    
+    /* Hide entire export section from Dashboard */
+    .export-section {
+        display: none !important;
+    }
+    
+    /* Hide both buttons in Settings section */
+    .settings-panel .quiz-btn:has(i.fa-download),
+    .settings-panel .quiz-btn:has(i.fa-plus) {
+        display: none !important;
+    }
+}
+@media (max-width: 768px) {
+    /* Hide all stat cards except Correct Answers */
+    .stat-card:not(:first-child) {
+        display: none !important;
+    }
+    
+    /* Optional: Make the Correct Answers card full width */
+    .stat-card:first-child {
+        width: 100% !important;
+        flex: 1 !important;
+    }
+
+    /* Your existing mobile styles for stats grid */
+    .stats-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 6px;
+        padding: 6px 10px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        margin: 0 -4px;
+    }
+}
+.user-avatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+/* Primary action button */
+.action-btn.primary {
+    background: var(--primary);
+    color: white;
+}
+
+.action-btn.primary:hover {
+    background: var(--primary-dark);
+    transform: scale(1.1);
+}
+
+    </style>
+</head>
+<body class="dark-mode">
+    <div class="overlay" id="overlay"></div>
+    
+    <!-- Custom Quiz Modal -->
+<div class="custom-quiz-modal" id="customQuizModal">
+    <div class="custom-quiz-content glass-effect">
+        <h3 class="custom-quiz-title"> </h3>
+        <div class="custom-quiz-options">
+            <div class="custom-quiz-option" data-category="all">
+                <div class="option-selector"></div>
+                <label>All Categories</label>
+            </div>
+            <div class="custom-quiz-option" data-category="easy">
+                <div class="option-selector"></div>
+                <label>Easy Questions Only</label>
+            </div>
+            <div class="custom-quiz-option" data-category="medium">
+                <div class="option-selector"></div>
+                <label>Medium Questions Only</label>
+            </div>
+            <div class="custom-quiz-option" data-category="hard">
+                <div class="option-selector"></div>
+                <label>Hard Questions Only</label>
+            </div>
+            <div class="custom-quiz-option" data-category="bookmarked">
+                <div class="option-selector"></div>
+                <label>Bookmarked Questions Only</label>
+            </div>
+            <div class="quiz-options-section">
+                <label>Number of Questions</label>
+                <div class="modern-dropdown">
+                    <select id="questionCount">
+                        <option value="5">5 Questions</option>
+                        <option value="10" selected>10 Questions</option>
+                        <option value="15">15 Questions</option>
+                        <option value="20">20 Questions</option>
+                        <option value="0">All Questions</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="custom-quiz-actions">
+            <button class="quiz-btn" id="cancelCustomQuiz">
+                Cancel
+            </button>
+            <button class="quiz-btn check-btn" id="createCustomQuiz">
+                Create Quiz
+            </button>
+        </div>
+    </div>
+</div>
+    
+    <!-- Main App Container -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-stethoscope"></i>
+                    <span>ALIF</span>
+                </div>
+                <div class="sidebar-subtitle">Advanced Medical Education Platform</div>
+            </div>
+            
+            <div class="user-profile">
+    <div class="user-avatar">
+        <img src="logo.png" alt="User Avatar">
+    </div>
+    <div class="user-info">
+        <h3>ALIFO</h3>
+        <p>Medical Student</p>
+    </div>
+</div>
+
+            
+            <div class="nav-item active">
+                <div class="nav-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <span>Dashboard</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <span>My Courses</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <span>Progress Analytics</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-bookmark"></i>
+                </div>
+                <span>Bookmarked Questions</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <span>Settings</span>
+            </div>
+            
+            <div class="categories-section">
+                <div class="section-title">
+                    <span>Medical Categories</span>
+                    <i class="fas fa-sliders-h"></i>
+                </div>
+                <div class="categories-grid" id="categoriesGrid"></div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <!-- Top Navigation -->
+            <div class="top-nav">
+    <div class="nav-left">
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- Add Back and Home buttons -->
+        <a href="/" class="action-btn" id="backBtn">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <a href="/" class="action-btn primary">
+            <i class="fas fa-home"></i>
+        </a>
+        
+        <h1 class="page-title" id="pageTitle">Dashboard</h1>
+    </div>
+    <div class="nav-right">
+        <!-- Your existing mode selector and buttons -->
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="exam" aria-label="Exam Mode">
+                <i class="fas fa-file-alt"></i>
+                Exam
+            </button>
+            <button class="mode-btn" data-mode="quiz" aria-label="Quiz Mode">
+                <i class="fas fa-tasks"></i>
+                Quiz
+            </button>
+            <button class="mode-btn" data-mode="learn" aria-label="Learn Mode">
+                <i class="fas fa-brain"></i>
+                Learn
+            </button>
+        </div>
+        <div class="action-btn" id="themeToggle" aria-label="Toggle Theme">
+            <i class="fas fa-sun"></i>
+        </div>
+        <div class="action-btn" aria-label="Notifications">
+            <i class="fas fa-bell"></i>
+        </div>
+    </div>
+</div>
+            
+            <!-- Search Section -->
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search questions or categories...">
+                </div>
+            </div>
+            
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card fade-in">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-trend">
+                            <i class="fas fa-arrow-up" style="color: var(--success);"></i>
+                            <span style="color: var(--success); font-size: 13px;">+12%</span>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="correctAnswers">0</div>
+                    <div class="stat-label">Correct Answers</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-trend">
+                            <i class="fas fa-arrow-down" style="color: var(--error);"></i>
+                            <span style="color: var(--error); font-size: 13px;">-5%</span>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="timeSpent">0h</div>
+                    <div class="stat-label">Time Spent</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="stat-trend">
+                            <i class="fas fa-arrow-up" style="color: var(--success);"></i>
+                            <span style="color: var(--success); font-size: 13px;">+8%</span>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="masteryLevel">0%</div>
+                    <div class="stat-label">Mastery Level</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-trend">
+                            <i class="fas fa-arrow-up" style="color: var(--warning);"></i>
+                            <span style="color: var(--warning); font-size: 13px;">+3</span>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="streakCount">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+            </div>
+            
+            <!-- Analytics Section -->
+            <div class="analytics-section">
+                <h3 class="analytics-title">Learning Analytics</h3>
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <div class="analytics-value" id="weakAreasCount">0</div>
+                        <div class="analytics-label">Weak Areas Identified</div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="analytics-value" id="avgTimePerQuestion">0s</div>
+                        <div class="analytics-label">Avg Time Per Question</div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="analytics-value" id="improvementRate">0%</div>
+                        <div class="analytics-label">Weekly Improvement</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quiz Container -->
+            <div class="quiz-container" id="quizContainer"></div>
+            
+            <!-- Results Screen -->
+            <div class="results-screen hidden" id="resultsScreen"></div>
+            
+            <!-- Export Section -->
+            <div class="export-section">
+                <button class="export-btn" id="exportProgress">
+                    <i class="fas fa-download"></i>
+                     
+                </button>
+                <button class="export-btn" id="createCustomQuizBtn" style="margin-left: 12px;">
+                    <i class="fas fa-plus"></i>
+                     
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+  // Check if running inside Telegram
+  const tg = window.Telegram?.WebApp;
+
+  // --- 1️⃣ Handle Telegram Mini App Back Button ---
+  if (tg) {
+    tg.ready(); // Initialize Telegram SDK
+    tg.BackButton.show();
+
+    tg.BackButton.onClick(() => {
+      console.log("Telegram back button pressed");
+      handleBackAction();
+    });
+  }
+
+  // --- 2️⃣ Handle Browser/Phone Back Button ---
+  window.addEventListener('popstate', () => {
+    console.log("Browser back button pressed");
+    handleBackAction();
+  });
+
+  // --- 3️⃣ Function to handle back action globally ---
+  function handleBackAction() {
+    // Example actions (customize as you wish):
+    // Go back if possible, otherwise go to home page
+    if (document.referrer && window.history.length > 1) {
+      window.history.back();
+    } else {
+      window.location.href = '/'; // or your home page route
+    }
+  }
+
+  // --- 4️⃣ Optional: Prevent unwanted exits ---
+  // This ensures pressing back doesn’t immediately close the app
+  history.pushState(null, '', location.href);
+</script>
+
+     <script>
+        // Anti-copy, anti-inspect measures
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+document.addEventListener('keydown', function(e) {
+    if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73) || (e.ctrlKey && e.shiftKey && e.keyCode === 74) || (e.ctrlKey && e.keyCode === 85)) {
+        e.preventDefault();
+    }
+});
+
+// Enhanced quiz data with more questions
+const quizData = [
+    {
+        "id": 1,
+        "question": "A 74-year-old woman presents with acute chest pain and shortness of breath. Cardiac catheterization demonstrates occlusion of the left anterior descending coronary artery. Laboratory studies and ECG are consistent with acute myocardial infarction. Which of the following is the most likely pathologic finding in the affected heart muscle 4 weeks later?",
+        "options": [
+            "Capillary-rich granulation tissue",
+            "Collagen-rich scar tissue",
+            "Granulomatous inflammation",
+            "Neutrophils and necrotic debris",
+            "Vascular congestion and edema"
+        ],
+        "answer": 1,
+        "correctAnswer": "Collagen-rich scar tissue",
+        "explanation": "Pathologic findings in myocardial infarction include coagulative necrosis approximately 24 hours after vascular occlusion. Polymorphonuclear leukocytes and macrophages predominate during the next 2 to 5 days. Toward the end of the first week, the infarct is invaded by capillary-rich granulation tissue. Ultimately, the necrotic myocardium is replaced by collagen-rich scar tissue (weeks to months).",
+        "whyNotOtherOptions": {
+            "a": "Capillary-rich granulation tissue is seen toward the end of the first week, not at 4 weeks.",
+            "c": "Granulomatous inflammation does not occur after an ischemic myocardial infarct.",
+            "d": "Neutrophils and necrotic debris are features of the early inflammatory phase (2 to 5 days).",
+            "e": "Vascular congestion and edema are features of acute inflammation."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 2,
+        "question": "A 4-year-old boy falls on a rusty nail and punctures his skin. The wound is cleaned and covered with sterile gauze. Which of the following is the initial event in the healing process?",
+        "options": [
+            "Accumulation of acute inflammatory cells",
+            "Deposition of proteoglycans and collagen",
+            "Differentiation and migration of myofibroblasts",
+            "Formation of a fibrin clot",
+            "Macrophage-mediated phagocytosis of cellular debris"
+        ],
+        "answer": 3,
+        "correctAnswer": "Formation of a fibrin clot",
+        "explanation": "The initial phase of the repair reaction, which typically begins with hemorrhage, involves the formation of a fibrin clot that fills the gap created by the wound. A thrombus (clot), referred to as a scab after drying out, forms on the wounded skin as a barrier to invading microorganisms. It also prevents the loss of plasma and tissue fluid. Formed primarily from plasma fibrin, the thrombus is rich in fibronectin. The thrombus also contains contracting platelets, which are an initial source of growth factors.",
+        "whyNotOtherOptions": {
+            "a": "Accumulation of acute inflammatory cells might occur after formation of the initial fibrin clot.",
+            "b": "Collagen formation occurs much later.",
+            "c": "Myofibroblasts begin to accumulate in the wound around the 3rd day.",
+            "e": "Macrophage activity occurs much later."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Easy"
+    },
+    {
+        "id": 3,
+        "question": "An 82-year-old man dies 4 years after developing congestive heart failure. He had a history of multiple myocardial infarcts over the past 10 years. A trichrome stain of heart muscle at autopsy is shown in the image. What is the predominant type of collagen found in this mature scar tissue?",
+        "options": [
+            "Type I",
+            "Type II",
+            "Type IV",
+            "Type V",
+            "Type VI"
+        ],
+        "answer": 0,
+        "correctAnswer": "Type I",
+        "explanation": "A mature scar is composed primarily of type I collagen. By contrast, the early matrix of granulation tissue contains proteoglycans, glycoproteins, and type III collagen. Eventually, the temporary matrix is removed by a combination of extracellular and intracellular digestion, and the definitive matrix is deposited. Extracellular cross-linking of the newly synthesized type I collagen progressively increases wound strength.",
+        "whyNotOtherOptions": {
+            "b": "Collagen type II is found in cartilage.",
+            "c": "Collagen type IV is found in basement membranes.",
+            "d": "Collagen type V is found in various organs.",
+            "e": "Collagen type VI is found in various organs."
+        },
+        "relatedQuestions": ["1"],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 4,
+        "question": "A 25-year-old woman sustains a deep, open laceration over her right forearm in a motorcycle accident. The wound is cleaned and sutured. Which of the following cell types mediates contraction of the wound to facilitate healing?",
+        "options": [
+            "Endothelial cells",
+            "Fibroblasts",
+            "Macrophages",
+            "Myofibroblasts",
+            "Smooth muscle cells"
+        ],
+        "answer": 3,
+        "correctAnswer": "Myofibroblasts",
+        "explanation": "The myofibroblast is the cell responsible for wound contraction as well as the deforming pathologic process termed wound contracture. These cells express α-smooth muscle actin, desmin, and vimentin, and they respond to pharmacologic agents that cause smooth muscle to contract or relax. Myofibroblasts exert their contractile effects by forming syncytia, in which the myofibroblasts are bound together by tight junctions.",
+        "whyNotOtherOptions": {
+            "a": "Endothelial cells respond to growth factors and form capillaries, which are necessary for the delivery of nutrients and inflammatory cells.",
+            "b": "Fibroblasts tend to be solitary cells, surrounded by collagen fibers.",
+            "c": "Macrophages do not mediate wound contraction.",
+            "e": "Smooth muscle cells do not mediate wound contraction in this context."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 5,
+        "question": "During the next 3 months, the wound heals with formation of a linear scar. Which of the following nutritional factors is required for proper collagen assembly in the scar tissue of the patient described in Question 4?",
+        "options": [
+            "Folic acid",
+            "Thiamine",
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin E"
+        ],
+        "answer": 3,
+        "correctAnswer": "Vitamin C",
+        "explanation": "Vitamin C (ascorbic acid) is a powerful, biologic reducing agent that is necessary for the hydroxylation of proline residues in collagen. Most of the clinical features associated with vitamin C deficiency (scurvy) are caused by the formation of an abnormal collagen that lacks tensile strength. Patients with vitamin C deficiency exhibit poor wound healing. Dehiscence (bursting open) of previously healed wounds may also occur.",
+        "whyNotOtherOptions": {
+            "a": "Folic acid is not required for collagen assembly.",
+            "b": "Thiamine is not required for collagen assembly.",
+            "c": "Vitamin A is not required for collagen assembly.",
+            "e": "Vitamin E is not required for collagen assembly."
+        },
+        "relatedQuestions": ["4"],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Easy"
+    },
+    {
+        "id": 6,
+        "question": "A 70-year-old woman with diabetes develops an ulcer on her right leg (shown in the image). The ulcer bed is covered with granulation tissue. Which of the following are the principle cellular components found in the bed of this wound?",
+        "options": [
+            "Fibroblasts and endothelial cells",
+            "Myofibroblasts and eosinophils",
+            "Neutrophils and lymphocytes",
+            "Plasma cells and macrophages",
+            "Smooth muscle cells and Merkel cells"
+        ],
+        "answer": 0,
+        "correctAnswer": "Fibroblasts and endothelial cells",
+        "explanation": "Granulation tissue has two major components: cells and proliferating capillaries. The cells are mostly fibroblasts, myofibroblasts, and macrophages. Fibroblasts and myofibroblasts derive from mesenchymal stem cells. Capillaries arise from adjacent blood vessels by division of endothelial cells in a process termed angiogenesis. Macrophages are a principal source of growth factors and are recognized for their phagocytic functions. Granulation tissue is fluid laden, and its cellular constituents supply antibacterial antibodies and growth factors. Once repair has been achieved, most of the newly formed capillaries are obliterated and then reabsorbed, leaving a pale avascular scar.",
+        "whyNotOtherOptions": {
+            "b": "Myofibroblasts and eosinophils are not the principal components.",
+            "c": "Neutrophils and lymphocytes may be present but not principal in granulation tissue.",
+            "d": "Plasma cells and macrophages are not the principal components.",
+            "e": "Smooth muscle cells and Merkel cells are not involved in granulation tissue."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 7,
+        "question": "Which of the following proteins helps stimulate healing and angiogenesis in the wound of the patient described in Question 6?",
+        "options": [
+            "a1-Antitrypsin",
+            "Caspase-9",
+            "Lysozyme",
+            "a2-Macroglobulin",
+            "Metalloproteinase"
+        ],
+        "answer": 4,
+        "correctAnswer": "Metalloproteinase",
+        "explanation": "Matrix metalloproteinases (MMPs) are crucial components in wound healing because they enable cells to migrate by degrading matrix proteins. Members of this protein family include collagenase, stromelysin, and gelatinase. In addition to enhancing cell migration, MMPs can disrupt cell-cell adhesions and release bioactive molecules stored in the matrix.",
+        "whyNotOtherOptions": {
+            "a": "a1-Antitrypsin minimizes MMP activity by binding to proteinase inhibitors.",
+            "b": "Caspase-9 is involved in apoptosis, not healing.",
+            "c": "Lysozyme is a secretory product of neutrophils that degrades bacterial cell walls.",
+            "d": "a2-Macroglobulin minimizes MMP activity by binding to proteinase inhibitors."
+        },
+        "relatedQuestions": ["6"],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 8,
+        "question": "A 68-year-old man presents for repair of an abdominal aortic aneurysm. Severe complicated atherosclerosis is noted at surgery, prompting concern for embolism of atheromatous material to the kidneys and other organs. If the patient were to develop a renal cortical infarct as a result of surgery, which of the following would be the most likely outcome?",
+        "options": [
+            "Chronic inflammation",
+            "Granulomatous inflammation",
+            "Hemangioma formation",
+            "Repair and regeneration",
+            "Scar formation"
+        ],
+        "answer": 4,
+        "correctAnswer": "Scar formation",
+        "explanation": "A large infarct of the kidney will heal by fibrosis (scar formation). In most renal diseases, there is destruction of the extracellular matrix framework. Repair and regeneration is then incomplete, and scar formation is the expected outcome. The regenerative capacity of renal tissue is maximal in cortical tubules, less in medullary tubules, and nonexistent in glomeruli.",
+        "whyNotOtherOptions": {
+            "a": "Chronic inflammation precedes scar formation.",
+            "b": "Granulomatous inflammation is not a complication of renal cortical infarction.",
+            "c": "Hemangiomas are common benign tumors of endothelial cells that usually occur in the skin.",
+            "d": "Repair and regeneration is incomplete in large infarcts."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 9,
+        "question": "A 40-year-old woman presents with a painless lesion on her right ear lobe (shown in the image). She reports that her ears were pierced 4 months ago. Which of the following best explains the pathogenesis of this lesion?",
+        "options": [
+            "Clonal expansion of smooth muscle cells",
+            "Exuberant formation of granulation tissue",
+            "Increased growth of capillary endothelial cells",
+            "Increased turnover of extracellular matrix proteoglycans",
+            "Maturation arrest of collagen assembly"
+        ],
+        "answer": 4,
+        "correctAnswer": "Maturation arrest of collagen assembly",
+        "explanation": "Keloid is an exuberant scar that tends to progress beyond the site of initial injury and recurs after excision. Dark-skinned persons are more frequently affected by keloids than light-skinned people. Keloids are characterized by changes in the ratio of type III to type I collagen, suggesting a “maturation arrest” in the healing process. Further support for maturation arrest as an explanation for keloids and hypertrophic scars is the overexpression of fibronectin in these lesions.",
+        "whyNotOtherOptions": {
+            "a": "Clonal expansion of smooth muscle cells is not the pathogenesis of keloid.",
+            "b": "Exuberant formation of granulation tissue describes pyogenic granuloma, not keloid.",
+            "c": "Increased growth of capillary endothelial cells is seen in hemangioma.",
+            "d": "Increased turnover of extracellular matrix proteoglycans is not specific to keloid."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 10,
+        "question": "A 58-year-old woman undergoes lumpectomy for breast cancer. One month following surgery, she notices a firm 0.3-cm nodule along one edge of the surgical incision. Biopsy of this nodule reveals chronic inflammatory cells, multinucleated giant cells, and extensive fibrosis. The multinucleated cells in this nodule most likely formed in response to which of the following pathogenic stimuli?",
+        "options": [
+            "Bacterial infection",
+            "Foreign material",
+            "Lymphatic obstruction",
+            "Neoplastic cells",
+            "Viral infection"
+        ],
+        "answer": 1,
+        "correctAnswer": "Foreign material",
+        "explanation": "Granulomatous inflammation is a subtype of chronic inflammation, which develops when acute inflammatory cells are unable to digest the injurious agent (e.g., suture or talc). Fusion of macrophages within the lesion results in the formation of multinucleated giant cells.",
+        "whyNotOtherOptions": {
+            "a": "Bacterial infection typically causes suppurative inflammation.",
+            "c": "Lymphatic obstruction leads to lymphedema.",
+            "d": "Neoplastic cells would show malignancy.",
+            "e": "Viral infection causes different inflammatory patterns."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 11,
+        "question": "A 57-year-old man with a history of alcoholism presents with yellow discoloration of his skin and sclerae. Laboratory studies show elevated serum levels of liver enzymes (AST and ALT). A trichrome stain of a liver biopsy is shown in the image. A similar pattern of regeneration and fibrosis would be expected in the liver of a patient with which of the following conditions?",
+        "options": [
+            "Acute toxic liver injury",
+            "Chronic viral hepatitis",
+            "Fulminant hepatic necrosis",
+            "Hepatocellular carcinoma",
+            "Thrombosis of the portal vein"
+        ],
+        "answer": 1,
+        "correctAnswer": "Chronic viral hepatitis",
+        "explanation": "Chronic liver injury (e.g., chronic viral hepatitis) is associated with the development of broad collagenous scars within the hepatic parenchyma. This is termed cirrhosis. Hepatocytes form regenerative nodules that lack central veins and expand to obstruct blood vessels and bile flow. Portal hypertension and jaundice ensue, despite adequate numbers of regenerated but disconnected hepatocytes.",
+        "whyNotOtherOptions": {
+            "a": "Acute toxic liver injury is generally reversible.",
+            "c": "Fulminant hepatic necrosis, if the patient survives, usually regenerates.",
+            "d": "Hepatocellular carcinoma may be associated with tumor fibrosis but not with regeneration.",
+            "e": "Portal vein thrombosis does not cause hepatic fibrosis but may be a complication of embolism."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 12,
+        "question": "A 10-year-old boy trips at school and scrapes the palms of his hands. The wounds are cleaned and covered with sterile gauze. Which of the following terms best characterizes the healing of these superficial abrasions?",
+        "options": [
+            "Fibrosis",
+            "Granulation tissue",
+            "Primary intention",
+            "Regeneration",
+            "Secondary intention"
+        ],
+        "answer": 3,
+        "correctAnswer": "Regeneration",
+        "explanation": "Superficial abrasions of the skin heal by a process of regeneration. It is mediated by stem cells or stabile cells that are able to progress through the cell cycle and fully restore normal tissue organization and function. Cellular migration is the predominant means by which the wound surface is reepithelialized.",
+        "whyNotOtherOptions": {
+            "a": "Fibrosis refers to aberrant healing with deposition of collagen-rich scar tissue.",
+            "b": "Granulation tissue forms during the repair of deep wounds.",
+            "c": "Primary intention is a feature of healing in deeper wounds with apposed edges.",
+            "e": "Secondary intention is a feature of healing in deeper wounds with tissue loss."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Easy"
+    },
+    {
+        "id": 13,
+        "question": "Which of the following cellular processes helps restore normal epithelial structure and function in the patient described in Question 12?",
+        "options": [
+            "Collagen and fibronectin-rich extracellular matrix deposition",
+            "Contact inhibition of epithelial cell growth and motility",
+            "Myofibroblast differentiation and syncytia formation",
+            "Platelet activation and intravascular coagulation",
+            "Proliferation of capillary endothelial cells (angiogenesis)"
+        ],
+        "answer": 1,
+        "correctAnswer": "Contact inhibition of epithelial cell growth and motility",
+        "explanation": "Maturation of the epidermis requires an intact layer of basal cells that are in direct contact with one another. If this contact is disrupted, basal epithelial cells at the wound margin become activated and eventually reestablish contact with other basal cells through extensive cell migration and mitosis. When epithelial continuity is reestablished, migration and cell division cease, and the epidermis resumes its normal cycle of maturation and shedding. This process of epithelial growth regulation is referred to as “contact inhibition of growth and motility.”",
+        "whyNotOtherOptions": {
+            "a": "Collagen and fibronectin-rich extracellular matrix deposition describes responses to deep wound healing.",
+            "c": "Myofibroblast differentiation and syncytia formation is involved in wound contraction.",
+            "d": "Platelet activation and intravascular coagulation is early in hemostasis.",
+            "e": "Proliferation of capillary endothelial cells (angiogenesis) is part of granulation tissue."
+        },
+        "relatedQuestions": ["12"],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 14,
+        "question": "A 34-year-old woman has a benign nevus removed from her back under local anesthesia. Which of the following families of cell adhesion molecules is the principal component of the “provisional matrix” that forms during early wound healing?",
+        "options": [
+            "Cadherins",
+            "Fibronectins",
+            "Integrins",
+            "Laminins",
+            "Selectins"
+        ],
+        "answer": 1,
+        "correctAnswer": "Fibronectins",
+        "explanation": "Fibronectins are adhesive glycoproteins that are widely distributed in stromal connective tissue and deposited at the site of tissue injury. During the initial phase of healing, fibronectin in the extravasated plasma is cross-linked to fibrin, collagen, and other extracellular matrix components by the action of transglutaminases. This cross-linking provides a provisional stabilization of the wound during the first several hours. Fibronectin, cell debris, and bacterial products are chemoattractants for a variety of cells that are recruited to the wound site over the next several days.",
+        "whyNotOtherOptions": {
+            "a": "Cadherins are cell-cell adhesion molecules found at the cell surface.",
+            "c": "Integrins are cell adhesion molecules found at the cell surface.",
+            "d": "Laminins are basement membrane glycoproteins.",
+            "e": "Selectins mediate the initial adhesion of leukocytes to endothelial cells at sites of inflammation."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 15,
+        "question": "Which of the following families of glycoproteins plays the most important role in regulating the migration and differentiation of leukocytes and connective tissue cells during wound healing in the patient described in Question 14?",
+        "options": [
+            "Cadherins",
+            "Fibrillins",
+            "Integrins",
+            "Laminins",
+            "Selectins"
+        ],
+        "answer": 2,
+        "correctAnswer": "Integrins",
+        "explanation": "The locomotion of leukocytes is powered by membrane extensions called lamellipodia. Slower moving cells, such as fibroblasts, extend fingerlike membrane protrusions called filopodia. The leading edge of the cell membrane adheres to the extracellular matrix through transmembrane adhesion receptors termed integrins. These cell surface glycoproteins transmit mechanical and chemical signals, thereby regulating cellular survival, proliferation, differentiation, and migration. The motility of epithelial cells is also regulated by integrin receptors.",
+        "whyNotOtherOptions": {
+            "a": "Cadherins are cell-cell adhesion molecules.",
+            "b": "Fibrillins are structural molecules that interact with elastic fibrils.",
+            "d": "Laminins are basement membrane glycoproteins.",
+            "e": "Selectins mediate the recruitment of neutrophils in acute inflammation but do not mediate directed cell migration at the site of tissue injury."
+        },
+        "relatedQuestions": ["14"],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 16,
+        "question": "A 29-year-old carpenter receives a traumatic laceration to her left arm. Which of the following is the most important factor that determines whether this wound will heal by primary or secondary intention?",
+        "options": [
+            "Apposition of edges",
+            "Depth of wound",
+            "Metabolic status",
+            "Skin site affected",
+            "Vascular supply"
+        ],
+        "answer": 0,
+        "correctAnswer": "Apposition of edges",
+        "explanation": "Healing by primary intention occurs in wounds with closely apposed edges and minimal tissue loss. Such a wound requires only minimal cell proliferation and neovascularization to heal, and the result is a small scar. Healing by secondary intention occurs in a gouged wound, in which the edges are far apart and in which there is substantial tissue loss. This wound requires wound contraction, extensive cell proliferation, and neovascularization (granulation tissue) to heal.",
+        "whyNotOtherOptions": {
+            "b": "Depth of wound is important but not the primary determinant between primary and secondary intention.",
+            "c": "Metabolic status is important for outcome but not distinction between intentions.",
+            "d": "Skin site affected is important for outcome but not distinction.",
+            "e": "Vascular supply is important for outcome but not distinction."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 17,
+        "question": "Activated fibroblasts, myofibroblasts, and capillary sprouts are most abundant in the wound of the patient described in Question 16 at which of the following times after injury?",
+        "options": [
+            "3 to 6 hours",
+            "12 to 24 hours",
+            "3 to 5 days",
+            "8 to 10 days",
+            "2 weeks"
+        ],
+        "answer": 2,
+        "correctAnswer": "3 to 5 days",
+        "explanation": "Activated fibroblasts, myofibroblasts, and capillary sprouts are abundant in healing wounds 3 to 5 days following injury. Activated fibroblasts change shape from oval to bipolar as they begin to form collagen and synthesize a variety of extracellular matrix proteins.",
+        "whyNotOtherOptions": {
+            "a": "3 to 6 hours is too early for these components.",
+            "b": "Neutrophils accumulate 12 to 24 hours after injury.",
+            "d": "8 to 10 days is later phase.",
+            "e": "Mature scar tissue would be visible 2 weeks following injury."
+        },
+        "relatedQuestions": ["16"],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Easy"
+    },
+    {
+        "id": 18,
+        "question": "A 9-year-old boy receives a deep laceration over his right eyebrow playing ice hockey. The wound is cleaned and sutured. Which of the following describes the principal function of macrophages that are present in the wound 24 to 48 hours after injury?",
+        "options": [
+            "Antibody production",
+            "Deposition of collagen",
+            "Histamine release",
+            "Phagocytosis",
+            "Wound contraction"
+        ],
+        "answer": 3,
+        "correctAnswer": "Phagocytosis",
+        "explanation": "Macrophages arrive at the site of injury shortly after neutrophils, but they persist in the wound for days longer. Macrophages remove debris and orchestrate the formation of granulation tissue by releasing cytokines and chemoattractants.",
+        "whyNotOtherOptions": {
+            "a": "Plasma cells produce antibodies.",
+            "b": "Fibroblasts deposit collagen.",
+            "c": "Mast cells release histamine.",
+            "e": "Myofibroblasts mediate wound contraction."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Easy"
+    },
+    {
+        "id": 19,
+        "question": "Which of the following collagens is deposited first during wound healing in the patient described in Question 18?",
+        "options": [
+            "Type I",
+            "Type II",
+            "Type III",
+            "Type IV",
+            "Type V"
+        ],
+        "answer": 2,
+        "correctAnswer": "Type III",
+        "explanation": "Concurrent with fibrinolysis, a temporary matrix composed of proteoglycans, glycoproteins, and type III collagen is deposited. The secretion of type III collagen is a forerunner to the formation of type I collagen, which will impart greater tensile strength to the wound. TGF-β enhances the synthesis of collagen and fibronectin and decreases metalloproteinase transcription and matrix degradation. Extracellular cross-linking of newly synthesized collagen further increases the mechanical strength of the wound.",
+        "whyNotOtherOptions": {
+            "a": "Type I collagen is deposited later for mature scar.",
+            "b": "Type II collagen is found in cartilage.",
+            "d": "Type IV collagen is found in basement membranes.",
+            "e": "Type V collagen is not the first deposited."
+        },
+        "relatedQuestions": ["18"],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 20,
+        "question": "A 16-year-old boy suffers a concussion during an ice hockey game and is rushed to the emergency room. A CT scan of the brain reveals a cerebral contusion of the left frontal lobe. The boy lies comatose for 3 days but eventually regains consciousness. Which of the following cells is the principal mediator of scar formation in the central nervous system of this patient?",
+        "options": [
+            "Fibroblasts",
+            "Glial cells",
+            "Neurons",
+            "Oligodendrocytes",
+            "Schwann cells"
+        ],
+        "answer": 1,
+        "correctAnswer": "Glial cells",
+        "explanation": "Damage to the brain or spinal cord is followed by growth of capillaries and gliosis (i.e., the proliferation of astrocytes and microglia). Gliosis in the central nervous system is the equivalent of scar formation elsewhere; once established, it remains permanently.",
+        "whyNotOtherOptions": {
+            "a": "Fibroblasts mediate scar in peripheral tissues.",
+            "c": "Neurons do not proliferate significantly.",
+            "d": "Oligodendrocytes do not mediate scar.",
+            "e": "Schwann cells are in peripheral nervous system."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 21,
+        "question": "A 30-year-old firefighter suffers extensive third-degree burns over his arms and hands. This patient is at high risk for developing which of the following complications of wound healing?",
+        "options": [
+            "Contracture",
+            "Dehiscence",
+            "Incisional hernia",
+            "Keloid",
+            "Traumatic neuroma"
+        ],
+        "answer": 0,
+        "correctAnswer": "Contracture",
+        "explanation": "A mechanical reduction in the size of a wound depends on the presence of myofibroblasts and sustained cell contraction. An exaggeration of these processes is termed contracture and results in severe deformity of the wound and surrounding tissues. Contractures are particularly conspicuous in the healing of serious burns and can be severe enough to compromise the movement of joints.",
+        "whyNotOtherOptions": {
+            "b": "Dehiscence is bursting open of wound, related to poor healing.",
+            "c": "Incisional hernia is abdominal wall defect.",
+            "d": "Keloid is exuberant scar beyond wound.",
+            "e": "Traumatic neuroma is nerve regeneration issue."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 22,
+        "question": "A 23-year-old man suffers a crush injury of his foot, which becomes secondarily infected. He undergoes a below-the-knee amputation. Six months later, the patient complains of chronic pain at the site of amputation. A firm nodule is identified at the scar site. A biopsy of the nodule demonstrates haphazard growth of nerves (shown in the image). Which of the following is the most likely diagnosis?",
+        "options": [
+            "Ganglioma",
+            "Ganglioneuroma",
+            "Hamartoma",
+            "Neural nevus",
+            "Neuroma"
+        ],
+        "answer": 4,
+        "correctAnswer": "Neuroma",
+        "explanation": "Neurons in the peripheral nervous system can regenerate their axons, and under ideal circumstances, interruption in the continuity of a peripheral nerve results in complete functional recovery. However, if the cut ends are not in perfect alignment or are prevented from establishing continuity by inflammation, a traumatic neuroma results. This bulbous lesion consists of disorganized axons and proliferating Schwann cells and fibroblasts.",
+        "whyNotOtherOptions": {
+            "a": "Ganglioma is a benign neoplasm.",
+            "b": "Ganglioneuroma is a benign neoplasm.",
+            "c": "Hamartoma is a benign neoplasm-like malformation.",
+            "d": "Neural nevus is not a standard term for this."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Medium"
+    },
+    {
+        "id": 23,
+        "question": "A 34-year-old man presents with a 5-day history of a painful sore on his hand. Physical examination reveals a 0.5-cm abscess on the extensor surface of the left hand that drains a thick, purulent material. Diapedesis of leukocytes into and around this patient’s infected wound occurs primarily at which of the following anatomic locations?",
+        "options": [
+            "Lymphatic capillaries",
+            "Postcapillary venules",
+            "Precapillary arterioles",
+            "Small dermal arteries",
+            "Small dermal veins"
+        ],
+        "answer": 1,
+        "correctAnswer": "Postcapillary venules",
+        "explanation": "One of the earliest responses following tissue injury occurs within the microvasculature at the level of the capillary and postcapillary venule. Following injury, changes in the structure of the vascular wall lead to activation of endothelial cells, loss of vascular integrity, leakage of fluid and plasma components from the intravascular compartment, and emigration of erythrocytes and leukocytes from the vascular space into the extravascular tissue (diapedesis). Leukocyte recruitment in the postcapillary venule is initiated by interaction of leukocytes with endothelial cell surface selectin molecules.",
+        "whyNotOtherOptions": {
+            "a": "Lymphatic capillaries are not primary for diapedesis.",
+            "c": "Precapillary arterioles are not the site.",
+            "d": "Small dermal arteries are not the site.",
+            "e": "Small dermal veins are not the primary site for diapedesis."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 24,
+        "question": "A 35-year-old pregnant woman with a history of chronic gastritis presents to the emergency room complaining of acute abdominal pain. Physical examination reveals hepatomegaly, ascites, and mild jaundice. The patient subsequently develops acute hepatic failure and expires. Autopsy reveals thrombosis of the hepatic veins (Budd-Chiari syndrome). During the autopsy, a lesion is identified in the distal stomach and examined by light microscopy (shown in the image). Which of the following best describes this incidental finding at autopsy?",
+        "options": [
+            "Carcinoma",
+            "Contracture",
+            "Diverticulum",
+            "Granuloma",
+            "Ulcer"
+        ],
+        "answer": 4,
+        "correctAnswer": "Ulcer",
+        "explanation": "Incidental findings are frequently encountered at autopsy. In this case, a peptic ulcer is identified in the distal stomach. Histologic examination shows focal destruction of the mucosa and full-thickness replacement of the muscularis with collagen-rich connective tissue. Gastric ulcers are usually single and less than 2 cm in diameter. Ulcers on the lesser curvature are commonly associated with chronic gastritis (this patient), whereas those on the greater curvature are often related to NSAIDs.",
+        "whyNotOtherOptions": {
+            "a": "Grossly, chronic peptic ulcers may closely resemble gastric carcinoma, but biopsy would confirm.",
+            "b": "Contraction and scarring of gastric ulcers may occur and may cause pyloric stenosis, but histopathology does not suggest.",
+            "c": "Diverticula of the stomach are rare and, if present, are usually lined by a normal gastric mucosa.",
+            "d": "Granuloma features inflammatory cells that are not observed."
+        },
+        "relatedQuestions": [],
+        "category": "Repair, Regeneration, and Fibrosis",
+        "difficulty": "Medium"
+    }
+];
+
+// Core application variables
+const overlay = document.getElementById('overlay');
+const menuToggle = document.getElementById('menuToggle');
+const sidebar = document.getElementById('sidebar');
+const mainContent = document.getElementById('mainContent');
+const categoriesGrid = document.getElementById('categoriesGrid');
+const themeToggle = document.getElementById('themeToggle');
+const quizContainer = document.getElementById('quizContainer');
+const resultsScreen = document.getElementById('resultsScreen');
+const pageTitle = document.getElementById('pageTitle');
+const modeButtons = document.querySelectorAll('.mode-btn');
+const correctAnswersEl = document.getElementById('correctAnswers');
+const timeSpentEl = document.getElementById('timeSpent');
+const masteryLevelEl = document.getElementById('masteryLevel');
+const streakCountEl = document.getElementById('streakCount');
+const searchInput = document.getElementById('searchInput');
+const exportProgressBtn = document.getElementById('exportProgress');
+const createCustomQuizBtn = document.getElementById('createCustomQuizBtn');
+const customQuizModal = document.getElementById('customQuizModal');
+const cancelCustomQuizBtn = document.getElementById('cancelCustomQuiz');
+const createCustomQuizBtnModal = document.getElementById('createCustomQuiz');
+const weakAreasCountEl = document.getElementById('weakAreasCount');
+const avgTimePerQuestionEl = document.getElementById('avgTimePerQuestion');
+const improvementRateEl = document.getElementById('improvementRate');
+
+// Navigation elements
+const navItems = document.querySelectorAll('.nav-item');
+
+// Application state
+let currentMode = 'exam';
+let selectedCategories = [];
+let currentQuestionIndex = 0;
+let score = 0;
+let userAnswers = [];
+let questions = [];
+let incorrectQuestions = [];
+let isAnswerChecked = false;
+let bookmarkedQuestions = new Set();
+let userProgress = {};
+let userStats = {
+    totalQuestions: 0,
+    correctAnswers: 0,
+    timeSpent: 0,
+    masteryLevel: 0,
+    streak: 0,
+    lastActive: null,
+    weeklyProgress: []
+};
+let timerInterval = null;
+let startTime = null;
+let remainingTime = 0;
+let isCountdown = false;
+let examCheckMode = 'immediate';
+let examSubmitted = false;
+let questionTimers = [];
+let searchResults = [];
+let isSearchActive = false;
+let currentPage = 'Dashboard';
+let customQuestions = [];
+
+// Core application functions
+function init() {
+    initializeCategories();
+    initializeEventListeners();
+    initializeNavigation();
+    loadUserData();
+    updateDashboardStats();
+    updateAnalytics();
+    showDashboard();
+    createFAB();
+    updateCustomQuizModalHTML();
+}
+
+function createFAB() {
+    const fab = document.createElement('button');
+    fab.className = 'fab';
+    fab.innerHTML = '<i class="fas fa-plus"></i>';
+    fab.title = 'Create Custom Question';
+    fab.addEventListener('click', showCustomQuestionCreator);
+    document.body.appendChild(fab);
+}
+
+function initializeNavigation() {
+    navItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            navItems.forEach(nav => nav.classList.remove('active'));
+            item.classList.add('active');
+            
+            switch(index) {
+                case 0: // Dashboard
+                    currentPage = 'Dashboard';
+                    showDashboard();
+                    break;
+                case 1: // My Courses
+                    currentPage = 'courses';
+                    showCourses();
+                    break;
+                case 2: // Progress Analytics
+                    currentPage = 'analytics';
+                    showAnalytics();
+                    break;
+                case 3: // Bookmarked Questions
+                    currentPage = 'bookmarks';
+                    showBookmarks();
+                    break;
+                case 4: // Settings
+                    currentPage = 'settings';
+                    showSettings();
+                    break;
+            }
+            
+            closeSidebar();
+        });
+    });
+}
+
+function showDashboard() {
+    console.log('showDashboard called'); // Debug
+    
+    hideAllSections();
+    document.querySelector('.stats-grid').style.display = 'grid';
+    document.querySelector('.analytics-section').style.display = 'block';
+    document.querySelector('.search-container').style.display = 'block';
+    document.querySelector('.export-section').style.display = 'block';
+    
+    // Reset page title
+    pageTitle.textContent = 'Dashboard';
+    updateDashboardStats();
+    
+    // ALWAYS load questions and show quiz layout
+    questions = [...quizData, ...customQuestions];
+    selectedCategories = [...new Set(questions.map(q => q.category))];
+    
+    // Reset quiz state
+    currentQuestionIndex = 0;
+    userAnswers = new Array(questions.length);
+    isAnswerChecked = false;
+    examSubmitted = false;
+    
+    console.log('Questions loaded:', questions.length);
+    console.log('Current mode:', currentMode);
+    
+    // Force show quiz container
+    quizContainer.classList.remove('hidden');
+    resultsScreen.classList.add('hidden');
+    
+    if (questions.length > 0) {
+        console.log('Calling renderQuizLayout...');
+        renderQuizLayout();
+    } else {
+        console.log('No questions, showing message');
+        showNoQuestionsMessage();
+    }
+}
+
+function showCourses() {
+    hideAllSections();
+    pageTitle.textContent = 'My Courses';
+    
+    quizContainer.innerHTML = `
+        <div style="text-align: center; padding: 40px 20px;">
+            <div style="font-size: 80px; color: var(--primary); margin-bottom: 20px; opacity: 0.8;">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h2 style="font-size: 32px; margin-bottom: 16px; color: var(--text-primary); background: linear-gradient(135deg, var(--primary), var(--primary-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;">Learning Pathways</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto; font-size: 16px; line-height: 1.6;">
+                Structured learning paths designed to build your medical knowledge systematically.
+            </p>
+           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 40px;">
+                    <div onclick="window.location.href='anatomy.html'" style="cursor: pointer;">
+                       ${createCourseCard('Anatomy Mastery', 'fas fa-brain', '#6366f1', 75, 'Build foundational anatomy knowledge')}
+                    </div>
+  <div onclick="window.location.href='anatomy.html'" style="cursor: pointer;">
+                       ${createCourseCard('Physiology Deep Dive', 'fas fa-heartbeat', '#06b6d4', 45, 'Understand body systems and functions')}
+                   </div>
+  <div onclick="window.location.href='anatomy.html'" style="cursor: pointer;">
+                       ${createCourseCard('Clinical Pathology', 'fas fa-virus', '#10b981', 30, 'Study diseases and diagnostics')}
+                    </div> 
+  <div onclick="window.location.href='anatomy.html'" style="cursor: pointer;">
+                       ${createCourseCard('Pharmacology', 'fas fa-pills', '#f59e0b', 20, 'Master drug mechanisms and effects')}
+                    </div>
+    <div onclick="window.location.href='anatomy.html'" style="cursor: pointer;">
+                       ${createCourseCard('Medical Imaging', 'fas fa-x-ray', '#8b5cf6', 15, 'Learn radiology and imaging techniques')}
+                    </div>
+    <div onclick="window.location.href='anatomy.html'" style="cursor: pointer;">
+                       ${createCourseCard('Emergency Medicine', 'fas fa-ambulance', '#ef4444', 10, 'Critical care and emergency procedures')}
+                    </div>
+            </div>
+        </div>
+    `;
+    quizContainer.classList.remove('hidden');
+}
+
+function createCourseCard(title, icon, color, progress, description) {
+    return `
+        <div class="category-card" style="text-align: left; cursor: pointer; border-left: 4px solid ${color};" onclick="startCourse('${title.toLowerCase()}')">
+            <div class="category-header">
+                <div class="category-icon" style="background: ${color}20; color: ${color};">
+                    <i class="${icon}"></i>
+                </div>
+                <div>
+                    <div class="category-name" style="font-size: 16px; font-weight: 600;">${title}</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">${description}</div>
+                </div>
+            </div>
+            <div class="category-stats">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${progress}%; background: ${color}"></div>
+                </div>
+                <div class="progress-text">${progress}%</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 12px;">
+                <span style="font-size: 11px; color: var(--text-tertiary);">${Math.floor(progress/10)}/10 Modules</span>
+                <span style="font-size: 11px; color: ${color}; font-weight: 600;">Continue →</span>
+            </div>
+        </div>
+    `;
+}
+
+function showAnalytics() {
+    hideAllSections();
+    document.querySelector('.stats-grid').style.display = 'grid';
+    document.querySelector('.analytics-section').style.display = 'block';
+    document.querySelector('.export-section').style.display = 'block';
+    pageTitle.textContent = 'Progress Analytics';
+    updateAnalytics();
+    
+    quizContainer.innerHTML = `
+        <div style="padding: 24px;">
+            <div class="analytics-section glass-effect" style="border-radius: 24px; padding: 32px;">
+                <h3 class="analytics-title" style="font-size: 24px; margin-bottom: 8px;">Performance Insights</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 32px;">Detailed analytics to optimize your learning journey</p>
+                <div class="analytics-grid">
+                    <div class="analytics-card glass-effect" style="border-radius: 20px; padding: 24px;">
+                        <div class="analytics-value" style="font-size: 32px; color: var(--primary);">${weakAreasCountEl.textContent}</div>
+                        <div class="analytics-label">Areas Needing Focus</div>
+                    </div>
+                    <div class="analytics-card glass-effect" style="border-radius: 20px; padding: 24px;">
+                        <div class="analytics-value" style="font-size: 32px; color: #06b6d4;">${avgTimePerQuestionEl.textContent}</div>
+                        <div class="analytics-label">Average Response Time</div>
+                    </div>
+                    <div class="analytics-card glass-effect" style="border-radius: 20px; padding: 24px;">
+                        <div class="analytics-value" style="font-size: 32px; color: #10b981;">${improvementRateEl.textContent}</div>
+                        <div class="analytics-label">Weekly Progress Rate</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="glass-effect" style="border-radius: 24px; padding: 32px; margin-top: 24px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 24px; color: var(--text-primary);">📊 Learning Recommendations</h3>
+                <div style="display: grid; gap: 16px;">
+                    ${createRecommendation('Focus on Weak Areas', 'fas fa-bullseye', 'var(--primary)', 'Spend 60% of study time on topics below 70% mastery')}
+                    ${createRecommendation('Consistent Practice', 'fas fa-chart-line', '#10b981', `Maintain your ${userStats.streak}-day streak for optimal retention`)}
+                    ${createRecommendation('Active Recall', 'fas fa-brain', '#8b5cf6', 'Use spaced repetition for better long-term memory')}
+                    ${createRecommendation('Mixed Practice', 'fas fa-random', '#f59e0b', 'Combine different topics in single study sessions')}
+                </div>
+            </div>
+
+            <div class="glass-effect" style="border-radius: 24px; padding: 32px; margin-top: 24px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 24px; color: var(--text-primary);">🎯 Study Plan</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                    ${createStudyPlanItem('Daily Goal', '50 questions', 'fas fa-calendar-day', '#6366f1')}
+                    ${createStudyPlanItem('Weekly Target', '5 hours', 'fas fa-chart-bar', '#06b6d4')}
+                    ${createStudyPlanItem('Mastery Goal', '85% overall', 'fas fa-trophy', '#f59e0b')}
+                    ${createStudyPlanItem('Weak Topics', '2 sessions/week', 'fas fa-exclamation-triangle', '#ef4444')}
+                </div>
+            </div>
+        </div>
+    `;
+    quizContainer.classList.remove('hidden');
+}
+
+function createRecommendation(title, icon, color, description) {
+    return `
+        <div style="display: flex; align-items: center; gap: 16px; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 16px; border-left: 4px solid ${color};">
+            <i class="${icon}" style="color: ${color}; font-size: 24px;"></i>
+            <div>
+                <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">${title}</div>
+                <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.5;">${description}</div>
+            </div>
+        </div>
+    `;
+}
+
+function createStudyPlanItem(title, value, icon, color) {
+    return `
+        <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 16px;">
+            <i class="${icon}" style="color: ${color}; font-size: 32px; margin-bottom: 12px;"></i>
+            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">${title}</div>
+            <div style="font-size: 18px; color: ${color}; font-weight: 700;">${value}</div>
+        </div>
+    `;
+}
+
+function showBookmarks() {
+    const bookmarkedQuestionsList = [...quizData, ...customQuestions].filter(q => bookmarkedQuestions.has(q.id));
+    hideAllSections();
+    pageTitle.textContent = 'Bookmarked Questions';
+    
+    if (bookmarkedQuestionsList.length === 0) {
+        quizContainer.innerHTML = `
+            <div style="text-align: center; padding: 80px 20px;">
+                <div style="font-size: 96px; color: var(--text-tertiary); margin-bottom: 24px; opacity: 0.5;">
+                    <i class="far fa-bookmark"></i>
+                </div>
+                <h2 style="font-size: 32px; margin-bottom: 16px; color: var(--text-primary);">No Bookmarked Questions Yet</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 40px; max-width: 400px; margin-left: auto; margin-right: auto; font-size: 16px; line-height: 1.6;">
+                    Click the bookmark icon on any question to save it here for quick review. This is perfect for difficult concepts or important topics you want to revisit.
+                </p>
+                <button class="quiz-btn" onclick="showDashboard(); navItems[0].click()" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 16px 32px; border-radius: 16px;">
+                    <i class="fas fa-arrow-left"></i>
+                    Explore Questions
+                </button>
+            </div>
+        `;
+    } else {
+        quizContainer.innerHTML = `
+            <div style="padding: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+                    <div>
+                        <h2 style="font-size: 28px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+                            ${bookmarkedQuestionsList.length} Saved Question${bookmarkedQuestionsList.length !== 1 ? 's' : ''}
+                        </h2>
+                        <p style="color: var(--text-secondary);">Your personal collection of important questions</p>
+                    </div>
+                    <button class="quiz-btn" onclick="startBookmarksQuiz()" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 16px 24px; border-radius: 16px;">
+                        <i class="fas fa-play"></i>
+                        Practice Bookmarks
+                    </button>
+                </div>
+                <div style="display: grid; gap: 20px;">
+                    ${bookmarkedQuestionsList.map(question => `
+                        <div class="question-card glass-effect" style="cursor: pointer; border-radius: 20px; padding: 24px;" onclick="jumpToBookmarkQuestion(${question.id})">
+                            <div class="question-header">
+                                <div class="question-meta">
+                                    <div class="question-number" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark));">Q${question.id}</div>
+                                    <div class="question-category glass-effect">${question.category}</div>
+                                    <div class="question-difficulty" style="background: ${getDifficultyColor(question.difficulty)};">
+                                        ${question.difficulty}
+                                    </div>
+                                    ${question.custom ? '<div class="question-category glass-effect" style="background: #10b98120; color: #10b981;">Custom</div>' : ''}
+                                </div>
+                                <div class="question-actions">
+                                    <button class="action-btn bookmark-btn" onclick="event.stopPropagation(); toggleBookmark(${question.id}); showBookmarks();" aria-label="Remove Bookmark" style="background: rgba(239, 68, 68, 0.1); color: var(--error);">
+                                        <i class="fas fa-bookmark"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="question-text" style="font-size: 16px; line-height: 1.6;">${question.question}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    quizContainer.classList.remove('hidden');
+}
+
+// Add this function to handle clicking on individual bookmark questions
+function jumpToBookmarkQuestion(questionId) {
+    const bookmarkedQuestionsList = [...quizData, ...customQuestions].filter(q => bookmarkedQuestions.has(q.id));
+    
+    // Start a quiz with just this one question
+    questions = [bookmarkedQuestionsList.find(q => q.id === questionId)];
+    currentQuestionIndex = 0;
+    userAnswers = new Array(questions.length);
+    isAnswerChecked = false;
+    currentMode = 'quiz';
+    
+    // Update mode buttons
+    modeButtons.forEach(b => b.classList.remove('active'));
+    modeButtons[1].classList.add('active'); // Quiz mode
+    
+    pageTitle.textContent = 'Quiz Mode - Bookmarked Question';
+    
+    hideAllSections();
+    quizContainer.classList.remove('hidden');
+    renderQuizLayout();
+}
+
+function showSettings() {
+    hideAllSections();
+    pageTitle.textContent = 'Settings & Preferences';
+    
+    quizContainer.innerHTML = `
+        <div style="padding: 24px; max-width: 800px; margin: 0 auto;">
+            <div class="settings-panel" style="padding: 32px; margin-bottom: 24px;">
+                <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary);">🎨 Appearance</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 24px;">Customize the look and feel of your study environment</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); margin-bottom: 12px; font-weight: 600;">Theme</label>
+                        <div class="mode-selector glass-effect" style="padding: 8px; border-radius: 16px;">
+                            <button class="mode-btn ${document.body.classList.contains('dark-mode') ? '' : 'active'}" onclick="setTheme('light')" style="border-radius: 12px; padding: 12px 16px;">
+                                <i class="fas fa-sun"></i>
+                                Light Mode
+                            </button>
+                            <button class="mode-btn ${document.body.classList.contains('dark-mode') ? 'active' : ''}" onclick="setTheme('dark')" style="border-radius: 12px; padding: 12px 16px;">
+                                <i class="fas fa-moon"></i>
+                                Dark Mode
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); margin-bottom: 12px; font-weight: 600;">Animation</label>
+                        <div class="mode-selector glass-effect" style="padding: 8px; border-radius: 16px;">
+                            <button class="mode-btn active" style="border-radius: 12px; padding: 12px 16px;">
+                                <i class="fas fa-bolt"></i>
+                                Smooth
+                            </button>
+                            <button class="mode-btn" style="border-radius: 12px; padding: 12px 16px;">
+                                <i class="fas fa-minus"></i>
+                                Minimal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-panel" style="padding: 32px; margin-bottom: 24px;">
+                <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary);">⚡ Study Preferences</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 24px;">Optimize your learning experience</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); margin-bottom: 12px; font-weight: 600;">Default Mode</label>
+                        <div class="mode-selector glass-effect" style="padding: 8px; border-radius: 16px;">
+                            <button class="mode-btn ${currentMode === 'quiz' ? 'active' : ''}" onclick="setDefaultMode('quiz')" style="border-radius: 12px; padding: 12px 16px;">
+                                <i class="fas fa-tasks"></i>
+                                Quiz
+                            </button>
+                            <button class="mode-btn ${currentMode === 'exam' ? 'active' : ''}" onclick="setDefaultMode('exam')" style="border-radius: 12px; padding: 12px 16px;">
+                                <i class="fas fa-file-alt"></i>
+                                Exam
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); margin-bottom: 12px; font-weight: 600;">Questions Per Session</label>
+                        <select class="modern-dropdown" style="width: 100%;" onchange="setQuestionsPerSession(this.value)">
+                            <option value="10">10 Questions</option>
+                            <option value="25" selected>25 Questions</option>
+                            <option value="50">50 Questions</option>
+                            <option value="100">100 Questions</option>
+                            <option value="0">All Questions</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-panel" style="padding: 32px; margin-bottom: 24px;">
+                <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary);">📊 Data & Progress</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 24px;">Manage your learning data</p>
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <button class="quiz-btn" onclick="exportProgress()" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 16px 24px; border-radius: 16px; justify-content: start;">
+                        <i class="fas fa-download" style="margin-right: 12px;"></i>
+                         
+                    </button>
+                    <button class="quiz-btn" onclick="showCustomQuestionCreator()" style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 16px 24px; border-radius: 16px; justify-content: start;">
+                        <i class="fas fa-plus" style="margin-right: 12px;"></i>
+                        Create Custom Question
+                    </button>
+                    <button class="quiz-btn" onclick="resetProgress()" style="background: linear-gradient(135deg, var(--error), #dc2626); color: white; padding: 16px 24px; border-radius: 16px; justify-content: start;">
+                        <i class="fas fa-trash" style="margin-right: 12px;"></i>
+                        Reset All Progress
+                    </button>
+                </div>
+            </div>
+
+            <div class="settings-panel" style="padding: 32px;">
+                <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary);">ℹ️ About ALIF</h3>
+                <div style="color: var(--text-secondary); line-height: 1.7;">
+                    <p>ALIF is an advanced medical education platform designed to help medical students and professionals enhance their knowledge through interactive quizzes and detailed analytics.</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 20px;">
+                        <div>
+                            <strong style="color: var(--text-primary);">Version</strong>
+                            <div>2.1.0</div>
+                        </div>
+                        <div>
+                            <strong style="color: var(--text-primary);">Questions</strong>
+                            <div>${quizData.length + customQuestions.length} total</div>
+                        </div>
+                        <div>
+                            <strong style="color: var(--text-primary);">Last Updated</strong>
+                            <div>${new Date().toLocaleDateString()}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    quizContainer.classList.remove('hidden');
+}
+
+function setTheme(theme) {
+    if (theme === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeToggle.querySelector('i').className = 'fas fa-sun';
+    } else {
+        document.body.classList.remove('dark-mode');
+        themeToggle.querySelector('i').className = 'fas fa-moon';
+    }
+    showNotification(`Theme set to ${theme} mode`, 'success');
+}
+
+function setDefaultMode(mode) {
+    currentMode = mode;
+    modeButtons.forEach(b => b.classList.remove('active'));
+    modeButtons[mode === 'quiz' ? 1 : 0].classList.add('active');
+    showNotification(`Default mode set to ${mode}`, 'success');
+}
+
+function setQuestionsPerSession(count) {
+    showNotification(`Questions per session set to ${count === '0' ? 'all' : count}`, 'info');
+}
+
+function showCustomQuestionCreator() {
+    const modal = document.createElement('div');
+    modal.className = 'custom-quiz-modal active';
+    modal.innerHTML = `
+        <div class="custom-quiz-content glass-effect" style="max-width: 600px; border-radius: 24px;">
+            <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 24px;">
+                <h3 style="font-size: 24px; font-weight: 700; color: var(--text-primary);">Create Custom Question</h3>
+                <button class="action-btn" onclick="closeCustomQuestionModal()" style="background: rgba(239, 68, 68, 0.1); color: var(--error);">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="custom-question-creator">
+                <div style="display: grid; gap: 20px;">
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); margin-bottom: 8px; font-weight: 600;">Question Text</label>
+                        <textarea id="customQuestionText" placeholder="Enter your question here..." style="width: 100%; padding: 16px; border: 2px solid var(--border); border-radius: 16px; background: var(--surface); color: var(--text-primary); font-size: 14px; resize: vertical; min-height: 80px;"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); margin-bottom: 8px; font-weight: 600;">Category</label>
+                        <select id="customQuestionCategory" class="modern-dropdown" style="width: 100%;">
+                            <option value="Custom Anatomy">Custom Anatomy</option>
+                            <option value="Custom Physiology">Custom Physiology</option>
+                            <option value="Custom Pathology">Custom Pathology</option>
+                            <option value="Custom Pharmacology">Custom Pharmacology</option>
+                            <option value="General Medicine">General Medicine</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); margin-bottom: 8px; font-weight: 600;">Difficulty</label>
+                        <div class="mode-selector glass-effect" style="padding: 8px; border-radius: 16px;">
+                            <button type="button" class="mode-btn difficulty-btn active" data-difficulty="Easy" style="border-radius: 12px; padding: 12px 16px;">
+                                Easy
+                            </button>
+                            <button type="button" class="mode-btn difficulty-btn" data-difficulty="Medium" style="border-radius: 12px; padding: 12px 16px;">
+                                Medium
+                            </button>
+                            <button type="button" class="mode-btn difficulty-btn" data-difficulty="Hard" style="border-radius: 12px; padding: 12px 16px;">
+                                Hard
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); margin-bottom: 12px; font-weight: 600;">Options</label>
+                        <div style="display: grid; gap: 12px;">
+                            ${['A', 'B', 'C', 'D'].map(letter => `
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--surface); display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--text-secondary); flex-shrink: 0;">${letter}</div>
+                                    <input type="text" id="customOption${letter}" placeholder="Option ${letter}" style="flex: 1; padding: 12px 16px; border: 2px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text-primary);">
+                                    <input type="radio" name="correctAnswer" value="${letter}" id="correct${letter}" style="transform: scale(1.2);">
+                                    <label for="correct${letter}" style="color: var(--text-secondary); font-weight: 600;">Correct</label>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); margin-bottom: 8px; font-weight: 600;">Explanation</label>
+                        <textarea id="customExplanation" placeholder="Explain why the correct answer is right..." style="width: 100%; padding: 16px; border: 2px solid var(--border); border-radius: 16px; background: var(--surface); color: var(--text-primary); font-size: 14px; resize: vertical; min-height: 60px;"></textarea>
+                    </div>
+                </div>
+                
+                <div class="custom-quiz-actions" style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 32px;">
+                    <button class="quiz-btn" onclick="closeCustomQuestionModal()" style="background: var(--secondary); color: white; padding: 12px 24px; border-radius: 12px;">
+                        Cancel
+                    </button>
+                    <button class="quiz-btn check-btn" onclick="saveCustomQuestion()" style="padding: 12px 24px; border-radius: 12px;">
+                        <i class="fas fa-save"></i>
+                        Save Question
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Add difficulty button handlers
+    modal.querySelectorAll('.difficulty-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            modal.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+}
+
+function closeCustomQuestionModal() {
+    const modal = document.querySelector('.custom-quiz-modal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+function saveCustomQuestion() {
+    const questionText = document.getElementById('customQuestionText').value;
+    const category = document.getElementById('customQuestionCategory').value;
+    const difficulty = document.querySelector('.difficulty-btn.active').dataset.difficulty;
+    const explanation = document.getElementById('customExplanation').value;
+    
+    // Get options
+    const options = [];
+    for (let letter of ['A', 'B', 'C', 'D']) {
+        const optionText = document.getElementById(`customOption${letter}`).value;
+        if (optionText.trim()) {
+            options.push(optionText);
+        }
+    }
+    
+    // Get correct answer
+    const correctAnswerRadio = document.querySelector('input[name="correctAnswer"]:checked');
+    if (!correctAnswerRadio) {
+        showNotification('Please select the correct answer', 'error');
+        return;
+    }
+    
+    const correctAnswerIndex = ['A', 'B', 'C', 'D'].indexOf(correctAnswerRadio.value);
+    
+    if (!questionText.trim() || options.length < 2) {
+        showNotification('Please fill in all required fields', 'error');
+        return;
+    }
+    
+    // Generate a unique ID for the custom question
+    const maxId = Math.max(
+        ...quizData.map(q => q.id),
+        ...customQuestions.map(q => q.id),
+        0
+    );
+    
+    const newQuestion = {
+        id: maxId + 1,
+        question: questionText,
+        options: options,
+        answer: correctAnswerIndex,
+        correctAnswer: options[correctAnswerIndex],
+        explanation: explanation || 'No explanation provided.',
+        whyNotOtherOptions: {},
+        relatedQuestions: [],
+        category: category,
+        difficulty: difficulty,
+        custom: true
+    };
+    
+    customQuestions.push(newQuestion);
+    saveUserData();
+    
+    closeCustomQuestionModal();
+    showNotification('Custom question created successfully!', 'success');
+    
+    // Refresh the current view and categories
+    initializeCategories();
+    if (currentPage === 'Dashboard') {
+        showDashboard();
+    } else if (currentPage === 'bookmarks') {
+        showBookmarks();
+    }
+}
+
+function hideAllSections() {
+    quizContainer.classList.add('hidden');
+    resultsScreen.classList.add('hidden');
+    document.querySelector('.stats-grid').style.display = 'none';
+    document.querySelector('.analytics-section').style.display = 'none';
+    document.querySelector('.export-section').style.display = 'none';
+    // Note: search-container is NOT hidden here - we want it always visible during search
+}
+
+function startCourse(courseName) {
+    showNotification(`Starting ${courseName} course...`, 'info');
+    // Filter questions by course/category and start quiz
+    const courseQuestions = [...quizData, ...customQuestions].filter(q => 
+        q.category.toLowerCase().includes(courseName.toLowerCase())
+    );
+    
+    if (courseQuestions.length === 0) {
+        showNotification('No questions available for this course yet', 'info');
+        return;
+    }
+    
+    questions = courseQuestions;
+    currentQuestionIndex = 0;
+    userAnswers = new Array(questions.length);
+    isAnswerChecked = false;
+    currentMode = 'quiz';
+    modeButtons.forEach(b => b.classList.remove('active'));
+    modeButtons[1].classList.add('active');
+    pageTitle.textContent = `Quiz Mode - ${courseName}`;
+    
+    hideAllSections();
+    renderQuizLayout();
+}
+
+// FIXED BOOKMARK PRACTICE FUNCTION
+function startBookmarksQuiz() {
+    const bookmarkedQuestionsList = [...quizData, ...customQuestions].filter(q => bookmarkedQuestions.has(q.id));
+    
+    if (bookmarkedQuestionsList.length === 0) {
+        showNotification('No bookmarked questions to practice!', 'error');
+        return;
+    }
+    
+    questions = bookmarkedQuestionsList;
+    currentQuestionIndex = 0;
+    userAnswers = new Array(questions.length);
+    isAnswerChecked = false;
+    currentMode = 'quiz';
+    
+    // Update mode buttons
+    modeButtons.forEach(b => b.classList.remove('active'));
+    modeButtons[1].classList.add('active'); // Quiz mode
+    
+    pageTitle.textContent = 'Quiz Mode - Bookmarked Questions';
+    
+    hideAllSections();
+    quizContainer.classList.remove('hidden');
+    renderQuizLayout();
+    
+    showNotification(`Starting practice with ${questions.length} bookmarked questions`, 'success');
+}
+
+function resetProgress() {
+    if (confirm('Are you sure you want to reset all your progress? This action cannot be undone.')) {
+        userProgress = {};
+        userStats = {
+            totalQuestions: 0,
+            correctAnswers: 0,
+            timeSpent: 0,
+            masteryLevel: 0,
+            streak: 0,
+            lastActive: new Date().toISOString(),
+            weeklyProgress: []
+        };
+        bookmarkedQuestions = new Set();
+        customQuestions = [];
+        saveUserData();
+        updateDashboardStats();
+        updateAnalytics();
+        showNotification('All progress has been reset', 'success');
+        showDashboard();
+    }
+}
+
+function initializeEventListeners() {
+    menuToggle.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', closeSidebar);
+    themeToggle.addEventListener('click', toggleTheme);
+    
+    modeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            modeButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentMode = btn.dataset.mode;
+            pageTitle.textContent = `${btn.dataset.mode.charAt(0).toUpperCase() + btn.dataset.mode.slice(1)} Mode`;
+            startQuiz();
+        });
+    });
+    
+    initializeEnhancedFeatures();
+    document.getElementById('backBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        // Use browser back navigation
+        window.history.back();
+    });
+}
+function updateBackButton() {
+    const backBtn = document.getElementById('backBtn');
+    // Show back button if there's history to go back to
+    if (window.history.length > 1) {
+        backBtn.style.display = 'flex';
+    } else {
+        backBtn.style.display = 'none';
+    }
+}
+
+function toggleSidebar() {
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('active');
+    mainContent.classList.toggle('sidebar-open');
+    document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    mainContent.classList.remove('sidebar-open');
+    document.body.style.overflow = '';
+}
+
+function toggleTheme() {
+    document.body.classList.toggle('dark-mode');
+    const icon = themeToggle.querySelector('i');
+    if (document.body.classList.contains('dark-mode')) {
+        icon.className = 'fas fa-sun';
+    } else {
+        icon.className = 'fas fa-moon';
+    }
+}
+
+function initializeEnhancedFeatures() {
+    initializeSearch();
+    initializeKeyboardNavigation();
+    enhanceAccessibility();
+    
+    exportProgressBtn.addEventListener('click', exportProgress);
+    createCustomQuizBtn.addEventListener('click', () => {
+        customQuizModal.classList.add('active');
+    });
+    cancelCustomQuizBtn.addEventListener('click', () => {
+        customQuizModal.classList.remove('active');
+    });
+    createCustomQuizBtnModal.addEventListener('click', () => {
+        const selectedOptions = document.querySelectorAll('.custom-quiz-option.selected');
+        const options = {
+            categories: selectedCategories,
+            difficulty: null,
+            bookmarkedOnly: false
+        };
+        
+        selectedOptions.forEach(option => {
+            const category = option.dataset.category;
+            if (category === 'easy' || category === 'medium' || category === 'hard') {
+                options.difficulty = category;
+            } else if (category === 'bookmarked') {
+                options.bookmarkedOnly = true;
+            }
+        });
+        
+        createCustomQuiz(options);
+    });
+    
+    // Add selection toggling for custom quiz options
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.custom-quiz-option')) {
+            const option = e.target.closest('.custom-quiz-option');
+            option.classList.toggle('selected');
+        }
+    });
+    
+    // Ensure search works when clicking Dashboard
+    navItems[0].addEventListener('click', () => {
+        if (searchInput.value.trim().length > 0) {
+            // If there's a search query, maintain search state
+            isSearchActive = true;
+        }
+    });
+}
+
+// FIXED SEARCH FUNCTIONALITY
+function initializeSearch() {
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.trim().toLowerCase();
+            
+            // Clear previous search state when input is empty
+            if (query.length === 0) {
+                document.body.classList.remove('search-blur-active');
+                isSearchActive = false;
+                if (currentPage === 'Dashboard') {
+                    showDashboard();
+                }
+                return;
+            }
+            
+            // Add blur effect when searching
+            document.body.classList.add('search-blur-active');
+            
+            if (query.length < 2) {
+                isSearchActive = false;
+                return;
+            }
+            
+            isSearchActive = true;
+            performSearch(query);
+        });
+        
+        // Add clear search functionality
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                clearSearch();
+            }
+        });
+    }
+}
+
+function performSearch(query) {
+    const allQuestions = [...quizData, ...customQuestions];
+    searchResults = allQuestions.filter(q => 
+        q.question.toLowerCase().includes(query) ||
+        q.category.toLowerCase().includes(query) ||
+        (q.explanation && q.explanation.toLowerCase().includes(query)) ||
+        q.options.some(opt => opt.toLowerCase().includes(query))
+    );
+    
+    console.log('Search query:', query, 'Results:', searchResults.length); // Debug log
+    
+    if (searchResults.length > 0) {
+        // Show search results in quiz layout
+        questions = searchResults;
+        currentQuestionIndex = 0;
+        userAnswers = new Array(questions.length);
+        isAnswerChecked = false;
+        
+        hideAllSections();
+        quizContainer.classList.remove('hidden');
+        renderQuizLayout();
+        
+        // Update page title to show search context
+        pageTitle.textContent = `Search: "${query}" (${searchResults.length} results)`;
+        
+        // Highlight search terms
+        setTimeout(() => {
+            highlightSearchTerms(query);
+        }, 100);
+    } else {
+        // Show no results message
+        showSearchNoResults(query);
+    }
+}
+
+function showSearchNoResults(query) {
+    hideAllSections();
+    quizContainer.innerHTML = `
+        <div class="no-questions" style="text-align: center; padding: 80px 20px;">
+            <div style="font-size: 64px; color: var(--text-tertiary); margin-bottom: 24px; opacity: 0.5;">
+                <i class="fas fa-search"></i>
+            </div>
+            <h2 style="font-size: 28px; margin-bottom: 16px; color: var(--text-primary);">No Results Found</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 32px; max-width: 400px; margin-left: auto; margin-right: auto;">
+                No questions match your search for "<strong style="color: var(--primary);">${query}</strong>". Try different keywords or browse categories.
+            </p>
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                <button class="quiz-btn" onclick="clearSearch()" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 12px 24px; border-radius: 12px;">
+                    <i class="fas fa-times"></i>
+                    Clear Search
+                </button>
+                <button class="quiz-btn" onclick="toggleSidebar()" style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 12px 24px; border-radius: 12px;">
+                    <i class="fas fa-folder-open"></i>
+                    Browse Categories
+                </button>
+            </div>
+        </div>
+    `;
+    quizContainer.classList.remove('hidden');
+    pageTitle.textContent = `Search: "${query}" (0 results)`;
+}
+
+function clearSearch() {
+    searchInput.value = '';
+    document.body.classList.remove('search-blur-active');
+    isSearchActive = false;
+    showDashboard();
+}
+
+function highlightSearchTerms(query) {
+    const questionTexts = document.querySelectorAll('.question-text');
+    const optionTexts = document.querySelectorAll('.option-text');
+    const categoryElements = document.querySelectorAll('.question-category');
+    
+    const highlightText = (element) => {
+        const originalText = element.textContent;
+        const regex = new RegExp(`(${query})`, 'gi');
+        const highlighted = originalText.replace(regex, '<mark class="search-highlight">$1</mark>');
+        element.innerHTML = highlighted;
+    };
+    
+    questionTexts.forEach(highlightText);
+    optionTexts.forEach(highlightText);
+    categoryElements.forEach(highlightText);
+}
+
+function initializeKeyboardNavigation() {
+    document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        
+        switch(e.key) {
+            case 'ArrowDown':
+            case 'ArrowUp':
+                e.preventDefault();
+                navigateOptions(e.key === 'ArrowDown' ? 1 : -1);
+                break;
+            case ' ':
+            case 'Enter':
+                e.preventDefault();
+                if (document.activeElement.classList.contains('option')) {
+                    document.activeElement.click();
+                }
+                break;
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+                e.preventDefault();
+                const index = parseInt(e.key) - 1;
+                const options = document.querySelectorAll('.option:not(.disabled)');
+                if (options[index]) {
+                    options[index].click();
+                }
+                break;
+            case 'Escape':
+                if (document.querySelector('.custom-quiz-modal')) {
+                    document.querySelector('.custom-quiz-modal').remove();
+                }
+                break;
+        }
+    });
+}
+
+function navigateOptions(direction) {
+    const options = document.querySelectorAll('.option:not(.disabled)');
+    const currentIndex = Array.from(options).findIndex(opt => opt === document.activeElement);
+    let nextIndex = currentIndex + direction;
+    
+    if (nextIndex < 0) nextIndex = options.length - 1;
+    if (nextIndex >= options.length) nextIndex = 0;
+    
+    options[nextIndex].focus();
+}
+
+function enhanceAccessibility() {
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('option')) {
+            const options = e.target.parentElement.querySelectorAll('.option');
+            options.forEach((opt, index) => {
+                opt.setAttribute('aria-checked', opt.classList.contains('selected') ? 'true' : 'false');
+                opt.setAttribute('role', 'radio');
+                opt.setAttribute('tabindex', '0');
+            });
+        }
+    });
+}
+
+function loadUserData() {
+    const savedProgress = localStorage.getItem('mediQuizProgress');
+    const savedStats = localStorage.getItem('mediQuizStats');
+    const savedBookmarks = localStorage.getItem('mediQuizBookmarks');
+    const savedCustomQuestions = localStorage.getItem('mediQuizCustomQuestions');
+    
+    if (savedProgress) {
+        userProgress = JSON.parse(savedProgress);
+    }
+    if (savedStats) {
+        userStats = JSON.parse(savedStats);
+        const today = new Date().toDateString();
+        const lastActive = new Date(userStats.lastActive).toDateString();
+        if (lastActive !== today) {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            if (lastActive === yesterday.toDateString()) {
+                userStats.streak++;
+            } else {
+                userStats.streak = 1;
+            }
+        }
+    }
+    if (savedBookmarks) {
+        bookmarkedQuestions = new Set(JSON.parse(savedBookmarks));
+    }
+    if (savedCustomQuestions) {
+        customQuestions = JSON.parse(savedCustomQuestions);
+    }
+    
+    userStats.lastActive = new Date().toISOString();
+    saveUserData();
+}
+
+function saveUserData() {
+    localStorage.setItem('mediQuizProgress', JSON.stringify(userProgress));
+    localStorage.setItem('mediQuizStats', JSON.stringify(userStats));
+    localStorage.setItem('mediQuizBookmarks', JSON.stringify(Array.from(bookmarkedQuestions)));
+    localStorage.setItem('mediQuizCustomQuestions', JSON.stringify(customQuestions));
+}
+
+function updateDashboardStats() {
+    correctAnswersEl.textContent = userStats.correctAnswers;
+    timeSpentEl.textContent = `${Math.floor(userStats.timeSpent / 60)}h ${userStats.timeSpent % 60}m`;
+    masteryLevelEl.textContent = `${userStats.masteryLevel}%`;
+    streakCountEl.textContent = userStats.streak;
+}
+
+function updateAnalytics() {
+    const allQuestions = [...quizData, ...customQuestions];
+    const weakAreas = Object.entries(userProgress)
+        .filter(([_, data]) => data.attempts > 0 && (data.correct / data.attempts) < 0.6)
+        .map(([id, _]) => allQuestions.find(q => q.id == id)?.category)
+        .reduce((acc, category) => {
+            acc[category] = (acc[category] || 0) + 1;
+            return acc;
+        }, {});
+        
+    weakAreasCountEl.textContent = Object.keys(weakAreas).length;
+    
+    const totalTime = userStats.timeSpent * 60;
+    const avgTime = userStats.totalQuestions > 0 ? Math.round(totalTime / userStats.totalQuestions) : 0;
+    avgTimePerQuestionEl.textContent = `${avgTime}s`;
+    
+    if (userStats.weeklyProgress.length > 1) {
+        const latest = userStats.weeklyProgress[userStats.weeklyProgress.length - 1];
+        const previous = userStats.weeklyProgress[userStats.weeklyProgress.length - 2];
+        const improvement = ((latest - previous) / previous) * 100;
+        improvementRateEl.textContent = `${Math.round(improvement)}%`;
+    } else {
+        improvementRateEl.textContent = "0%";
+    }
+}
+
+function exportProgress() {
+    const data = {
+        progress: userProgress,
+        stats: userStats,
+        bookmarks: Array.from(bookmarkedQuestions),
+        customQuestions: customQuestions,
+        exportDate: new Date().toISOString(),
+        analytics: generateStudyReport()
+    };
+    
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `mediquiz-progress-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    
+    showNotification('Progress data exported successfully!', 'success');
+}
+
+function createCustomQuiz(options) {
+    let filteredQuestions = [...quizData, ...customQuestions];
+    
+    if (options.categories && options.categories.length > 0) {
+        filteredQuestions = filteredQuestions.filter(q => options.categories.includes(q.category));
+    }
+    
+    if (options.difficulty) {
+        filteredQuestions = filteredQuestions.filter(q => q.difficulty.toLowerCase() === options.difficulty);
+    }
+    
+    if (options.bookmarkedOnly) {
+        filteredQuestions = filteredQuestions.filter(q => bookmarkedQuestions.has(q.id));
+    }
+    
+    if (options.count && options.count > 0) {
+        filteredQuestions = shuffleArray(filteredQuestions).slice(0, options.count);
+    }
+    
+    questions = filteredQuestions;
+    currentQuestionIndex = 0;
+    userAnswers = new Array(questions.length);
+    isAnswerChecked = false;
+    examSubmitted = false;
+    
+    if (questions.length === 0) {
+        showNoQuestionsMessage();
+        return;
+    }
+    
+    hideAllSections();
+    renderQuizLayout();
+    customQuizModal.classList.remove('active');
+    showNotification(`Custom quiz created with ${questions.length} questions`, 'success');
+}
+
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+function generateStudyReport() {
+    const allQuestions = [...quizData, ...customQuestions];
+    const weakAreas = Object.entries(userProgress)
+        .filter(([_, data]) => data.attempts > 0 && (data.correct / data.attempts) < 0.6)
+        .map(([id, _]) => {
+            const question = allQuestions.find(q => q.id == id);
+            return {
+                questionId: id,
+                category: question?.category,
+                difficulty: question?.difficulty,
+                performance: userProgress[id].correct / userProgress[id].attempts
+            };
+        });
+        
+    const strongAreas = Object.entries(userProgress)
+        .filter(([_, data]) => data.attempts > 0 && (data.correct / data.attempts) >= 0.8)
+        .map(([id, _]) => {
+            const question = allQuestions.find(q => q.id == id);
+            return {
+                questionId: id,
+                category: question?.category,
+                difficulty: question?.difficulty,
+                performance: userProgress[id].correct / userProgress[id].attempts
+            };
+        });
+        
+    return {
+        weakAreas,
+        strongAreas,
+        totalMastered: Object.values(userProgress).filter(p => p.correct >= 3).length,
+        totalQuestions: allQuestions.length,
+        masteryPercentage: calculateMasteryLevel(),
+        generatedAt: new Date().toISOString()
+    };
+}
+
+function showNotification(message, type = 'info') {
+    // Remove existing notifications
+    document.querySelectorAll('.notification').forEach(n => n.remove());
+    
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.style.cssText = `
+        position: fixed;
+        top: 30px;
+        right: 30px;
+        padding: 20px 28px;
+        background: ${type === 'success' ? 'var(--success)' : type === 'error' ? 'var(--error)' : 'var(--primary)'};
+        color: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        z-index: 10000;
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        backdrop-filter: blur(30px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        font-weight: 600;
+        max-width: 400px;
+        line-height: 1.5;
+    `;
+    notification.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle'}" style="font-size: 20px;"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                document.body.removeChild(notification);
+            }
+        }, 400);
+    }, 4000);
+}
+
+function initializeCategories() {
+    const allQuestions = [...quizData, ...customQuestions];
+    const categories = [...new Set(allQuestions.map(q => q.category))];
+    const categoryIcons = {
+        "Anatomy Fundamentals": "fas fa-brain",
+        "Neuroanatomy": "fas fa-brain",
+        "Gastrointestinal System": "fas fa-stomach",
+        "Cardiovascular System": "fas fa-heart",
+        "Custom Anatomy": "fas fa-user-md",
+        "Custom Physiology": "fas fa-heartbeat",
+        "Custom Pathology": "fas fa-virus",
+        "Custom Pharmacology": "fas fa-pills",
+        "General Medicine": "fas fa-stethoscope"
+    };
+    
+    const categoryColors = {
+        "Anatomy Fundamentals": "#6366f1",
+        "Neuroanatomy": "#06b6d4",
+        "Gastrointestinal System": "#10b981",
+        "Cardiovascular System": "#ef4444",
+        "Custom Anatomy": "#8b5cf6",
+        "Custom Physiology": "#f59e0b",
+        "Custom Pathology": "#ec4899",
+        "Custom Pharmacology": "#84cc16",
+        "General Medicine": "#64748b"
+    };
+
+    categoriesGrid.innerHTML = '';
+    categories.forEach(category => {
+        const categoryQuestions = allQuestions.filter(q => q.category === category);
+        const mastered = categoryQuestions.filter(q =>
+            userProgress[q.id] && userProgress[q.id].correct >= 3
+        ).length;
+        const progress = categoryQuestions.length > 0 ?
+            Math.round((mastered / categoryQuestions.length) * 100) : 0;
+            
+        const categoryCard = document.createElement('div');
+        categoryCard.className = 'category-card active glass-effect';
+        categoryCard.dataset.category = category;
+        categoryCard.style.borderLeft = `4px solid ${categoryColors[category] || '#6366f1'}`;
+        categoryCard.innerHTML = `
+            <div class="category-header">
+                <div class="category-icon" style="background: ${categoryColors[category] || '#6366f1'}20; color: ${categoryColors[category] || '#6366f1'}">
+                    <i class="${categoryIcons[category] || 'fas fa-question'}"></i>
+                </div>
+                <div class="category-name">${category}</div>
+                ${category.includes('Custom') ? '<div style="font-size: 10px; color: var(--primary); background: var(--primary-light); padding: 2px 6px; border-radius: 8px;">Custom</div>' : ''}
+            </div>
+            <div class="category-stats">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${progress}%; background: ${categoryColors[category] || '#6366f1'}"></div>
+                </div>
+                <div class="progress-text">${progress}%</div>
+            </div>
+            <div style="font-size: 11px; color: var(--text-tertiary); margin-top: 8px;">
+                ${categoryQuestions.length} question${categoryQuestions.length !== 1 ? 's' : ''}
+                ${categoryQuestions.filter(q => q.custom).length > 0 ? ` · ${categoryQuestions.filter(q => q.custom).length} custom` : ''}
+            </div>
+        `;
+        
+        if (categoryQuestions.length > 1) {
+            const dropdown = document.createElement('div');
+            dropdown.className = 'modern-dropdown';
+            dropdown.innerHTML = `
+                <select onchange="jumpToQuestion(this.value)">
+                    <option value="">Jump to Question...</option>
+                    ${categoryQuestions.sort((a, b) => a.id - b.id).map(q => 
+                        `<option value="question-${q.id}">Q${q.id}: ${q.question.substring(0, 50)}${q.question.length > 50 ? '...' : ''}${q.custom ? ' ★' : ''}</option>`
+                    ).join('')}
+                </select>
+            `;
+            categoryCard.appendChild(dropdown);
+        }
+        
+        categoryCard.addEventListener('click', (e) => {
+            if (!e.target.closest('.modern-dropdown') && !e.target.closest('select')) {
+                toggleCategory(categoryCard);
+                const firstQ = categoryQuestions.sort((a, b) => a.id - b.id)[0];
+                if (firstQ) {
+                    jumpToQuestion(`question-${firstQ.id}`);
+                }
+            }
+        });
+        
+        categoriesGrid.appendChild(categoryCard);
+    });
+    
+    selectedCategories = [...categories];
+}
+
+function toggleCategory(categoryCard) {
+    const category = categoryCard.dataset.category;
+    if (categoryCard.classList.contains('active')) {
+        categoryCard.classList.remove('active');
+        selectedCategories = selectedCategories.filter(c => c !== category);
+    } else {
+        categoryCard.classList.add('active');
+        selectedCategories.push(category);
+    }
+    startQuiz();
+    closeSidebar();
+}
+
+function startQuiz() {
+    if (currentPage !== 'Dashboard') return;
+    
+    quizContainer.style.opacity = '0';
+    setTimeout(() => {
+        const allQuestions = [...quizData, ...customQuestions];
+        questions = selectedCategories.length > 0 ? 
+            allQuestions.filter(q => selectedCategories.includes(q.category)) : 
+            allQuestions;
+            
+        if (questions.length === 0) {
+            showNoQuestionsMessage();
+            return;
+        }
+        if (currentMode === 'learn' && incorrectQuestions.length > 0) {
+            questions = allQuestions.filter(q => incorrectQuestions.includes(q.id));
+        }
+        if (questions.length === 0) {
+            showNoQuestionsMessage();
+            return;
+        }
+        questions.sort((a, b) => a.id - b.id);
+        currentQuestionIndex = 0;
+        score = 0;
+        userAnswers = new Array(questions.length);
+        isAnswerChecked = false;
+        examSubmitted = false;
+        quizContainer.classList.remove('hidden');
+        resultsScreen.classList.add('hidden');
+        questionTimers = new Array(questions.length).fill(0);
+        if (currentMode === 'exam') {
+            isCountdown = true;
+            remainingTime = 120 * questions.length;
+        } else {
+            isCountdown = false;
+        }
+        startTimer();
+        renderQuizLayout();
+        quizContainer.style.opacity = '1';
+    }, 300);
+}
+
+function showNoQuestionsMessage() {
+    let message = '';
+    if (isSearchActive) {
+        message = 'No questions match your search criteria. Try different keywords.';
+    } else if (selectedCategories.length === 0) {
+        message = 'No categories selected. Please select categories from the sidebar.';
+    } else {
+        message = 'No questions available for the selected categories.';
+    }
+    
+    quizContainer.innerHTML = `
+        <div class="no-questions" style="text-align: center; padding: 80px 20px;">
+            <div style="font-size: 64px; color: var(--text-tertiary); margin-bottom: 24px; opacity: 0.5;">
+                <i class="fas fa-inbox"></i>
+            </div>
+            <h2 style="font-size: 28px; margin-bottom: 16px; color: var(--text-primary);">No Questions Available</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 32px; max-width: 400px; margin-left: auto; margin-right: auto;">
+                ${message}
+            </p>
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                <button class="quiz-btn" onclick="toggleSidebar()" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 12px 24px; border-radius: 12px;">
+                    <i class="fas fa-folder-open"></i>
+                    Select Categories
+                </button>
+                <button class="quiz-btn" onclick="showCustomQuestionCreator()" style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 12px 24px; border-radius: 12px;">
+                    <i class="fas fa-plus"></i>
+                    Create Question
+                </button>
+                ${isSearchActive ? `
+                    <button class="quiz-btn" onclick="clearSearch()" style="background: linear-gradient(135deg, var(--secondary), #4b5563); color: white; padding: 12px 24px; border-radius: 12px;">
+                        <i class="fas fa-times"></i>
+                        Clear Search
+                    </button>
+                ` : ''}
+            </div>
+        </div>
+    `;
+    resultsScreen.classList.add('hidden');
+    stopTimer();
+    quizContainer.style.opacity = '1';
+}
+
+function startTimer() {
+    if (timerInterval) clearInterval(timerInterval);
+    startTime = new Date();
+    timerInterval = setInterval(() => {
+        if (isCountdown) {
+            remainingTime--;
+            if (remainingTime <= 0) {
+                remainingTime = 0;
+                clearInterval(timerInterval);
+                if (currentMode === 'exam' && !examSubmitted) {
+                    showNotification('Time up! Submitting exam.', 'error');
+                    submitExam();
+                }
+            }
+            updateTimerDisplay(formatTime(remainingTime), 'timerDisplay', true);
+        } else {
+            questionTimers[currentQuestionIndex]++;
+            updateTimerDisplay(formatTime(questionTimers[currentQuestionIndex]), 'timerDisplay', false);
+        }
+    }, 1000);
+}
+
+function formatTime(seconds) {
+    const min = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const sec = (seconds % 60).toString().padStart(2, '0');
+    return `${min}:${sec}`;
+}
+
+function updateTimerDisplay(time, id, isCountdown = false) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.textContent = `Time: ${time}`;
+        if (isCountdown) {
+            el.classList.remove('timer-warning', 'timer-error');
+            if (remainingTime <= 30) {
+                el.classList.add('timer-error');
+            } else if (remainingTime <= 60) {
+                el.classList.add('timer-warning');
+            }
+        }
+    }
+}
+
+function stopTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        if (startTime) {
+            const endTime = new Date();
+            const timeSpent = Math.floor((endTime - startTime) / 1000 / 60);
+            userStats.timeSpent += timeSpent;
+            userStats.lastActive = new Date().toISOString();
+            saveUserData();
+            updateDashboardStats();
+        }
+    }
+}
+
+function renderQuizLayout() {
+    if (questions.length === 0) {
+        showNoQuestionsMessage();
+        return;
+    }
+    
+    if (currentMode === 'exam') {
+        renderExamLayout();
+    } else {
+        renderSingleQuestionLayout();
+    }
+}
+
+function renderExamLayout() {
+    const isImmediateMode = examCheckMode === 'immediate';
+    quizContainer.innerHTML = `
+        <div class="exam-header" style="margin-bottom: 24px; padding: 20px; background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border);">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                <div>
+                    <h3 style="font-size: 18px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">
+                        Exam Mode: ${questions.length} Questions
+                    </h3>
+                    <p style="color: var(--text-secondary); font-size: 14px;">
+                        ${isImmediateMode ?
+                          'Immediate Check - See explanations as you answer' :
+                          'All-in-One Check - Check all answers at the end'}
+                    </p>
+                </div>
+                <div class="exam-mode-toggle" style="display: flex; gap: 8px; background: var(--glass); padding: 4px; border-radius: var(--radius);">
+                    <button class="mode-toggle-btn ${isImmediateMode ? 'active' : ''}" data-mode="immediate" style="padding: 8px 16px; border: none; border-radius: 6px; background: ${isImmediateMode ? 'var(--primary)' : 'transparent'}; color: ${isImmediateMode ? 'white' : 'var(--text-secondary)'}; cursor: pointer; font-size: 12px; font-weight: 500;" aria-label="Immediate Check Mode">
+                        Immediate Check
+                    </button>
+                    <button class="mode-toggle-btn ${!isImmediateMode ? 'active' : ''}" data-mode="all-at-once" style="padding: 8px 16px; border: none; border-radius: 6px; background: ${!isImmediateMode ? 'var(--primary)' : 'transparent'}; color: ${!isImmediateMode ? 'white' : 'var(--text-secondary)'}; cursor: pointer; font-size: 12px; font-weight: 500;" aria-label="All-at-Once Check Mode">
+                        Check All
+                    </button>
+                </div>
+            </div>
+            <div class="progress-info" style="display: flex; align-items: center; gap: 16px;">
+                <span style="font-size: 14px; color: var(--text-secondary);" id="answeredCount">0/${questions.length} answered</span>
+                <div class="progress-bar" style="flex: 1; height: 6px;">
+                    <div class="progress-fill" id="examProgressFill" style="width: 0%"></div>
+                </div>
+                <span id="timerDisplay" style="font-size: 14px; color: var(--text-secondary);">Time: ${formatTime(remainingTime)}</span>
+                ${examSubmitted ? `<span style="color: var(--success); font-weight: 600; font-size: 14px;">Submitted!</span>` : ''}
+            </div>
+        </div>
+        <div class="exam-mode-layout">
+            ${questions.map((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.answer;
+                const showExplanationButton = examSubmitted || (isImmediateMode && userAnswer !== undefined);
+                return `
+                    <div class="question-card fade-in" data-question-index="${index}" id="question-${question.id}">
+                        <div class="question-header">
+                            <div class="question-meta">
+                                <div class="question-number">Q${question.id}</div>
+                                <div class="question-category">${question.category}</div>
+                                <div class="question-difficulty" style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; background: ${getDifficultyColor(question.difficulty)}; color: white;">
+                                    ${question.difficulty}
+                                </div>
+                                ${userAnswer !== undefined ? `
+                                    <div class="answer-status ${isCorrect ? 'correct' : 'incorrect'}" style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; background: ${isCorrect ? 'var(--success)' : 'var(--error)'}; color: white;">
+                                        ${isCorrect ? 'Correct' : 'Incorrect'}
+                                    </div>
+                                ` : ''}
+                            </div>
+                            <div class="question-actions">
+                                <button class="action-btn bookmark-btn" data-question-id="${question.id}" aria-label="Bookmark Question">
+                                    <i class="${bookmarkedQuestions.has(question.id) ? 'fas' : 'far'} fa-bookmark"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="question-text">${question.question}</div>
+                        <div class="options-grid">
+                            ${question.options.map((option, optIndex) => {
+                                const isSelected = userAnswer === optIndex;
+                                const isCorrectOption = optIndex === question.answer;
+                                let optionClass = 'option';
+                                if (userAnswer !== undefined) {
+                                    if (isCorrectOption) {
+                                        optionClass += ' correct';
+                                    } else if (isSelected && !isCorrectOption) {
+                                        optionClass += ' incorrect';
+                                    }
+                                    optionClass += ' disabled';
+                                } else if (isSelected) {
+                                    optionClass += ' selected';
+                                }
+                                return `
+                                    <div class="${optionClass}" data-option-index="${optIndex}" role="button" aria-label="Option ${String.fromCharCode(65 + optIndex)}">
+                                        <div class="option-letter">${String.fromCharCode(65 + optIndex)}</div>
+                                        <div class="option-text">${option}</div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        ${showExplanationButton ? `
+                            <div class="explanation-section">
+                                <details open>
+                                    <summary><i class="fas fa-info-circle"></i> Correct Answer</summary>
+                                    <div class="explanation-content correct-answer">
+                                        <strong>Answer: ${String.fromCharCode(65 + question.answer)}. ${question.correctAnswer}</strong>
+                                    </div>
+                                </details>
+                                ${userAnswer !== undefined && userAnswer !== question.answer ? `
+                                    <details>
+                                        <summary><i class="fas fa-exclamation-circle"></i> Why Not Your Answer?</summary>
+                                        <div class="explanation-content why-not-section">
+                                            <strong>Why not ${String.fromCharCode(65 + userAnswer)}?</strong>
+                                            <p>${question.whyNotOtherOptions[String.fromCharCode(97 + userAnswer)]}</p>
+                                        </div>
+                                    </details>
+                                ` : ''}
+                                <details>
+                                    <summary><i class="fas fa-book"></i> Detailed Explanation</summary>
+                                    <div class="explanation-content">${question.explanation}</div>
+                                </details>
+                                <details>
+                                    <summary><i class="fas fa-link"></i> Related Questions</summary>
+                                    <div class="explanation-content related-questions">
+                                        <div class="related-questions-list">
+                                            ${question.relatedQuestions.map(q => {
+                                                const qId = q.match(/\d+/)[0];
+                                                return `<span class="related-question-tag" onclick="jumpToQuestion('question-${qId}')" role="button" aria-label="Jump to Question ${qId}">Q${qId}</span>`;
+                                            }).join('')}
+                                        </div>
+                                    </div>
+                                </details>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('')}
+            <div class="quiz-controls">
+                <div style="display: flex; gap: 12px;">
+                    ${examCheckMode === 'all-at-once' && !examSubmitted ? `
+                        <button class="quiz-btn check-btn" id="checkAllBtn" ${userAnswers.filter(a => a !== undefined).length === 0 ? 'disabled' : ''} aria-label="Check All Answers">
+                            <i class="fas fa-check-double"></i>
+                            Check All Answers
+                        </button>
+                    ` : ''}
+                </div>
+                <button class="quiz-btn submit-btn" id="examSubmitBtn" ${examSubmitted ? 'disabled' : ''} aria-label="Submit Exam">
+                    <i class="fas fa-paper-plane"></i>
+                    ${examSubmitted ? 'Exam Submitted' : `Submit Exam (${questions.length} questions)`}
+                </button>
+            </div>
+        </div>
+    `;
+    initializeExamModeEvents();
+    updateExamSubmitButton();
+}
+
+function renderSingleQuestionLayout() {
+    if (currentQuestionIndex >= questions.length) {
+        showResults();
+        return;
+    }
+    const question = questions[currentQuestionIndex];
+    const userAnswer = userAnswers[currentQuestionIndex];
+    const isCorrect = userAnswer === question.answer;
+    quizContainer.innerHTML = `
+        <div class="question-card fade-in" data-question-index="${currentQuestionIndex}">
+            <div class="question-header">
+                <div class="question-meta">
+                    <div class="question-number">Q${question.id}</div>
+                    <div class="question-category">${question.category}</div>
+                    <div class="question-difficulty" style="background: ${getDifficultyColor(question.difficulty)};">
+                        ${question.difficulty}
+                    </div>
+                    ${userAnswer !== undefined ? `
+                        <div class="answer-status ${isCorrect ? 'correct' : 'incorrect'}" style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; background: ${isCorrect ? 'var(--success)' : 'var(--error)'}; color: white;">
+                            ${isCorrect ? 'Correct' : 'Incorrect'}
+                        </div>
+                    ` : ''}
+                </div>
+                <div class="question-actions">
+                    <button class="action-btn bookmark-btn" data-question-id="${question.id}" aria-label="Bookmark Question">
+                        <i class="${bookmarkedQuestions.has(question.id) ? 'fas' : 'far'} fa-bookmark"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="question-text">${question.question}</div>
+            <div class="options-grid">
+                ${question.options.map((option, index) => {
+                    const isSelected = userAnswer === index;
+                    const isCorrectOption = index === question.answer;
+                    let optionClass = 'option';
+                    if (isAnswerChecked) {
+                        if (isCorrectOption) {
+                            optionClass += ' correct';
+                        } else if (isSelected && !isCorrectOption) {
+                            optionClass += ' incorrect';
+                        }
+                        optionClass += ' disabled';
+                    } else if (isSelected) {
+                        optionClass += ' selected';
+                    }
+                    return `
+                        <div class="${optionClass}" data-option-index="${index}" role="button" aria-label="Option ${String.fromCharCode(65 + index)}">
+                            <div class="option-letter">${String.fromCharCode(65 + index)}</div>
+                            <div class="option-text">${option}</div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+            ${isAnswerChecked ? `
+                <div class="explanation-section">
+                    <details open>
+                        <summary><i class="fas fa-info-circle"></i> Correct Answer</summary>
+                        <div class="explanation-content correct-answer">
+                            <strong>Answer: ${String.fromCharCode(65 + question.answer)}. ${question.correctAnswer}</strong>
+                        </div>
+                    </details>
+                    ${userAnswer !== undefined && userAnswer !== question.answer ? `
+                        <details>
+                            <summary><i class="fas fa-exclamation-circle"></i> Why Not Your Answer?</summary>
+                            <div class="explanation-content why-not-section">
+                                <strong>Why not ${String.fromCharCode(65 + userAnswer)}?</strong>
+                                <p>${question.whyNotOtherOptions[String.fromCharCode(97 + userAnswer)]}</p>
+                            </div>
+                        </details>
+                    ` : ''}
+                    <details>
+                        <summary><i class="fas fa-book"></i> Detailed Explanation</summary>
+                        <div class="explanation-content">${question.explanation}</div>
+                    </details>
+                    <details>
+                        <summary><i class="fas fa-link"></i> Related Questions</summary>
+                        <div class="explanation-content related-questions">
+                            <div class="related-questions-list">
+                                ${question.relatedQuestions.map(q => {
+                                    const qId = q.match(/\d+/)[0];
+                                    return `<span class="related-question-tag" onclick="jumpToQuestion('question-${qId}')" role="button" aria-label="Jump to Question ${qId}">Q${qId}</span>`;
+                                }).join('')}
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            ` : ''}
+            <div class="quiz-controls">
+                <div style="display: flex; gap: 12px;">
+                    <button class="quiz-btn check-btn" id="checkAnswerBtn" ${userAnswer === undefined ? 'disabled' : ''} aria-label="Check Answer">
+                        <i class="fas fa-check"></i>
+                        Check Answer
+                    </button>
+                    ${currentMode === 'learn' && incorrectQuestions.length > 0 ? `
+                        <button class="quiz-btn" id="incorrectOnlyBtn" aria-label="Show Incorrect Only">
+                            <i class="fas fa-filter"></i>
+                            Incorrect Only
+                        </button>
+                    ` : ''}
+                </div>
+                <button class="quiz-btn next-btn" id="nextQuestionBtn" ${!isAnswerChecked ? 'disabled' : ''} aria-label="Next Question">
+                    <i class="fas fa-arrow-right"></i>
+                    ${currentQuestionIndex < questions.length - 1 ? 'Next Question' : 'Finish'}
+                </button>
+            </div>
+        </div>
+    `;
+    initializeQuizEvents();
+    updateTimerDisplay(formatTime(isCountdown ? remainingTime : questionTimers[currentQuestionIndex]), 'timerDisplay', isCountdown);
+}
+
+function initializeQuizEvents() {
+    const checkAnswerBtn = document.getElementById('checkAnswerBtn');
+    const nextQuestionBtn = document.getElementById('nextQuestionBtn');
+    const incorrectOnlyBtn = document.getElementById('incorrectOnlyBtn');
+    const bookmarkBtn = document.querySelector('.bookmark-btn');
+    const options = document.querySelectorAll('.option:not(.disabled)');
+    
+    options.forEach(option => {
+        option.addEventListener('click', () => {
+            if (!isAnswerChecked) {
+                options.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                userAnswers[currentQuestionIndex] = parseInt(option.dataset.optionIndex);
+                if (checkAnswerBtn) checkAnswerBtn.disabled = false;
+                updateExamSubmitButton();
+            }
+        });
+    });
+    
+    if (checkAnswerBtn) {
+        checkAnswerBtn.addEventListener('click', () => {
+            checkAnswer();
+            renderQuizLayout();
+        });
+    }
+    
+    if (nextQuestionBtn) {
+        nextQuestionBtn.addEventListener('click', () => {
+            currentQuestionIndex++;
+            isAnswerChecked = false;
+            renderQuizLayout();
+        });
+    }
+    
+    if (incorrectOnlyBtn) {
+        incorrectOnlyBtn.addEventListener('click', () => {
+            questions = quizData.filter(q => incorrectQuestions.includes(q.id));
+            currentQuestionIndex = 0;
+            userAnswers = new Array(questions.length);
+            isAnswerChecked = false;
+            renderQuizLayout();
+        });
+    }
+    
+    if (bookmarkBtn) {
+        bookmarkBtn.addEventListener('click', () => {
+            const questionId = parseInt(bookmarkBtn.dataset.questionId);
+            toggleBookmark(questionId);
+            bookmarkBtn.querySelector('i').className = bookmarkedQuestions.has(questionId) ? 'fas fa-bookmark' : 'far fa-bookmark';
+        });
+    }
+}
+
+function initializeExamModeEvents() {
+    const options = document.querySelectorAll('.option:not(.disabled)');
+    const checkAllBtn = document.getElementById('checkAllBtn');
+    const submitBtn = document.getElementById('examSubmitBtn');
+    const modeToggleButtons = document.querySelectorAll('.mode-toggle-btn');
+    
+    options.forEach(option => {
+        option.addEventListener('click', () => {
+            const questionIndex = parseInt(option.closest('.question-card').dataset.questionIndex);
+            const prevSelected = option.closest('.options-grid').querySelector('.selected');
+            if (prevSelected) prevSelected.classList.remove('selected');
+            option.classList.add('selected');
+            userAnswers[questionIndex] = parseInt(option.dataset.optionIndex);
+            updateExamProgress();
+            updateExamSubmitButton();
+            if (examCheckMode === 'immediate') {
+                checkAnswer(questionIndex);
+                renderQuizLayout();
+            }
+        });
+    });
+    
+    if (checkAllBtn) {
+        checkAllBtn.addEventListener('click', () => {
+            userAnswers.forEach((answer, index) => {
+                if (answer !== undefined) {
+                    checkAnswer(index);
+                }
+            });
+            renderQuizLayout();
+        });
+    }
+    
+    if (submitBtn) {
+        submitBtn.addEventListener('click', submitExam);
+    }
+    
+    modeToggleButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            modeToggleButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            examCheckMode = btn.dataset.mode;
+            renderQuizLayout();
+        });
+    });
+    
+    document.querySelectorAll('.bookmark-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const questionId = parseInt(btn.dataset.questionId);
+            toggleBookmark(questionId);
+            btn.querySelector('i').className = bookmarkedQuestions.has(questionId) ? 'fas fa-bookmark' : 'far fa-bookmark';
+        });
+    });
+}
+
+function updateExamProgress() {
+    const answered = userAnswers.filter(a => a !== undefined).length;
+    const progressPercent = (answered / questions.length) * 100;
+    const answeredCount = document.getElementById('answeredCount');
+    const progressFill = document.getElementById('examProgressFill');
+    if (answeredCount) {
+        answeredCount.textContent = `${answered}/${questions.length} answered`;
+    }
+    if (progressFill) {
+        progressFill.style.width = `${progressPercent}%`;
+    }
+}
+
+function updateExamSubmitButton() {
+    const submitBtn = document.getElementById('examSubmitBtn');
+    if (submitBtn) {
+        const allAnswered = userAnswers.every(a => a !== undefined);
+        submitBtn.disabled = !allAnswered || examSubmitted;
+        submitBtn.innerHTML = examSubmitted ?
+            '<i class="fas fa-paper-plane"></i> Exam Submitted' :
+            `<i class="fas fa-paper-plane"></i> Submit Exam (${questions.length} questions)`;
+    }
+}
+
+function checkAnswer(questionIndex = currentQuestionIndex) {
+    const question = questions[questionIndex];
+    const userAnswer = userAnswers[questionIndex];
+    isAnswerChecked = true;
+    if (userAnswer === question.answer) {
+        score++;
+        userStats.correctAnswers++;
+        if (!userProgress[question.id]) userProgress[question.id] = { correct: 0, attempts: 0 };
+        userProgress[question.id].correct++;
+        userProgress[question.id].attempts++;
+        incorrectQuestions = incorrectQuestions.filter(id => id !== question.id);
+    } else {
+        if (!incorrectQuestions.includes(question.id)) {
+            incorrectQuestions.push(question.id);
+        }
+        if (!userProgress[question.id]) userProgress[question.id] = { correct: 0, attempts: 0 };
+        userProgress[question.id].attempts++;
+    }
+    userStats.totalQuestions++;
+    userStats.masteryLevel = calculateMasteryLevel();
+    saveUserData();
+    updateDashboardStats();
+}
+
+function submitExam() {
+    examSubmitted = true;
+    if (examCheckMode === 'all-at-once') {
+        userAnswers.forEach((answer, index) => {
+            if (answer !== undefined) {
+                checkAnswer(index);
+            }
+        });
+    }
+    stopTimer();
+    showResults();
+}
+
+function calculateMasteryLevel() {
+    const masteredQuestions = Object.values(userProgress).filter(p => p.correct >= 3).length;
+    return quizData.length > 0 ? Math.round((masteredQuestions / quizData.length) * 100) : 0;
+}
+
+function showResults() {
+    stopTimer();
+    quizContainer.classList.add('hidden');
+    resultsScreen.classList.remove('hidden');
+    const percentage = questions.length > 0 ? Math.round((score / questions.length) * 100) : 0;
+    
+    let restartText = 'Restart Quiz';
+    if (currentPage === 'bookmarks') {
+        restartText = 'Practice Again';
+    }
+    
+    resultsScreen.innerHTML = `
+        <div class="results-card fade-in">
+            <div class="results-header">
+                <h2 class="results-title">${currentMode.charAt(0).toUpperCase() + currentMode.slice(1)} Results</h2>
+                <p class="score-text">You completed ${questions.length} question${questions.length !== 1 ? 's' : ''}</p>
+            </div>
+            <div class="score-display">${percentage}%</div>
+            <div class="score-text">Score: ${score} out of ${questions.length} correct</div>
+            <div class="results-details">
+                ${questions.map((q, index) => {
+                    const isCorrect = userAnswers[index] === q.answer;
+                    return `
+                        <div class="result-item">
+                            <div class="result-question">Q${q.id}: ${q.question}</div>
+                            <div class="result-status ${isCorrect ? 'result-correct' : 'result-incorrect'}">
+                                ${isCorrect ? 'Correct' : 'Incorrect'}
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                <button class="restart-btn" id="restartQuiz" aria-label="Restart Quiz" style="margin: 0;">
+                    <i class="fas fa-redo"></i>
+                    ${restartText}
+                </button>
+                ${currentPage === 'bookmarks' ? `
+                    <button class="quiz-btn" onclick="showBookmarks()" style="background: linear-gradient(135deg, var(--secondary), #4b5563); color: white; padding: 16px 24px; border-radius: var(--radius);">
+                        <i class="fas fa-bookmark"></i>
+                        Back to Bookmarks
+                    </button>
+                ` : ''}
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('restartQuiz').addEventListener('click', () => {
+        if (currentPage === 'bookmarks') {
+            startBookmarksQuiz();
+        } else {
+            startQuiz();
+        }
+    });
+}
+
+function toggleBookmark(questionId) {
+    if (bookmarkedQuestions.has(questionId)) {
+        bookmarkedQuestions.delete(questionId);
+        showNotification('Question removed from bookmarks', 'info');
+    } else {
+        bookmarkedQuestions.add(questionId);
+        showNotification('Question bookmarked', 'success');
+    }
+    saveUserData();
+    
+    // If we're on the bookmarks page, refresh it
+    if (currentPage === 'bookmarks') {
+        showBookmarks();
+    }
+}
+
+
+function getDifficultyColor(difficulty) {
+    switch (difficulty.toLowerCase()) {
+        case 'easy': return '#10b981';
+        case 'medium': return '#f59e0b';
+        case 'hard': return '#ef4444';
+        default: return '#64748b';
+    }
+}
+
+function jumpToQuestion(questionId) {
+    const questionIndex = questions.findIndex(q => `question-${q.id}` === questionId);
+    if (questionIndex !== -1) {
+        if (currentMode === 'exam') {
+            const element = document.getElementById(questionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        } else {
+            currentQuestionIndex = questionIndex;
+            isAnswerChecked = false;
+            renderQuizLayout();
+        }
+    } else {
+        // If question not in current quiz, start a new quiz with that question's category
+        const question = quizData.find(q => `question-${q.id}` === questionId) || customQuestions.find(q => `question-${q.id}` === questionId);
+        if (question) {
+            selectedCategories = [question.category];
+            startQuiz();
+            setTimeout(() => {
+                const element = document.getElementById(questionId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 500);
+        }
+    }
+}
+
+// Initialize the application
+init();
+    </script>
+</body>
+
+</html>
